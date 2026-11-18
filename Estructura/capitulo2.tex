@@ -1,0 +1,271 @@
+\chapter[CAPÍTULO II]{PLAN DEL PROYECTO DE INNOVACIÓN / MEJORA / CREATIVIDAD}
+
+\section{Identificación del Problema Técnico de la Empresa}
+
+\subsection{Problema Local de la Empresa}
+
+En la empresa J\&P Periféricos S.A.C., dentro del Área de Soporte Técnico y TI, se han identificado diversas deficiencias operativas que afectan la calidad y velocidad del servicio brindado a los clientes. Según la entrevista realizada al Gerente General y al Jefe de Soporte Técnico y TI de la empresa, entre los principales inconvenientes detectados destacan:
+
+\begin{enumerate}[label=\alph*)]
+    \item \textit{Desorganización y falta de trazabilidad en la gestión de solicitudes por canales informales (llamadas y WhatsApp).}
+    \item \textit{Retrasos y cruces de agenda en la programación de visitas técnicas e intervenciones in-situ.}
+    \item \textit{Inexistencia de un historial centralizado de mantenimientos y expedientes técnicos por equipo (uso de archivos Excel desactualizados).}
+    \item \textit{Incumplimiento o falta de control sobre los límites de servicio acordados en los contratos (SLA).}
+    \item \textit{Carencia de indicadores de rendimiento (KPIs) y tableros analíticos para evaluar el tiempo de respuesta del personal técnico.}
+\end{enumerate}
+
+Al aplicar el método de Pareto en los instrumentos de diagnóstico presentados en los Anexos, se identifica como el \textit{problema principal}: \textit{Desorganización y falta de trazabilidad centralizada en la gestión de solicitudes de soporte técnico y registro de inventario informático multinivel}. Esta situación genera cuellos de botella en la atención, demoras prolongadas en la primera respuesta e insatisfacción recurrente en los clientes corporativos.
+
+Las causas fundamentales que originan este problema principal radican en:
+
+\begin{enumerate}[label=\alph*)]
+    \item \textit{La ausencia de una plataforma web unificada que reemplace el uso de mensajería informal.}
+    \item \textit{La inexistencia de una base de datos centralizada de equipos y licencias que sirva como expediente técnico para los diagnósticos.}
+    \item \textit{La coordinación empírica e improvisada de rutas para las visitas presenciales.}
+    \item \textit{La carencia de tableros de control analíticos que permitan monitorear métricas clave como el tiempo medio de respuesta (MTTR) y la satisfacción del cliente.}
+\end{enumerate}
+
+\subsection{Problema Nacional}
+A nivel nacional, el ecosistema empresarial peruano está conformado de manera predominante por las Micro, Pequeñas y Medianas Empresas (Mipymes), las cuales constituyen el 99,3\% del tejido empresarial formal y concentran el 89,1\% del empleo privado formal (Ministerio de la Producción [PRODUCE], 2025). A pesar de este rol estructural en la economía, gran parte de estas organizaciones presenta un rezago en su madurez tecnológica y digital; operan bajo esquemas empíricos y continúan dependiendo de canales informales de comunicación (como mensajería instantánea) y registros manuales o hojas de cálculo desactualizadas para gestionar sus actividades cotidianas (PRODUCE, 2025). Esta falta de estandarización limita su capacidad operativa y se ve reflejada directamente en el sector tecnológico y de servicios informáticos —como en la empresa J\&P Periféricos S.A.C.—, donde la ausencia de plataformas de gestión centralizadas impide un adecuado control de incidentes y del inventario de activos TI.
+
+Esta problemática refleja una constante preocupante en el sector tecnológico y de servicios informáticos en el Perú. De acuerdo con Altamira (2026), el proceso acelerado de transformación digital en las micro, pequeñas y medianas empresas (PyMEs) tradicionales exige la migración inmediata de sus flujos operativos hacia plataformas de gestión centralizadas para mantener su competitividad en el mercado nacional. No obstante, un gran porcentaje de organizaciones dedicadas al soporte técnico continúa operando mediante esquemas empíricos y no estructurados, apoyados de forma precaria en aplicaciones de mensajería instantánea y registros manuales (Fiberlux Corp, 2025). Esta falta de estandarización limita la capacidad organizativa de las empresas para escalar sus operaciones, controlar adecuadamente los contratos de servicio y brindar una respuesta oportuna frente a incidentes críticos (Vargas, 2024).
+
+En consonancia con este panorama, reportes técnicos advierten que la carencia de una mesa de ayuda unificada y de un inventario informático estructurado en las organizaciones peruanas impide determinar con precisión la causa raíz de las fallas recurrentes de hardware y software (Castro y Quispe, 2025). Esta limitación operativa incrementa sustancialmente los costos por inactividad empresarial (\textit{downtime}), propicia el cruce constante de agendas técnicas en las atenciones presenciales e imposibilita la verificación de los acuerdos de nivel de servicio (SLA) (Ramírez y Gómez, 2024). Ante esta realidad, el sector tecnológico en el Perú demanda soluciones de software accesibles que integren el control jerárquico de activos, la trazabilidad del ticket en tiempo real y la gestión automatizada de visitas técnicas.
+
+En este contexto de aceleración digital, la adopción de herramientas tecnológicas resulta determinante para garantizar la sostenibilidad y competitividad de las empresas peruanas. Al respecto, Alvarado (2023) sostiene que la transformación digital orientada a la automatización de procesos y la simplificación operativa no solo incrementa la eficiencia y reduce costos, sino que disminuye drásticamente los tiempos de ciclo en la atención de requerimientos del cliente, factor crítico para fortalecer la lealtad e incrementarla satisfacción en el mercado nacional. Sin embargo, la falta de integración de plataformas accesibles y estructuradas en el sector de servicios TI impide que muchas organizaciones locales reduzcan sus tiempos de respuesta, limitando su capacidad para ofrecer un servicio transparente y de calidad global.
+
+Aunado a lo anterior, las deficiencias en la gestión de servicios y el tiempo de inactividad operativo generan pérdidas financieras críticas en el tejido empresarial del país. De acuerdo con un informe especializado publicado por Tricentis (2025), el 40\% de las organizaciones peruanas estima pérdidas anuales que oscilan entre US\$\ 1 millón y US\$\ 5 millones, mientras que otro 42\% reporta pérdidas de entre US\$\ 500 mil y US\$\ 1 millón a causa de fallas de software y la necesidad de mantenimiento correctivo constante. Esto demuestra que la falta de herramientas automatizadas y de una trazabilidad centralizada de incidencias en las empresas locales no solo provoca retrasos operativos, sino que se convierte en un riesgo financiero latente que compromete la continuidad del negocio.
+
+
+\subsection{Problema Internacional}
+
+A nivel global, la gestión de servicios de tecnología de la información (ITSM) enfrenta desafíos análogos vinculados con la madurez operativa y la automatización de procesos. Según estudios desarrollados por el Service Desk Institute (2024), las mesas de ayuda internacionales priorizan la eliminación paulatina del trabajo manual mediante la incorporación de flujos de trabajo automatizados para la recepción, clasificación, asignación y seguimiento de requerimientos. La dependencia de canales de atención informales es catalogada a nivel internacional como uno de los factores de mayor riesgo para la continuidad del negocio, ya que incrementa la insatisfacción del cliente y genera cuellos de botella en el soporte de primer y segundo nivel (Gartner, 2025).
+
+Por su parte, diversas investigaciones internacionales destacan que en el entorno empresarial moderno resulta indispensable disponer de arquitecturas de software capaces de monitorear y auditar métricas de rendimiento en tiempo real, tales como el Tiempo Medio de Respuesta (MTTR) y la tasa de resolución al primer contacto (FCR) (Rodríguez Guerrero, 2025). La ausencia de herramientas analíticas centralizadas impide a la gerencia evaluar objetivamente el desempeño del personal técnico y validar el cumplimiento de los contratos de soporte. Asimismo, la adopción de plataformas basadas en buenas prácticas reduce significativamente las horas de inactividad operativa y optimiza la atención de incidencias en organizaciones de diversa índole (Velasco Castro, 2023; Figueroa Pozo, 2023).
+
+En esta misma línea, Díaz Hidalgo (2024) demuestra en su estudio para la Cruz Roja Ecuatoriana que la alta demanda de soporte y el uso de herramientas obsoletas o al límite de su capacidad generan saturación operativa y cuellos de botella en las áreas de tecnología; por ello, la implementación de soluciones Help-Desk en la nube bajo marcos como ITIL permite mitigar estas deficiencias, estabilizando el servicio y optimizando de forma integral los procesos de TI. En consecuencia, la tendencia internacional se orienta hacia la adopción de plataformas web robustas y multitenant que integren en un único entorno la comunicación instantánea, el inventario jerárquico de activos y la analítica de servicios.
+
+A nivel internacional, la gestión ineficiente de las solicitudes y requerimientos en las áreas de tecnología de la información constituye un obstáculo crítico para la productividad institucional. Diversas organizaciones enfrentan desafíos análogos al carecer de herramientas automatizadas para el soporte técnico. Por ejemplo, en la empresa Técnica Avícola S.A. de Pacasmayo (Perú), la ausencia de un sistema de atención informática generaba deficiencias sustanciales en el departamento de TI, lo que motivó la implementación de una plataforma de tipo \textit{Help Desk} para optimizar el registro y la resolución de incidencias (Gonzales, 2016).
+
+Asimismo, en el sector empresarial peruano, la empresa Telvicon evidenció problemas operativos similares relacionados con el manejo desorganizado de sus servicios técnicos, situación que requirió la adopción de un \textit{Service Desk} bajo el marco de trabajo ITIL para mejorar los tiempos de respuesta y la calidad del servicio (Rodríguez y Falcón, 2019). De manera análoga, en el contexto ecuatoriano, la Universidad Politécnica Salesiana analizó el impacto negativo de los métodos tradicionales de soporte, concluyendo que la falta de herramientas centralizadas deteriora el desempeño del área técnica y alarga los tiempos de atención a los usuarios (Ponce y Samaniego, 2015). 
+
+Estas experiencias internacionales demuestran que el uso de procesos manuales o informales en la gestión de incidencias provoca congestión operativa, retrasos y pérdida de información, evidenciando la necesidad imperativa de implementar sistemas web especializados que automaticen el flujo de trabajo en el soporte tecnológico.
+
+\vspace{0.8em}
+
+\subsection{Formulación del Problema}
+
+\noindent \textbf{Problema General}
+
+\vspace{0.5em}
+
+¿De qué manera la implementación de un sistema web Help-Desk centralizado optimiza la gestión de atenciones técnicas y el registro de cambios de hardware y software en equipos multinivel para la empresa J\&P Periféricos S.A.C.?
+
+\vspace{1.2em}
+
+\noindent \textbf{Problemas Específicos}
+
+\begin{itemize}[leftmargin=1.27cm]
+    \item ¿De qué forma la asignación automatizada de tickets influye en la reducción de retrasos ocasionados por la gestión manual e informal de solicitudes?
+    
+    \item ¿Cómo la integración de un módulo de inventario informático por cliente impacta en la trazabilidad del expediente técnico de hardware y software?
+    
+    \item ¿De qué manera la programación de citas y soporte presencial reduce los cruces de horario y la descoordinación en las visitas \textit{in-situ}?
+    
+    \item ¿De qué forma el control digital de planes y contratos de soporte contribuye al cumplimiento de los límites de servicio acordados?
+    
+    \item ¿Cómo el flujo estandarizado de atención favorece el seguimiento y resolución oportuna de los tickets escalados a nivel técnico?
+    
+    \item ¿De qué manera la provisión de tableros con indicadores de rendimiento (KPIs) permite medir los tiempos de respuesta y la satisfacción del cliente?
+\end{itemize}
+
+\section{Objetivo del Proyecto de Innovación}
+
+\subsection{Objetivo General}
+
+Desarrollar e implementar un Sistema Web Help-Desk Centralizado para la gestión del servicio de soporte técnico y el control de inventario de activos TI en la empresa J\&P Periféricos S.A.C., con el fin de optimizar los tiempos de atención, garantizar la trazabilidad de los recursos informáticos y mejorar la satisfacción del cliente.
+
+\vspace{0.8em}
+
+\subsection{Objetivos Específicos}
+
+\begin{itemize}[leftmargin=1.27cm]
+    \item Automatizar la recepción y asignación de solicitudes de soporte, mediante un módulo de gestión de tickets que elimine los retrasos del canal manual e informal.
+    
+    \item Implementar un módulo de gestión de expedientes e inventarios de TI (hardware y software), parametrizado por empresa, sucursal, área y trabajador para garantizar la trazabilidad de los equipos.
+    
+    \item Integrar un módulo de agendamiento y programación de citas presenciales, para optimizar la coordinación y asignación del personal de soporte \textit{in-situ}.
+    
+    \item Desarrollar un módulo de control digital de planes y contratos de soporte, que valide de forma automatizada los límites de cobertura y Acuerdos de Nivel de Servicio (SLA) vinculados a cada cliente.
+    
+    \item Estandarizar el procedimiento de derivación y escalamiento de tickets, para asegurar el seguimiento continuo y la resolución oportuna de las atenciones a nivel técnico.
+    
+    \item Construir un módulo de métricas y tableros de control (KPIs), para evaluar el Tiempo Medio de Resolución (MTTR), medir los tiempos de respuesta y monitorear la satisfacción del cliente.
+\end{itemize}
+
+\section{Antecedentes del Proyecto de Innovación / Mejora / Creatividad (investigación realizada)}
+
+\subsection{Antecedentes Nacionales}
+
+En esta tesis de pregrado de la Universidad César Vallejo en la Escuela Profesional de Ingeniería de Sistemas, sustentada por Fonseca Calcin (2025), titulada ``Help desk para la atención de incidencias del área de soporte técnico de una asociación educativa cultural'', se señala como problema principal que la falta de un Help Desk estructurado expone la información institucional a riesgos por virus y amenazas informáticas en la red, dificultando la detección y respuesta oportuna ante incidentes de seguridad, lo que genera desorden, demoras en la solución de fallas y afecta la satisfacción de los usuarios. El objetivo principal fue implementar un sistema de Help Desk para optimizar la gestión de incidencias y reducir los riesgos de la información ante la amenaza de virus e infecciones informáticas en las redes de la institución. La metodología aplicada correspondió a una investigación básica y cuantitativa sobre sistemas de Help Desk y herramientas de gestión tecnológica actuales para resolver problemas de atención de incidencias e inseguridad de la información. Como resultado, se obtuvo que el Help Desk explica el 69.4\% de la mejora en la atención de incidencias, logrando una correlación positiva fuerte que optimiza la detección, registro y respuesta oportuna ante amenazas y fallas en la red. Se concluyó que, a pesar de las constantes amenazas informáticas, la implementación del Help Desk permite combatir los riesgos y proteger la información del servidor mediante una atención de incidencias organizada, rápida y efectiva.
+
+\vspace{0.8em}
+
+En esta tesis de Maestría de la Universidad César Vallejo, sustentada por Villalva Mendivil (2022), titulada ``Sistema Helpdesk en la Gestión de Incidencias del Área de TI en una Empresa de Telecomunicaciones, Lima, 2022'', se expone como problemática que la ausencia de un sistema Helpdesk estructurado generaba desorden en el registro de fallas y demoras prolongadas en la atención de TI, lo que obligaba a realizar desplazamientos innecesarios para problemas menores, afectando el cumplimiento de los tiempos de respuesta (SLA), interrumpiendo la operatividad y reduciendo la satisfacción de los usuarios. El objetivo fue implementar un sistema Helpdesk para mejorar la gestión de incidencias en el área de TI de la empresa TELEGEN PERU SAC mediante un diseño preexperimental. La metodología empleó una investigación aplicada de enfoque cuantitativo y diseño preexperimental de corte longitudinal, evaluando la implementación mediante fichas de registro para medir la mejora en los indicadores de atención, solución en primer nivel, cumplimiento de SLA y tiempos de respuesta. Como resultado, se obtuvo que la implementación incrementó la atención de incidencias del 63.74\% al 88.68\% y la resolución en primer nivel del 48.52\% al 93.57\%, reduciendo sustancialmente los tiempos de respuesta y mejorando de manera significativa el cumplimiento de los SLA. Se concluyó que el sistema Helpdesk optimiza significativamente la gestión de incidencias en el área de TI, permitiendo reducir los tiempos de respuesta y garantizar una atención organizada, rápida y efectiva a través del incremento en la resolución de primer nivel y el cumplimiento de los SLA.
+
+\vspace{0.8em}
+
+En esta tesis de la Universidad Peruana los Andes, presentada por Chávez Cotera (2022), titulada ``Implementación de un Sistema de Help Desk para Mejorar la Gestión de Incidencias del Parque Informático en el Gobierno Regional Junín'', se expone como problemática que en el Gobierno Regional Junín la gestión de incidencias se registraba mediante cuadernos de control manuales o en hojas de cálculo al final de cada semana. Esta falta de automatización generaba una brecha significativa en la atención, atendiéndose solo un promedio del 74\% de los incidentes y asignándose el 80\% de los mismos, lo cual afectaba la calidad de atención y provocaba insatisfacción en los usuarios e ineficiencia en horas-hombre. El objetivo fue determinar la influencia de un sistema Help Desk en la mejora de la gestión de incidencias del parque informático mediante un diseño preexperimental. La metodología empleó una investigación aplicada de nivel explicativo con diseño preexperimental (pre-test y post-test) bajo la metodología RUP, aplicando fichas de registro y un muestreo probabilístico de reportes diarios. Como resultado, se obtuvo que la implementación del sistema Help Desk incrementó el porcentaje de incidencias atendidas del 74.12\% al 74.99\% y el porcentaje de incidencias asignadas del 80.26\% al 83.75\%, mejorando el control y la canalización operativa de los requerimientos. Se concluyó que la implementación del sistema Help Desk optimiza significativamente la gestión de incidencias del parque informático en el Gobierno Regional Junín, superando las limitaciones de los registros manuales y garantizando una atención más organizada y eficiente.
+
+\vspace{0.8em}
+
+En esta tesis de Maestría de la Universidad César Vallejo, sustentada por Figueroa Santander (2022), titulada ``Aplicación ITIL en la Gestión de Incidencias en el Área de Informática de una Empresa de Turismo, Lima 2022'', se expone como problemática que antes de aplicar la metodología ITIL, la empresa presentaba graves deficiencias en la atención de fallas informáticas debido a la falta de un alineamiento adecuado y el seguimiento de procesos. Esto generaba retrasos, cuellos de botella en la recepción de solicitudes, acumulación de incidencias no resueltas y un elevado tiempo de resolución, afectando la calidad del servicio brindado a los usuarios y clientes. El objetivo fue determinar la influencia de la aplicación ITIL en la gestión de incidencias del área de informática de una empresa de turismo en Lima mediante un diseño preexperimental. La metodología correspondió a una investigación aplicada de nivel explicativo y enfoque cuantitativo, con un diseño preexperimental de corte longitudinal. Mediante fichas de observación sobre una muestra probabilística de 215 incidencias (distribuidas en 30 registros), se evaluó el comportamiento de los indicadores de resolución y tiempos antes y después del tratamiento experimental. Como resultado, se obtuvo que la implementación de las buenas prácticas de ITIL incrementó el promedio de incidencias resueltas del 56.52\% al 70.13\% y redujo el porcentaje de incidencias no resueltas del 43.47\% al 29.86\%. Asimismo, el tiempo promedio de resolución de incidencias se redujo sustancialmente de 38.36 a 12.58 minutos. Se concluyó que la aplicación de ITIL influye positivamente en la gestión de incidencias del área de informática, permitiendo optimizar el flujo de trabajo, reducir los tiempos de espera y garantizar una solución organizada, rápida y oportuna a los requerimientos técnicos de la empresa.
+
+\vspace{0.8em}
+
+En esta tesis de Maestría de la Universidad César Vallejo, sustentada por Mendoza Lizana (2023), titulada ``ITIL-V.4 en la Gestión de Incidencias para el área de service desk en una empresa privada de servicios, Lima 2023'', se presenta como problemática que en la entidad de servicios estudiada el proceso de reporte y atención de incidencias resultaba poco fluido, requiriendo que los usuarios enviaran correos a la mesa de ayuda para luego ser evaluados y escalados a distintas áreas para la validación de permisos. La falta de una metodología o flujo estandarizado generaba demoras significativas en la resolución de los requerimientos e incidentes reportados. El objetivo general fue determinar cómo influye ITIL V.4 en la gestión de incidencias para el área de service desk en una empresa privada de servicios en Lima durante el año 2023. La investigación fue de tipo básica, nivel descriptivo-explicativo, con un enfoque cuantitativo y un diseño no experimental, transversal y correlacional, sobre una población censal de 65 colaboradores mediante la técnica de la encuesta. Como resultado, se obtuvo una relación positiva muy alta del 93.7\% entre ITIL V.4 y la gestión de incidencias, influyendo en un 88.9\% en la solución de problemas, un 85.6\% en la calidad del servicio y un 90.1\% en la satisfacción del usuario. Se concluyó que la adopción del marco de buenas prácticas ITIL V.4 influye de manera directa y significativa en la gestión de incidencias del área de service desk, optimizando el flujo de trabajo, reduciendo los tiempos de atención y elevando la calidad del servicio técnico y la satisfacción general de los usuarios.
+
+\vspace{1.2em}
+
+\subsection{Antecedentes Internacionales}
+
+En esta tesis de la Universidad Santo Tomás del Municipio de Bucaramanga, sustentada por Rodríguez Guerrero (2025), titulada ``Análisis y Desarrollo de sistema de información Help Desk basado en ITIL para MiPymes'', se señala como problemática que en muchas micro, pequeñas y medianas empresas (MiPymes) en Colombia, la gestión de incidencias y solicitudes de soporte técnico se realizan de manera informal o con sistemas inadecuados, lo que resulta en una baja eficiencia operativa, largos tiempos de resolución de problemas y manejo inadecuado de la información. El objetivo fue desarrollar un sistema de información HelpDesk basado en ITIL para MiPymes, con el fin de optimizar la gestión de incidentes, inventario y solicitudes, mejorando la eficiencia operativa. La metodología fue desarrollada utilizando la metodología ágil Programación Extrema (Extreme Programming - XP), con un enfoque en entregas rápidas e incrementales, comenzando con la recolección y análisis de requerimientos alineados al marco ITIL v4 para la gestión de servicios de TI, los cuales se formalizaron mediante historias de usuario. Como resultado, se obtuvo la creación exitosa del sistema Help Desk, validando satisfactoriamente los 17 requerimientos funcionales y 2 no funcionales establecidos bajo el marco ITIL, además de una alta aceptación en la evaluación de la experiencia de usuario realizada con 6 participantes de perfiles administrativos, técnicos y empleados. Se concluyó que la implementación del sistema Help Desk optimiza significativamente la gestión de incidencias en el área de TI, permitiendo superar las limitaciones operativas mediante una atención organizada, rápida y efectiva, demostrando que la adopción del marco de buenas prácticas ITIL influye de manera directa en el flujo de trabajo y el control de los Acuerdos de Nivel de Servicio.
+
+\vspace{0.8em}
+
+En esta tesis de la Universidad Politécnica Salesiana, sustentada por Díaz Hidalgo (2024), titulada ``Diseño de software de Help Desk en la nube basado en ITIL para la Cruz Roja Ecuatoriana'', se señala como problemática que en la Cruz Roja Ecuatoriana se disponía de una plataforma de Help Desk saturada por la cantidad de tickets registrados diariamente, cuyo servidor local había cumplido su vida útil y llegado al tope de su capacidad de almacenamiento. El objetivo general fue diseñar un servicio Help Desk en la nube de software libre basado en las normas ITIL para mejorar el desempeño, optimizar los recursos y reducir los tiempos de respuesta del área de soporte técnico. La metodología empleó un enfoque mixto que combinó métodos inductivos, analíticos y experimentales, fundamentando la propuesta en buenas prácticas ITIL, análisis de necesidades de la mesa de ayuda, pruebas en la nube y apoyo bibliográfico y de campo. Como resultado, se logró la migración exitosa y sin pérdida de datos del historial de tickets desde Spiceworks Desktop a Spiceworks Cloud, preservando la trazabilidad, ID, comentarios y asignación de agentes, lo que mejoró la velocidad y estabilidad del servicio, erradicó problemas del servidor local y redujo costos al prescindir de nuevo hardware o licencias. Se concluyó que la migración e implementación de Spiceworks Cloud optimiza significativamente la gestión de incidencias en la Cruz Roja Ecuatoriana, permitiendo conservar el historial completo de tickets, liberar recursos en el centro de datos y mejorar los tiempos de respuesta bajo el marco de buenas prácticas ITIL sin generar costos adicionales ni requerir capacitaciones complejas.
+
+\vspace{0.8em}
+
+En esta tesis de la Universidad Pública de El Alto, sustentada por Velasco Castro (2023), titulada ``Sistema de Ticket especializado para la Gestión de incidencias en Soporte Técnico'', se expone como problemática que en el gobierno municipal de Achocalla el registro de incidencias se realiza de forma manual mediante formularios preimpresos, ocasionando pérdida de tiempo e información, así como demoras en el registro y atención de los requerimientos. El objetivo general fue desarrollar un sistema de ticket especializado para la gestión de incidencias en soporte técnico que permita el registro automatizado y eficiente de incidencias de hardware y software, mejorando la calidad y rapidez del servicio mediante metodologías ágiles. La investigación adoptó un razonamiento inductivo con enfoque cualitativo, empleando observaciones directas, revisión de formularios preimpresos y entrevistas semiestructuradas, además de validaciones mediante pruebas de caja blanca y negra, métricas ISO/IEC 9126, controles ISO/IEC 27002 y estimación de esfuerzo con el modelo COCOMO II. Como resultado, la implementación demostró un alto nivel de calidad bajo la norma ISO/IEC 9126 con una usabilidad del 95\%, garantizando la confidencialidad, integridad y disponibilidad mediante cifrado y control de accesos por roles. Se concluyó que el sistema web HelpDesk optimiza significativamente la gestión de incidencias en el área de TI, superando las limitaciones de los procesos manuales y garantizando una atención organizada, rápida y efectiva a través del incremento en la eficiencia operativa, el control centralizado de los requerimientos y una usabilidad sobresaliente para los usuarios finales.
+
+\vspace{0.8em}
+
+En esta tesis de pregrado de la Universidad Estatal Península de Santa Elena, sustentada por Figueroa Pozo (2023), titulada ``Estructura de una mesa de ayuda en el departamento de TI del Ministerio de Inclusión Económica y Social con el fin de mejorar el control de incidentes basadas en la metodología ITIL V3'', se expone como problemática que la falta de una mesa de ayuda estructurada y la presencia de un solo encargado para atender a más de 350 usuarios generaban desorden, cuellos de botella y demoras prolongadas en la atención de TI, gestionando las incidencias sin priorización clara ni seguimiento formal al carecer de un catálogo de servicios definido y del marco ITIL v3. El objetivo general fue implementar una propuesta de estructuración de la mesa de ayuda basada en las buenas prácticas de ITIL v3 para el departamento de TI del Ministerio de Inclusión Económica y Social, con el fin de optimizar el control de incidentes, reducir los tiempos de atención y mejorar la prestación del servicio. La metodología presentó un enfoque mixto (cuantitativo y cualitativo) de tipo descriptivo y no experimental, empleando encuestas dirigidas al personal administrativo para medir el nivel de satisfacción, entrevistas estructuradas al responsable de TI y observación directa para diagnosticar el flujo de atención y el volumen de incidentes bajo el marco de ITIL v3. Como resultado, se diseñó la estructura de la mesa de ayuda alineada a ITIL v3, definiendo un catálogo de servicios, flujos de atención y niveles de escalado claros; además, la propuesta demostró que, al estandarizar los procesos de recepción y priorización, se eliminan los cuellos de botella, registrando y controlando el 100\% de los incidentes y mejorando los tiempos de respuesta y la satisfacción de los usuarios. Se concluyó que la reestructuración de la mesa de ayuda bajo ITIL v3 optimiza significativamente la gestión de incidentes al estandarizar los procesos de recepción, priorización y escalado, mientras que la incorporación de un catálogo de servicios categorizado y acuerdos de nivel de servicio (SLA) mejora el tiempo de respuesta, elimina el desorden operativo y eleva la calidad percibida del servicio por parte de los usuarios institucionales.
+
+\vspace{0.8em}
+
+En esta tesis de pregrado de la Facultad de Tecnología Franca Dr. Thomaz Novelino'', sustentada por Teixeira Ferreira y Knoll Ricardo (2026), titulada HelpSynk - Sistema de gerenciamento de tickets: Solução freemium para equipes de TI com atendimento ao cliente'', se plantea como problemática que las pequeñas empresas y equipos internos de TI enfrentan serias dificultades en la gestión de solicitudes debido a la falta de herramientas centralizadas, recurriendo a canales informales (como correo electrónico o mensajería instantánea), lo que genera saturación, duplicación de requerimientos, pérdida de información y una nula trazabilidad en los costos y repuestos utilizados por sector. El objetivo general fue proyectar y desarrollar el sistema web ``HelpSynk'' para la gestión centralizada de tickets de soporte técnico en pequeñas organizaciones, optimizando el flujo de atención, reduciendo los tiempos de respuesta y permitiendo el control de costos operativos por sector. La metodología aplicó un desarrollo de software ágil e incremental, basado en elicitación de requisitos (entrevistas semiestructuradas, encuestas a usuarios finales y análisis comparativo de mercado), además de modelado de procesos en BPMN y diagramas UML (casos de uso, clases, actividades, estados y secuencia). Como resultado, se logró la implementación exitosa de la plataforma web HelpSynk, validada mediante pruebas piloto en un ambiente real con la empresa Hidromar, demostrando una reducción de hasta el 40\% en el tiempo de clasificación de solicitudes, eliminando el registro de llamadas duplicadas y ofreciendo un panel de control interactivo con exportación de reportes a Excel, detallando los costos de repuestos y servicios por atención. Se concluyó que la implementación de un sistema Help Desk propio centraliza de manera eficiente las atenciones informáticas en pequeñas y medianas organizaciones.
+
+\vspace{1.2em}
+
+\subsection{Artículos Científicos}
+
+En el artículo científico publicado por Vargas Calapucha y Romero Licuy (2026), titulado ``Sistema web de gestión de mantenimiento y baja de equipos del Instituto Superior Tecnológico Tena'', se plantea como problemática que el uso de métodos manuales, registros físicos y hojas de cálculo para la gestión de equipos tecnológicos provocaba pérdida de información, demoras en la atención de fallas y serias dificultades en la trazabilidad de los activos. El objetivo principal fue desarrollar una plataforma web para la gestión del mantenimiento y baja de equipos tecnológicos en el Instituto Superior Tecnológico Tena, permitiendo centralizar la información, automatizar procesos y generar reportes para la toma de decisiones. La metodología correspondió a una investigación aplicada con enfoque mixto, empleando el marco ágil SCRUM para el desarrollo iterativo y flexible del software web. Como resultado, se logró la construcción e implementación de la plataforma web, evidenciando una mejora significativa en la organización del mantenimiento, la seguridad de los datos y la eficiencia operativa de los servicios técnicos e institucionales. Se concluyó que el desarrollo del sistema web optimizó los recursos tecnológicos e impulsó la transformación digital del instituto, resolviendo la pérdida de información y garantizando un control eficiente del ciclo de vida de los activos.
+
+\vspace{0.8em}
+
+En el artículo científico de Gonzales Delgado (2025), titulado ``Sistema informático HelpDesk en la calidad de servicio TI de la Dirección Regional de Transportes y Comunicaciones - Tarapoto, 2025'', se analiza la problemática asociada a las limitaciones en la gestión de incidencias registradas antes de la solución (97 no resueltas y 267 horas de tiempo total de resolución), provocando que la calidad del servicio de TI se concentrara en niveles medio (58.2\%) y bajo (41.8\%). El objetivo fue determinar de qué manera el uso de un sistema informático HelpDesk mejora la calidad del servicio de TI en la Dirección Regional de Transportes y Comunicaciones de San Martín -- Tarapoto, 2025. La metodología fue de tipo aplicada con un diseño preexperimental de corte longitudinal; la población y muestra estuvo conformada por 67 usuarios del servicio de TI, empleando la encuesta y la observación mediante cuestionarios y guías de observación. Como resultado, tras implementar el sistema GLPI basado en ITIL 4, las incidencias resueltas aumentaron a 432 (+18\%), las no resueltas cayeron a 32 (-67\%) y el tiempo de resolución bajó a 178 horas (-33\%); asimismo, la calidad alta alcanzó el 52.2\% y se eliminó por completo el nivel bajo (0.0\%). Se concluyó que el uso del sistema informático HelpDesk mejora significativamente la calidad del servicio TI ($p < 0.05$) en todas sus dimensiones (fiabilidad, capacidad de respuesta, seguridad, empatía y elementos tangibles).
+
+\vspace{0.8em}
+
+En el artículo científico publicado por Arteaga y Astudillo León (2012), titulado ``Sistema de Helpdesk mediante el uso de entorno web'', se expone como problemática la falta de un canal web accesible e inmediato para el reporte de incidentes informáticos durante la jornada laboral, sumada a la ausencia de constancia formal en las solicitudes y la falta de un registro estructurado de soluciones técnicas. El objetivo general fue proporcionar un sistema web Helpdesk rápido y sencillo que permita a los empleados solicitar soporte con respaldo vía correo electrónico, consultar la base de conocimiento y calificar la atención recibida. La metodología correspondió a una investigación aplicada de nivel descriptivo, orientada al desarrollo de una plataforma web con integraciones de notificaciones por correo, bitácora de soluciones técnicas y módulos de evaluación de satisfacción. Como resultado, se implementó el sistema web permitiendo el registro centralizado de solicitudes, la emisión de respaldos por correo, la consulta eficiente de la base de conocimiento por parte de soporte y la calificación del nivel de satisfacción por los usuarios. Se concluyó que el sistema de Helpdesk optimiza la atención de incidentes informáticos, garantizando trazabilidad en los requerimientos, reduciendo tiempos mediante la bitácora de soluciones y asegurando la mejora continua del servicio.
+
+\vspace{0.8em}
+
+En el artículo científico publicado por Chávez Gomez (2023), titulado ``Implementación del Sistema de Help Desk Para la Gestión de Incidentes en la Central de Tecnologías de Información de una Entidad del Estado, 2023'', se expone como problemática la desorganización en la atención de solicitudes técnicas, los tiempos elevados de respuesta, la falta de centralización en la comunicación con soporte y las dificultades para dar cumplimiento a los Acuerdos de Nivel de Servicio (SLA). El objetivo general fue implementar un sistema de Help Desk para optimizar la gestión de incidentes, problemas y consultas de usuarios en la Central de Tecnologías de Información de una Entidad del Estado. La metodología correspondió a una investigación aplicada de diseño preexperimental basada en buenas prácticas de ITIL v4, orientada a la estandarización de flujos de trabajo de ticketing y la automatización del soporte técnico. Como resultado, se logró la estandarización de procesos, la recopilación centralizada de datos para análisis detallados, la mejora en la colaboración interna del equipo técnico y una atención más rápida de requerimientos. Se concluyó que el sistema Help Desk contribuye de manera efectiva a la gestión de incidentes, asegurando la calidad en el servicio al cliente, el cumplimiento de los SLA y la mejora continua de los servicios tecnológicos.
+
+\vspace{0.8em}
+
+En el artículo científico publicado por Loza Calderon (2024), titulado ``Revisión de un sistema web helpdesk para la gestión de incidencias de la infraestructura tecnológica en el Hotel GHL Lago Titicaca Puno 2024'', se analiza como problemática las deficiencias en el seguimiento y monitoreo de incidencias del sistema Helpdesk actual del hotel, evidenciadas por la falta de herramientas en tiempo real y la limitada accesibilidad de los usuarios a la información relevante. El objetivo general fue revisar e implementar mejoras en el sistema web Helpdesk del Hotel GHL Lago Titicaca para optimizar la gestión de incidencias tecnológicas, elevar la eficiencia operativa y mejorar la satisfacción del cliente. La metodología adoptó una investigación de enfoque sistemático y aplicado, centrada en el diagnóstico del proceso de soporte técnico, la integración de herramientas analíticas de diagnóstico en tiempo real y la evaluación periódica de los tiempos de respuesta. Como resultado, se incorporaron herramientas de monitoreo en tiempo real, reportes analíticos avanzados y herramientas de diagnóstico, logrando reducir significativamente los tiempos de respuesta/resolución e identificar patrones de fallas para una gestión preventiva. Se concluyó que la optimización del sistema web Helpdesk mejoró la operatividad del hotel y la experiencia de los huéspedes mediante una toma de decisiones más estratégica basada en datos, recomendando evaluaciones periódicas y capacitación continua del personal.
+
+\section{Justificación del Proyecto de Innovación / Mejora / Creatividad}
+
+\subsection{Justificación Legal}
+La implementación del sistema HelpDesk para la empresa J\&P Periféricos S.A.C. responde a la necesidad de adecuar las operaciones de soporte técnico al marco normativo peruano sobre gestión y protección de datos. El tratamiento de información de clientes, contactos y credenciales exige el cumplimiento estricto de la \textbf{Ley N.° 29733 (Ley de Protección de Datos Personales)} y su Reglamento (D.S. N.° 003-2013-JUS). La centralización de las incidencias en una base de datos relacional segura elimina el manejo informal de información en aplicaciones de mensajería o correos personales no auditables, reduciendo el riesgo de filtraciones o pérdidas.
+
+Asimismo, la plataforma contempla controles de acceso basados en roles (RBAC), autenticación mediante tokens JWT y registro de auditoría (\textit{logs}), alineándose con las exigencias de la \textbf{Ley N.° 30096 (Ley de Delitos Informáticos)} para prevenir accesos no autorizados, alteración de datos o fugas de información. Por último, la gestión formal de Acuerdos de Nivel de Servicio (SLA) dentro del sistema brinda soporte normativo a los contratos de atención, siguiendo los lineamientos de la norma \textbf{NTP-ISO/IEC 27001} en cuanto a trazabilidad y seguridad en la entrega de servicios de TI.
+
+\subsection{Justificación Social}
+En el ámbito organizacional, la adopción de una plataforma estructurada mejora directamente la calidad de vida laboral del equipo de soporte y fortalece la relación con los clientes. En la operatividad actual, la atención empírica genera sobrecarga de trabajo, duplicación de esfuerzos y cruces de horario en las visitas técnicas, lo que incrementa el estrés laboral y dificulta el seguimiento de las solicitudes.
+
+El sistema HelpDesk organiza y prioriza los tickets de atención, facilitando la programación transparente de visitas \textit{in-situ} y soportes remotos. Esto optimiza el uso del tiempo técnico, reduce desplazamientos innecesarios y fomenta un entorno de trabajo más equitativo y ordenado. Por su parte, las empresas cliente obtienen mayor visibilidad sobre el estado de sus requerimientos, lo que construye una relación de confianza mutua basada en la previsibilidad y la calidad del servicio.
+
+\subsection{Justificación Teórica}
+El proyecto se fundamenta en la aplicación práctica de marcos de trabajo y estándares internacionales de la Gestión de Servicios de Tecnologías de la Información (ITSM). En el plano operativo, se toman como referencia los flujos de gestión de incidentes, peticiones de servicio y activos de \textbf{ITIL v4}, transformando un proceso que se ejecutaba de forma empírica en una operación estandarizada, medible y trazable.
+
+Desde la perspectiva del desarrollo de software, la propuesta valida la implementación de una arquitectura desasociada moderna. El backend adopta el framework \textit{NestJS} basado en TypeScript con arquitectura modular e inyección de dependencias, respaldado por \textit{MySQL} para datos transaccionales, \textit{MongoDB} para el almacenamiento del historial de chats y \textit{Redis} con \textit{WebSockets} para la comunicación en tiempo real. Esta combinación demuestra teóricamente cómo el uso de arquitecturas escalables y tecnologías web consolidadas mejora la mantenibilidad, estabilidad y rendimiento del software empresarial en procesos de soporte técnico.
+
+
+\section{Marco Teórico y Conceptual}
+
+\subsection{Fundamento teórico del Proyecto de Innovación / Mejora / Creatividad}
+
+\subsubsection{Sistema Web Help-Desk Centralizado}
+\indent Un sistema web Help-Desk centralizado se define como una plataforma informática basada en tecnologías web y distribuidas, diseñada específicamente para automatizar, canalizar y gestionar de forma centralizada la atención de incidentes, solicitudes de servicio y requerimientos organizacionales (Díaz Hidalgo, 2024, pág. 9; Gonzales Delgado, 2026, pág. 12). Esta solución integra interfaces interconectadas que transforman el soporte técnico tradicional en flujos digitales estandarizados (Raya et al., 2014, pág. 18; Lira \& Lira, 2021, pág. 10).
+
+\begin{itemize}
+    \item \textbf{Arquitectura del Software y Desarrollo Web:} Analiza la adopción de infraestructuras web interconectadas bajo modelos modulares y de capas que garantizan la escalabilidad y mantenibilidad de la plataforma de soporte (Díaz Hidalgo, 2024, pág. 9). En la solución implementada para J\&P Periféricos S.A.C., el backend del Help-Desk se construyó sobre NestJS y Node.js bajo arquitectura limpia, aislando la lógica de negocio de los tickets (\texttt{@Injectable}) frente a las interfaces RESTful (\texttt{@Controller}) y los componentes de persistencia.
+    
+    \item \textbf{Seguridad de la Información y Control de Acceso en el Help-Desk:} Enmarca los fundamentos orientados a salvaguardar la confidencialidad e integridad de los datos de los usuarios y activos institucionales frente a operaciones no autorizadas (Teixeira Ferreira \& Knoll Ricardo, 2026, pág. 2). Incluye la aplicación de medidas técnicas de autenticación mediante tokens criptográficos (JWT) y control de acceso basado en roles (RBAC) para restringir los permisos entre clientes, técnicos y administradores, además de controles proactivos para mitigar vulnerabilidades durante la manipulación de tickets (Figueroa Pozo, 2023, págs. 23-24).
+    
+    \item \textbf{Automatización de Tickets y WebSockets:} Integra mecanismos de comunicación bidireccional en tiempo real sobre un único socket TCP y flujos automatizados para optimizar el registro, enrutamiento, asignación de operadores y notificación instantánea de las incidencias del Help-Desk (Díaz Hidalgo, 2024, pág. 12). Para soportar alta concurrencia de eventos en el chat y actualización de estados, la arquitectura añade Redis como corredor de mensajes (Pub/Sub) y caché en memoria.
+\end{itemize}
+
+\subsubsection{Gestión del Servicio de Soporte Técnico}
+\indent Representa el proceso operativo de negocio orientado a la optimización de los servicios de atención informática mediante marcos de trabajo estandarizados y mejores prácticas de la industria (Figueroa Santander, 2022, pág. 15).
+
+\begin{itemize}
+    \item \textbf{Gestión de Incidencias (Soporte Técnico):} Evalúa el impacto directo de la implementación de un sistema Help-Desk en la calidad del servicio técnico de TI, estructurando el ciclo de vida completo del ticket (registro, diagnóstico, escalamiento y cierre) para garantizar la trazabilidad de los requerimientos y la reducción de tiempos de inactividad (Gonzales Delgado, 2026, pág. 9). La solución digitaliza estos flujos evaluando indicadores clave de rendimiento (KPIs) como:
+    \begin{itemize}
+        \item \textit{MTTR (Mean Time to Repair):} Tiempo promedio consumido en la resolución efectiva de fallas.
+        \item \textit{MTTA (Mean Time to Acknowledge):} Tiempo medio de respuesta e inicio de atención del requerimiento.
+        \item \textit{FCR (First Contact Resolution):} Porcentaje de incidencias resueltas en la primera interacción.
+        \item \textit{CSAT (Customer Satisfaction):} Nivel cuantitativo de satisfacción manifestado por el usuario.
+    \end{itemize}
+    \item \textbf{Buenas Prácticas e ITIL v4:} Adopción de alineamientos estratégicos para co-crear valor entre la gestión de TI y las operaciones de la organización.
+\end{itemize}
+
+\subsubsection{Control de Inventario de Activos TI (ITAM)}
+\indent Describe la implementación de un sistema de control centralizado para el parque informático de las empresas clientes, permitiendo el registro auditable y trazable de los componentes de hardware y las licencias de software asignadas en cada locación externa (Chávez Cotera, 2022, pág. 18). Esta gestión centralizada garantiza el control operativo sobre el ciclo de vida de los bienes tecnológicos administrados por J\&P Periféricos S.A.C.
+
+\begin{itemize}
+    \item \textbf{Trazabilidad y Historial de Hardware y Software:} Administración continua del estado de conservación, ubicación física y asignación de equipos informáticos en las empresas clientes, permitiendo registrar de forma cronológica el historial detallado de los componentes de hardware y software que estuvieron instalados previamente en cada dispositivo, así como las modificaciones, actualizaciones y reemplazos efectuados a lo largo del tiempo.
+    
+    \item \textbf{Gestión Estructurada de Datos y Auditoría de Activos:} En el sistema web, la información asociada al inventario corporativo de los clientes y su historial de cambios se gestiona mediante modelos relacionales robustos en MySQL con el soporte de Prisma ORM, garantizando la consistencia transaccional y la trazabilidad exacta de qué recursos tecnológicos poseía un activo en un periodo determinado frente a su configuración actual.
+\end{itemize}
+
+\subsection{Conceptos y Términos utilizados}
+
+\begin{description}[font=\bfseries, style=nextline, itemsep=1.2em]
+
+    \item[Ticket]
+    Registro digital estructurado que documenta el ciclo de vida completo de un requerimiento de servicio o falla técnica dentro del sistema.
+
+    \item[API REST]
+    Interfaz de programación basada en el protocolo HTTP que permite el intercambio de datos en formato JSON entre el cliente frontend y el servidor backend.
+
+    \item[NestJS]
+    Framework progresivo de Node.js basado en TypeScript que aplica arquitectura modular, inyección de dependencias y principios SOLID para servicios escalables.
+
+    \item[Vite.js]
+    Herramienta de desarrollo y empaquetador web de alta velocidad para la construcción e interacción fluida de interfaces de usuario reactivas.
+
+    \item[MySQL]
+    Sistema de gestión de bases de datos relacional (RDBMS) utilizado para la persistencia transaccional y estructurada de los datos centrales del negocio.
+
+    \item[MongoDB]
+    Base de datos NoSQL orientada a documentos BSON/JSON utilizada para el almacenamiento flexible del historial del chat de soporte y registros transitorios.
+
+    \item[Redis]
+    Almacén de datos en memoria utilizado para la gestión de caché y mensajería en tiempo real mediante el patrón Publicador/Suscriptor (Pub/Sub).
+
+    \item[WebSockets]
+    Protocolo de comunicación bidireccional y de baja latencia sobre un único socket TCP para la transmisión de eventos en tiempo real.
+
+    \item[JWT (JSON Web Token)]
+    Estándar abierto para la transmisión segura de credenciales y autenticación basada en roles (RBAC).
+
+    \item[ORM (Object-Relational Mapping)]
+    Técnica de abstracción que mapea tablas relacionales a objetos de código, implementada mediante Prisma ORM para TypeScript.
+
+    \item[KPI (Key Performance Indicator)]
+    Métrica cuantitativa empleada para evaluar el desempeño y eficiencia de la gestión del servicio de soporte (MTTR, MTTA, FCR, CSAT).
+
+    \item[SLA (Service Level Agreement)]
+    Acuerdo de Nivel de Servicio que establece los parámetros y tiempos máximos comprometidos para la atención y resolución de requerimientos.
+
+    \item[ITIL v4]
+    Marco de referencia internacional de mejores prácticas enfocado en la Gestión de Servicios de Tecnologías de la Información (ITSM).
+
+\end{description}

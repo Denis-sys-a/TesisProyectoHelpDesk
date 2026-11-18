@@ -1,0 +1,220 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[utf8]{inputenc}
+
+% Idioma y Tipografía
+\usepackage[spanish, es-tabla]{babel}
+\usepackage{mathptmx} % Times New Roman compatible con pdfLaTeX
+
+% Márgenes Estándar APA (2.54 cm / 1 pulgada)
+\usepackage[top=2.54cm, bottom=2.54cm, left=2.54cm, right=2.54cm]{geometry}
+
+% Ruta predeterminada para las imágenes según tu carpeta "img"
+\usepackage{graphicx}
+\graphicspath{{img/}}
+
+% Interlineado Doble y Sangría
+\usepackage{setspace}
+\doublespacing
+\usepackage{indentfirst}
+\setlength{\parindent}{1.27cm}
+
+% Paquetes auxiliares de formato y tablas
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{placeins}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hanging}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{array}
+
+% Eliminación total de subrayados, bordes y ajuste de color en URLs y enlaces
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    pdfborder={0 0 0} % Garantiza cero bordes o líneas en enlaces
+}
+
+% Divisibilidad de URLs largas sin desbordar margen (Overfull \hbox)
+\expandafter\def\csname url@samestyle\endcsname{%
+  \dimen@\f@size\pt@
+  \expandafter\def\csname UrlFont\endcsname{\small\rmfamily}%
+}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds\do\/\do\-\do\.\do\=\do\?\do\&\do\_\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z}
+\makeatother
+
+% Formato de Títulos de Capítulos y Secciones según APA 7.ª Edición
+\titleformat{\chapter}[display]
+  {\normalfont\large\bfseries\centering}
+  {\chaptertitlename\ \Roman{chapter}}
+  {0.5em}
+  {\large\bfseries\centering}
+\titlespacing*{\chapter}{0pt}{-20pt}{18pt}
+
+\titleformat{\section}
+  {\normalfont\bfseries\raggedright}
+  {\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+\titleformat{\subsection}
+  {\normalfont\bfseries\itshape\raggedright}
+  {\thesubsection.}{0.5em}{} 
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\raggedright}
+  {\thesubsubsection.}{0.5em}{} 
+\titlespacing*{\subsubsection}{0pt}{12pt}{6pt}
+
+% Formato de Captions y Figuras APA 7
+\DeclareCaptionFormat{apaFormat}{#1#2\\[0.1cm]\textit{#3}}
+\captionsetup[figure]{format=apaFormat, labelsep=space, justification=raggedright, singlelinecheck=false, skip=3pt, belowskip=0pt}
+\captionsetup[table]{format=apaFormat, labelsep=space, justification=raggedright, singlelinecheck=false, skip=3pt, belowskip=0pt}
+
+% Numeración continua de figuras y tablas (sin el prefijo del capítulo)
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% ----------------------------------------------------
+% CONFIGURACIÓN DE NIVELES DE NUMERACIÓN E ÍNDICE
+% ----------------------------------------------------
+\setcounter{secnumdepth}{3} % Numera hasta \subsubsection (e.g., 2.5.1.1)
+\setcounter{tocdepth}{3}    % Muestra hasta \subsubsection en el Índice General
+
+% ----------------------------------------------------
+% CONFIGURACIÓN DEL ÍNDICE (TOC) - OPCIÓN [titles] FORZADA
+% ----------------------------------------------------
+\usepackage[titles]{tocloft}
+
+% Reescritura estricta para babel en español
+\addto\captionsspanish{%
+  \renewcommand{\contentsname}{ÍNDICE GENERAL}%
+  \renewcommand{\listfigurename}{ÍNDICE DE FIGURAS}%
+  \renewcommand{\listtablename}{ÍNDICE DE TABLAS}%
+}
+
+% Relleno de puntos para todos los niveles
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+
+% Formato de Capítulos en el TOC
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\setlength{\cftchapindent}{0pt}
+\setlength{\cftchapnumwidth}{0.75cm}
+\renewcommand{\cftchappresnum}{}
+\renewcommand{\cftchapaftersnum}{}
+
+% Formato, alineación y sangrías de Secciones, Subsecciones y Subsubsecciones
+\renewcommand{\cftsecfont}{\bfseries}
+\renewcommand{\cftsecpagefont}{\bfseries}
+\setlength{\cftsecindent}{1.27cm}
+\setlength{\cftsecnumwidth}{1.0cm}
+
+\renewcommand{\cftsubsecfont}{\bfseries\itshape}
+\renewcommand{\cftsubsecpagefont}{\normalfont}
+\setlength{\cftsubsecindent}{1.8cm}
+\setlength{\cftsubsecnumwidth}{1.2cm}
+
+\renewcommand{\cftsubsubsecfont}{\normalfont}
+\renewcommand{\cftsubsubsecpagefont}{\normalfont}
+\setlength{\cftsubsubsecindent}{2.5cm}
+\setlength{\cftsubsubsecnumwidth}{1.5cm}
+
+% Agregar punto final a los números en el TOC
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
+
+\begin{document}
+
+% ----------------------------------------------------
+% 1. PORTADA / CARÁTULA (Sin número impreso)
+% ----------------------------------------------------
+\pagenumbering{gobble}
+\input{Estructura/caratula}
+\cleardoublepage
+
+% ----------------------------------------------------
+% 2. NUMERACIÓN ARÁBIGA CONTINUA
+% ----------------------------------------------------
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\input{Estructura/agradecimiento}
+\cleardoublepage
+
+\input{Estructura/dedicatoria}
+\cleardoublepage
+
+\input{Estructura/resumen}
+\cleardoublepage
+
+% ----------------------------------------------------
+% 3. ÍNDICES AUTOMÁTICOS / PRELIMINARES
+% ----------------------------------------------------
+\tableofcontents % ÍNDICE GENERAL
+\cleardoublepage
+
+\listoffigures % ÍNDICE DE FIGURAS
+\cleardoublepage
+
+\listoftables % ÍNDICE DE TABLAS
+\cleardoublepage
+
+% Página independiente para ÍNDICE DE ANEXOS
+\chapter*{\centering ÍNDICE DE ANEXOS}
+\addcontentsline{toc}{chapter}{ÍNDICE DE ANEXOS}
+
+\vspace{0.4em}
+\noindent Anexo 1: Lista de Problemas Pareto \dotfill 54 \\
+\noindent Anexo 2: Tabla de Frecuencia y Distribución de Pareto \dotfill 54 \\
+\noindent Anexo 3: Diagrama de Pareto \dotfill 55
+
+\cleardoublepage
+
+% ----------------------------------------------------
+% 4. INTRODUCCIÓN Y CUERPO PRINCIPAL
+% ----------------------------------------------------
+\input{Estructura/introduccion}
+\cleardoublepage
+
+\input{Estructura/capitulo1}
+\cleardoublepage
+
+\input{Estructura/capitulo2}
+\cleardoublepage
+
+\input{Estructura/capitulo3}
+\cleardoublepage
+
+\input{Estructura/capitulo4}
+\cleardoublepage
+
+\input{Estructura/capitulo5}
+\cleardoublepage
+
+\input{Estructura/capitulo6}
+\cleardoublepage
+
+% ----------------------------------------------------
+% 5. SECCIONES FINALES
+% ----------------------------------------------------
+\input{Estructura/referencias}
+\cleardoublepage
+
+\input{Estructura/anexos}
+
+\end{document}

@@ -1,0 +1,248 @@
+\chapter[CAPÍTULO III]{ANÁLISIS DE LA SITUACIÓN ACTUAL}
+
+\section{Diagrama del Proceso, Mapa de Flujo de Valor y/o Diagrama de Operación actual}
+
+\subsection{Proceso actual de la Empresa - sin la intervención del Software}
+El proceso operativo para la atención de requerimientos de soporte técnico, mantenimiento y gestión de inventario en J\&P Periféricos S.A.C. se ejecuta actualmente mediante un flujo empírico y no estandarizado, caracterizado por la dependencia de canales de comunicación informales y registros manuales en hojas de cálculo.
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Diagrama de Proceso actual}
+    \label{fig:diagrama_proceso_actual}
+    \vspace{0.4em}
+    
+    \includegraphics[width=\textwidth]{img/diagrama-proceso-sin-sistema.png}
+    
+    \vspace{0.4em}
+    {\small \textit{Nota.} Representación BPMN del flujo manual de atención y control de inventario antes de la intervención del software.}
+\end{figure}
+
+\section{Efecto del Problema en el área del trabajo o en los resultados de la Empresa}
+
+La ausencia de un sistema centralizado de gestión de atenciones técnicas e inventario informático en J\&P Periféricos S.A.C. genera efectos negativos directos que impactan tanto la productividad interna del Área de Soporte Técnico como la satisfacción final de los clientes corporativos.
+Para evaluar el impacto de estos efectos en el área de trabajo, se resumen los principales indicadores afectados en la siguiente tabla.
+
+\begin{table}[H]
+\small
+\renewcommand{\arraystretch}{1.2}
+\centering
+\caption{Identificación de las Causas del Problema Principal en el Área de Trabajo}
+\label{tab:causas_problema}
+\vspace{0.4em}
+
+\begin{tabularx}{\linewidth}{c X}
+\hline
+\textbf{N° KPI} & \textbf{IDENTIFICACIÓN DE LAS CAUSAS} \\
+\hline
+CA1 & a) Recepción y comunicación canalizada por medios informales (WhatsApp y llamadas sin trazabilidad) que genera retrasos operativos. \\
+\hline
+CA2 & b) Uso de archivos de Excel manuales y desactualizados junto a la inexistencia de una base de datos centralizada de equipos y expedientes técnicos. \\
+\hline
+CA3 & c) Planificación manual y desordenada de visitas técnicas in-situ que genera cruce de agendas y descoordinación. \\
+\hline
+CA4 & d) Ausencia de seguimiento digital sobre los niveles de servicio y deficiente control en el cumplimiento de los contratos (SLA). \\
+\hline
+CA5 & e) Ausencia de un flujo estandarizado para la asignación, seguimiento y escalamiento oportuno de los tickets a nivel técnico. \\
+\hline
+CA6 & f) Carencia de tableros analíticos y métricas operativas (MTTR, MTTA, FCR y satisfacción del cliente) para evaluar el desempeño técnico. \\
+\hline
+\end{tabularx}
+
+\vspace{0.3em}
+\raggedright
+{\small \textit{Nota.} Síntesis de las causas operativas identificadas en el diagnóstico del problema principal.}
+\end{table}
+
+\newpage
+
+\section{Análisis de la causa raíz que genera el Problema}
+Con la finalidad de identificar las causas fundamentales que originan la desorganización y la falta de trazabilidad en las atenciones técnicas de J\&P Periféricos S.A.C., se aplicó la técnica del Diagrama de Causa-Efecto (Diagrama de Ishikawa). 
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Diagrama de Causa-Efecto (Ishikawa) del Problema Principal}
+    \label{fig:diagrama_ishikawa}
+    \vspace{0.4em}
+    
+    \includegraphics[width=1\textwidth]{img/diagrama_ishikawa.png}
+    
+    \vspace{0.4em}
+    {\small \textit{Nota.} Representación gráfica de las causas raíz agrupadas por categorías de análisis.}
+\end{figure}
+
+\newpage
+
+\section{Priorización de causa Raíz}
+\subsection{Lista de causas encuestadas}
+Para evaluar la percepción del personal técnico y operativo respecto al impacto de cada causa raíz identificada, se aplicó un instrumento de encuesta evaluado mediante una escala Likert modificada (4: Muy Crítico / Muy Malo, 3: Crítico / Malo, 2: Regular / Leve, 1: Aceptable / Deficiente) sobre una población de 15 evaluadores.
+
+\begin{table}[H]
+\footnotesize
+\renewcommand{\arraystretch}{1.1}
+\centering
+\caption{Resultados de la Encuesta de Valoración de Causas Raíz}
+\label{tab:encuesta_causas}
+\vspace{0.4em}
+
+\begin{tabularx}{\linewidth}{c X *{4}{>{\centering\arraybackslash}p{0.6cm}} >{\centering\arraybackslash}p{1.2cm}}
+\hline
+\textbf{N°} & \textbf{Identificación de las causas} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{Total Puntaje} \\
+\hline
+CA1 & Búsqueda manual de datos de equipos en archivos Excel desactualizados. & 3 & 7 & 4 & 2 & 43 \\
+\hline
+CA2 & Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro. & 3 & 5 & 5 & 2 & 39 \\
+\hline
+CA3 & Descoordinación y reubicación de horarios por cruces en visitas in-situ. & 2 & 5 & 7 & 2 & 39 \\
+\hline
+CA4 & Retraso en el escalamiento e identificación del historial de tickets previos. & 2 & 8 & 2 & 1 & 37 \\
+\hline
+CA5 & Verificación manual de términos y límites de servicio en contratos (SLA). & 2 & 3 & 7 & 3 & 34 \\
+\hline
+CA6 & Elaboración manual de reportes e informes de rendimiento de fin de mes. & 1 & 3 & 6 & 4 & 29 \\
+\hline
+CA7 & Carencia de indicadores de rendimiento (KPIs) para evaluar el tiempo de respuesta. & 3 & 2 & 2 & 1 & 23 \\
+\hline
+\multicolumn{6}{r}{\textbf{Total General:}} & \textbf{244} \\
+\hline
+\end{tabularx}
+
+\vspace{0.3em}
+\raggedright
+{\small \textit{Nota.} Resultados consolidados de las encuestas aplicadas al personal de soporte técnico.}
+\end{table}
+
+\subsection{Diagrama de Pareto en función al grado de las causas principales}
+De acuerdo con la valoración obtenida en las encuestas, se procesaron los datos para construir la distribución acumulada bajo el principio de Pareto (80/20), identificando el grado de incidencia de las causas principales que generan la problemática en el área de soporte técnico de J\&P Periféricos S.A.C. Asimismo, se incluye el esquema de priorización de causa raíz que ilustra de manera directa el impacto de las variables críticas sobre el proceso operativo.
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Diagrama de Pareto por Fenómenos}
+    \label{fig:diagrama_pareto_por_fenomeno}
+    \vspace{0.4em}
+    
+    \includegraphics[width=0.95\textwidth]{img/diagrama_pareto_por_fenomeno.png}
+    
+    \vspace{0.4em}
+    {\small \textit{Nota.} Representación gráfica de la distribución acumulada de causas encuestadas en el servicio de soporte técnico.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \captionsetup{justification=centering}
+    \caption{Diagrama de Priorizacion de Causa Raíz}
+    \label{fig:diagrama_problema}
+    \vspace{0.4em}
+    
+    \includegraphics[width=0.95\textwidth]{img/diagrama_problema.png}
+    
+    \vspace{0.4em}
+    {\small \textit{Nota.} Esquema de impacto directo de las causas priorizadas sobre la organizacion y trazabilidad.}
+\end{figure}
+
+\subsection{Análisis cualitativo y cuantitativo}
+
+\subsubsection{Causa 1: Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro}
+\noindent \textbf{Análisis cualitativo:} La atención de incidentes mediante mensajes de WhatsApp y llamadas telefónicas directas impide registrar de forma oficial el requerimiento, provocando que las solicitudes queden traspapeladas o dispersas en los dispositivos móviles del personal. Esto genera confusión sobre qué técnico atendió a cada cliente, duplicidad en la comunicación y falta de seguimiento formal, ocasionando demoras considerables en el inicio de la atención y una constante pérdida de la trazabilidad operativa.	\\
+
+\noindent \textbf{Análisis cuantitativo:} 
+Durante el período de mayo a septiembre de 2026 se registraron 149 solicitudes gestionadas de manera informal, lo que representa un promedio mensual del 38\% del total de atenciones. Cada atención informal genera un tiempo improductivo promedio de 30 minutos por la falta de unificación de canales. Considerando una plantilla de 3 técnicos operativos con un costo hora-hombre valorizado en S/. 25.00, las horas perdidas acumuladas ascienden a aproximadamente 74.5 horas por semestralidad, lo que se traduce en una \textbf{pérdida económica operativa estimada de S/. 1,862.50 semestrales} solo por ineficiencia en la recepción de solicitudes.
+
+\begin{table}[H]
+\small
+\renewcommand{\arraystretch}{1.15}
+\centering
+\caption{Análisis cuantitativo y económico de solicitudes por canales informales (Causa 1)}
+\label{tab:cuantitativo_causa1}
+\vspace{0.4em}
+
+\begin{tabularx}{\linewidth}{X >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{2.2cm}}
+\hline
+\textbf{Mes} & \textbf{Solicitudes informales} & \textbf{Total atenciones} & \textbf{Porcentaje} & \textbf{Pérdida estimada (S/.)} \\
+\hline
+May-26 & 26 & 70 & 37\% & S/. 325.00 \\
+Jun-26 & 32 & 85 & 38\% & S/. 400.00 \\
+Jul-26 & 37 & 95 & 39\% & S/. 462.50 \\
+Aug-26 & 24 & 65 & 37\% & S/. 300.00 \\
+Sep-26 & 30 & 80 & 38\% & S/. 375.00 \\
+\hline
+\textbf{Total} & \textbf{149} & \textbf{395} & \textbf{38\% (Prom.)} & \textbf{S/. 1,862.50} \\
+\hline
+\end{tabularx}
+
+\vspace{0.3em}
+\raggedright
+{\small \textit{Nota.} Consolidado mensual de incidencia e impacto económico por canales informales.}
+\end{table}
+
+\vspace{0.4cm}
+
+\subsubsection{Causa 2: Búsqueda manual de datos de equipos en archivos Excel desactualizados}
+\noindent \textbf{Análisis cualitativo:} El inventario de activos TI y el historial de mantenimiento de los equipos de cómputo por cliente se administran mediante hojas de cálculo en Excel. Al no estar centralizada ni integrada con las solicitudes de atención, los técnicos deben realizar búsquedas manuales de especificaciones, garantías y mantenimientos previos antes o durante cada atención. Esto genera pérdida de tiempo operativo, errores en los diagnósticos y riesgo constante de trabajar con información obsoleta o duplicada. \\
+
+\noindent \textbf{Análisis cuantitativo:} 
+Se identificaron 103 atenciones con retrasos significativos debido a la búsqueda manual de expedientes en hojas de Excel (26\% del total). Con un tiempo de paralización estimado en 25 minutos por incidencia y un costo operativo de S/. 25.00 por hora-hombre, este cuello de botella genera una \textbf{pérdida económica acumulada de S/. 1,072.90} en el período de análisis, debido al tiempo hombre invertido en la localización manual de historiales técnicos.
+
+\begin{table}[H]
+\small
+\renewcommand{\arraystretch}{1.15}
+\centering
+\caption{Análisis cuantitativo y económico por búsqueda manual de activos (Causa 2)}
+\label{tab:cuantitativo_causa2}
+\vspace{0.4em}
+
+\begin{tabularx}{\linewidth}{X >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{2.2cm}}
+\hline
+\textbf{Mes} & \textbf{Atenciones con demora} & \textbf{Total atenciones} & \textbf{Porcentaje} & \textbf{Pérdida estimada (S/.)} \\
+\hline
+May-26 & 18 & 70 & 26\% & S/. 187.50 \\
+Jun-26 & 22 & 85 & 26\% & S/. 229.20 \\
+Jul-26 & 26 & 95 & 27\% & S/. 270.80 \\
+Aug-26 & 16 & 65 & 25\% & S/. 166.70 \\
+Sep-26 & 21 & 80 & 26\% & S/. 218.70 \\
+\hline
+\textbf{Total} & \textbf{103} & \textbf{395} & \textbf{26\% (Prom.)} & \textbf{S/. 1,072.90} \\
+\hline
+\end{tabularx}
+
+\vspace{0.3em}
+\raggedright
+{\small \textit{Nota.} Registro mensual del impacto operativo y económico por la falta de inventario centralizado.}
+\end{table}
+
+\vspace{0.4cm}
+
+\subsubsection{Causa 3: Descoordinación y reubicación de horarios por cruces en visitas in-situ}
+\noindent \textbf{Análisis cualitativo:} La programación de visitas presenciales y soporte técnico in-situ en las sedes de los clientes se gestiona de manera manual y sin un calendario centralizado de disponibilidad técnica. Esto provoca cruces de agenda entre los técnicos asignados, reprogramaciones de última hora, tiempos muertos por traslados no optimizados y descoordinación con los horarios de atención de los clientes, lo que afecta la puntualidad y genera insatisfacción en el servicio. \\
+
+\noindent \textbf{Análisis cuantitativo:} 
+Durante el período evaluado se registraron 81 visitas presenciales afectadas por reprogramaciones y cruces de agenda (20\% del total). Cada cruce y reprogramación genera un tiempo muerto promedio de 20 minutos de coordinación y retraso en ruta. Valorizando el impacto del tiempo técnico y el consumo operativo adicional en traslados ineficientes, se genera una \textbf{pérdida económica de S/. 675.00} en el semestre.
+
+\begin{table}[H]
+\small
+\renewcommand{\arraystretch}{1.15}
+\centering
+\caption{Análisis cuantitativo y económico de visitas in-situ con reprogramación (Causa 3)}
+\label{tab:cuantitativo_causa3}
+\vspace{0.4em}
+
+\begin{tabularx}{\linewidth}{X >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{2.8cm} >{\centering\arraybackslash}p{1.8cm} >{\centering\arraybackslash}p{2.2cm}}
+\hline
+\textbf{Mes} & \textbf{Visitas con cruce de agenda} & \textbf{Total atenciones} & \textbf{Porcentaje} & \textbf{Pérdida estimada (S/.)} \\
+\hline
+May-26 & 14 & 70 & 20\% & S/. 116.70 \\
+Jun-26 & 18 & 85 & 21\% & S/. 150.00 \\
+Jul-26 & 21 & 95 & 22\% & S/. 175.00 \\
+Aug-26 & 12 & 65 & 18\% & S/. 100.00 \\
+Sep-26 & 16 & 80 & 20\% & S/. 133.30 \\
+\hline
+\textbf{Total} & \textbf{81} & \textbf{395} & \textbf{20\% (Prom.)} & \textbf{S/. 675.00} \\
+\hline
+\end{tabularx}
+
+\vspace{0.3em}
+\raggedright
+{\small \textit{Nota.} Distribución mensual de incidencias y pérdida económica por descoordinación en agenda presencial.}
+\end{table}
