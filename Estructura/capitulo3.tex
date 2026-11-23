@@ -35,24 +35,27 @@ Para evaluar el impacto de estos efectos en el área de trabajo, se resumen los 
 \hline
 \textbf{N° KPI} & \textbf{IDENTIFICACIÓN DE LAS CAUSAS} \\
 \hline
-CA1 & a) Recepción y comunicación canalizada por medios informales (WhatsApp y llamadas sin trazabilidad) que genera retrasos operativos. \\
+CA1 & Búsqueda manual de datos de equipos en archivos Excel desactualizados. \\
 \hline
-CA2 & b) Uso de archivos de Excel manuales y desactualizados junto a la inexistencia de una base de datos centralizada de equipos y expedientes técnicos. \\
+CA2 & Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro. \\
 \hline
-CA3 & c) Planificación manual y desordenada de visitas técnicas in-situ que genera cruce de agendas y descoordinación. \\
+CA3 & Descoordinación y reubicación de horarios por cruces en visitas in-situ. \\
 \hline
-CA4 & d) Ausencia de seguimiento digital sobre los niveles de servicio y deficiente control en el cumplimiento de los contratos (SLA). \\
+CA4 & Retraso en el escalamiento e identificación del historial de tickets previos. \\
 \hline
-CA5 & e) Ausencia de un flujo estandarizado para la asignación, seguimiento y escalamiento oportuno de los tickets a nivel técnico. \\
+CA5 & Verificación manual de términos y límites de servicio en contratos (SLA). \\
 \hline
-CA6 & f) Carencia de tableros analíticos y métricas operativas (MTTR, MTTA, FCR y satisfacción del cliente) para evaluar el desempeño técnico. \\
+CA6 & Elaboración manual de reportes e informes de rendimiento de fin de mes. \\
+\hline
+CA7 & Carencia de indicadores de rendimiento (KPIs) para evaluar el tiempo de respuesta. \\
 \hline
 \end{tabularx}
 
 \vspace{0.3em}
 \raggedright
-{\small \textit{Nota.} Síntesis de las causas operativas identificadas en el diagnóstico del problema principal.}
+{\small \textit{Nota.} Síntesis de las causas operativas identificadas en el diagnóstico del problema principal. Codificación idéntica a la encuesta de priorización (CA1–CA7).}
 \end{table}
+
 
 \newpage
 
@@ -71,6 +74,21 @@ Con la finalidad de identificar las causas fundamentales que originan la desorga
     \vspace{0.4em}
     {\small \textit{Nota.} Representación gráfica de las causas raíz agrupadas por categorías de análisis.}
 \end{figure}
+
+La estructura de causa-efecto se organiza bajo las seis ramas clásicas del Diagrama de Ishikawa (6M), mapeando explícitamente los códigos CA1–CA7 de la Lista Maestra de Causas:
+
+\begin{itemize}[leftmargin=1.27cm]
+    \item \textbf{Métodos (procesos y procedimientos):} CA2 (recepción informal sin protocolo estandarizado), CA3 (programación empírica de visitas in-situ), CA4 (escalamiento sin flujo estandarizado) y CA5 (verificación manual de SLA).
+    \item \textbf{Mano de Obra (personal y coordinación):} CA3 (coordinación manual de agendas técnicas) y CA4 (identificación manual del historial de tickets).
+    \item \textbf{Maquinaria/Tecnología (sistemas y herramientas):} CA1 (inventario en Excel sin base de datos), CA2 (ausencia de plataforma web centralizada) y CA7 (ausencia de tableros y métricas).
+    \item \textbf{Materiales/Información (datos y registros):} CA1 (datos de equipos en archivos dispersos), CA4 (historial de tickets no centralizado) y CA6 (reportes elaborados manualmente).
+    \item \textbf{Medio Ambiente (entorno organizacional y de servicio):} CA2 (entorno de atención por mensajería informal) y CA3 (entorno de visitas in-situ en sedes de clientes).
+    \item \textbf{Medición (métricas e indicadores):} CA5 (control manual de SLA), CA6 (reportes de fin de mes manuales) y CA7 (carencia de KPIs de tiempo de respuesta).
+\end{itemize}
+
+\vspace{0.4em}
+{\small \textit{Nota.} El diagrama de causa-efecto (img/diagrama\_ishikawa.png) debe reflejar visualmente esta misma agrupación por ramas 6M y los códigos CA1–CA7.}
+
 
 \newpage
 
@@ -144,7 +162,7 @@ De acuerdo con la valoración obtenida en las encuestas, se procesaron los datos
 
 \subsection{Análisis cualitativo y cuantitativo}
 
-\subsubsection{Causa 1: Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro}
+\subsubsection{Causa CA2: Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro}
 \noindent \textbf{Análisis cualitativo:} La atención de incidentes mediante mensajes de WhatsApp y llamadas telefónicas directas impide registrar de forma oficial el requerimiento, provocando que las solicitudes queden traspapeladas o dispersas en los dispositivos móviles del personal. Esto genera confusión sobre qué técnico atendió a cada cliente, duplicidad en la comunicación y falta de seguimiento formal, ocasionando demoras considerables en el inicio de la atención y una constante pérdida de la trazabilidad operativa.	\\
 
 \noindent \textbf{Análisis cuantitativo:} 
@@ -179,7 +197,7 @@ Sep-26 & 30 & 80 & 38\% & S/. 375.00 \\
 
 \vspace{0.4cm}
 
-\subsubsection{Causa 2: Búsqueda manual de datos de equipos en archivos Excel desactualizados}
+\subsubsection{Causa CA1: Búsqueda manual de datos de equipos en archivos Excel desactualizados}
 \noindent \textbf{Análisis cualitativo:} El inventario de activos TI y el historial de mantenimiento de los equipos de cómputo por cliente se administran mediante hojas de cálculo en Excel. Al no estar centralizada ni integrada con las solicitudes de atención, los técnicos deben realizar búsquedas manuales de especificaciones, garantías y mantenimientos previos antes o durante cada atención. Esto genera pérdida de tiempo operativo, errores en los diagnósticos y riesgo constante de trabajar con información obsoleta o duplicada. \\
 
 \noindent \textbf{Análisis cuantitativo:} 
@@ -214,7 +232,7 @@ Sep-26 & 21 & 80 & 26\% & S/. 218.70 \\
 
 \vspace{0.4cm}
 
-\subsubsection{Causa 3: Descoordinación y reubicación de horarios por cruces en visitas in-situ}
+\subsubsection{Causa CA3: Descoordinación y reubicación de horarios por cruces en visitas in-situ}
 \noindent \textbf{Análisis cualitativo:} La programación de visitas presenciales y soporte técnico in-situ en las sedes de los clientes se gestiona de manera manual y sin un calendario centralizado de disponibilidad técnica. Esto provoca cruces de agenda entre los técnicos asignados, reprogramaciones de última hora, tiempos muertos por traslados no optimizados y descoordinación con los horarios de atención de los clientes, lo que afecta la puntualidad y genera insatisfacción en el servicio. \\
 
 \noindent \textbf{Análisis cuantitativo:} 

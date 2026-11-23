@@ -1,0 +1,11 @@
+# 2024-chavez-inventario-web
+
+- **URL de consulta:** No disponible en el extracto adjunto (PDF: "Chávez Palomino, Alfredo Manuel (2024).pdf"). Repositorio/institución: Universidad Nacional del Callao (UNAC), Facultad de Ingeniería Industrial y de Sistemas, Escuela Profesional de Ingeniería de Sistemas, Callao, Perú. ORCID autor: 0009-0008-5652-6649.
+- **Ámbito:** Nacional (Perú).
+- **Autor(es) y año:** Chávez Palomino, Alfredo Manuel (2024).
+- **Título:** Implementación de un sistema web y el control de inventario en una empresa de Lima, 2023.
+- **Institución / Repositorio:** Universidad Nacional del Callao (UNAC). Asesor: Mg. Oswaldo Daniel Casazola Cruz. Aprobado: 06 de enero de 2024. Callao, Perú.
+- **Justificación de inclusión:** Aporta evidencia cuantitativa (23,48 % de mejora en control de inventario, 21,65 % en exactitud y 25,32 % en identificación de rotación, con impacto estadísticamente significativo) sobre la mejora de la exactitud y trazabilidad del inventario mediante un sistema web frente a procesos manuales, respaldando la variable de control de inventario de activos TI. Diferencia frente a la presente investigación: inventario comercial de productos de seguridad industrial (rotación/exactitud de stock); no aborda gestión de incidencias de soporte técnico ni trazabilidad de activos TI (hardware/software) asignados a empresas clientes externas.
+- **Metodología y muestra:** Cuantitativo, aplicativo, diseño preexperimental. Muestra: 26 productos de seguridad industrial. Recopilación de datos: técnica de fichaje. Sistema desarrollado con patrón MVC, PHP y MySQL; gestión del proyecto con Scrum; integración de Looker Studio para reportes.
+- **Resultados estadísticos clave:** +23,48 % en control de inventario; +21,65 % en exactitud del inventario; +25,32 % en identificación de la rotación de inventario.
+- **Texto integrado en LaTeX:** Insertado en `Estructura/capitulo2.tex`, `\subsection{Antecedentes Nacionales}`, antes de `\subsection{Antecedentes Internacionales}`.
