@@ -5,7 +5,7 @@
 Este capítulo presenta la estrategia de implementación del sistema web help-desk y control de activos TI, formalizada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}). Para ejecutar la mejora de forma ordenada, el plan se organiza bajo dos enfoques complementarios:
 
 \begin{itemize}
-    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Next.js; \textit{Backend} en NestJS con Prisma ORM y MySQL).
+    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM y MySQL).
     \item \textbf{Analítica y métricas (CRISP-DM):} Estructura el procesamiento del historial de incidencias, activos y auditoría para alimentar los tableros y KPIs gerenciales.
 \end{itemize}
 
@@ -82,17 +82,17 @@ Los requerimientos funcionales especifican las operaciones, interacciones y regl
 \multicolumn{4}{@{}p{\textwidth}}{\small \textit{Nota.} Detalle completo de los requerimientos funcionales del sistema web help-desk.} \\
 \endlastfoot
 
-RF-001 & Gestión de Usuarios y Autenticación & Registro, inicio de sesión con tokens JWT sin estado, cifrado Bcrypt, roles y control de sesiones concurrentes (\textit{soft\_locks}). & ADMIN, SOPORTE, CLIENTE \\
+RF-001 & Gestión de Usuarios y Autenticación & Registro, inicio de sesión con tokens JWT sin estado, cifrado Bcrypt, roles y control de sesiones concurrentes (\textit{soft\_locks}). & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU, CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL, CLIENTE\_TRABAJADOR \\
 RF-002 & Gestión Organizativa y Planes & Registro y administración de clientes vinculados a un plan de soporte (costo, vigencia y límite de equipos). & ADMINISTRADOR \\
-RF-003 & Gestión de Sucursales y Áreas & Administración de sedes físicas y departamentos operativos internos para la ubicación de activos y personal. & ADMIN, CLIENTE \\
+RF-003 & Gestión de Sucursales y Áreas & Administración de sedes físicas y departamentos operativos internos para la ubicación de activos y personal. & ADMINISTRADOR, CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL \\
 RF-004 & Cobertura Geográfica de Técnicos & Asociación mediante tabla pivote (\texttt{tecnicos\_zonas}) de técnicos de campo autorizados por zona geográfica. & ADMINISTRADOR \\
-RF-005 & Ciclo de Vida de Tickets & Reporte de incidencias vinculadas a equipos con generación de PIN y gestión de su máquina de estados. & CLIENTE, SOPORTE \\
-RF-006 & Parque Informático de Equipos & Registro de equipos de cómputo (Desktop, Laptop) con estado operativo y vinculación al responsable. & ADMIN, SOPORTE \\
-RF-007 & Inventario de Hardware & Gestión maestro de componentes físicos, repuestos y su hoja de vida histórica (\texttt{registro\_hardware}). & ADMIN, SOPORTE \\
-RF-008 & Gestión de Software y Licencias & Control de catálogo global de software, licencias, claves maestras y acoplamiento por endpoint. & ADMIN, SOPORTE \\
-RF-009 & Agendamiento de Visitas In-Situ & Programación de citas de soporte presencial vinculando ticket, técnico, sucursal y control anti-cruces. & SOPORTE \\
+RF-005 & Ciclo de Vida de Tickets & Reporte de incidencias vinculadas a equipos con generación de PIN y gestión de su máquina de estados. & CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL, CLIENTE\_TRABAJADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RF-006 & Parque Informático de Equipos & Registro de equipos de cómputo (Desktop, Laptop) con estado operativo y vinculación al responsable. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RF-007 & Inventario de Hardware & Gestión maestro de componentes físicos, repuestos y su hoja de vida histórica (\texttt{registro\_hardware}). & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RF-008 & Gestión de Software y Licencias & Control de catálogo global de software, licencias, claves maestras y acoplamiento por endpoint. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RF-009 & Agendamiento de Visitas In-Situ & Programación de citas de soporte presencial vinculando ticket, técnico, sucursal y control anti-cruces. & SOPORTE\_TECNICO, SOPORTE\_INSITU \\
 RF-010 & Auditoría de Eventos Críticos & Registro histórico detallado de cambios sobre tickets y citas utilizando metadatos estructurados JSON. & ADMINISTRADOR \\
-RF-011 & Dashboards e Indicadores & Generación de reportes analíticos de volumen de tickets, tiempos de atención y cumplimiento de SLA. & ADMIN, SOPORTE \\
+RF-011 & Dashboards e Indicadores & Generación de reportes analíticos de volumen de tickets, tiempos de atención y cumplimiento de SLA. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
 \end{longtable}
 \endgroup
 
@@ -125,11 +125,11 @@ Los requerimientos no funcionales definen los atributos de calidad del sistema, 
 
 RNF-001 & Comunicación en Tiempo Real & Transmisión bidireccional y de baja latencia para notificaciones y estados de tickets mediante WebSockets. & Todos los roles \\
 RNF-002 & Seguridad e Integridad & Autenticación segura mediante JWT sin estado, Bcrypt y control de acceso basado en roles (RBAC). & Todos los roles \\
-RNF-003 & Persistencia y Escalabilidad & Uso de base de datos relacional MySQL con Prisma ORM y soporte para metadatos JSON dinámicos. & ADMIN, SOPORTE \\
-RNF-004 & Rendimiento en Búsquedas & Procesamiento de consultas masivas de inventario y reportes de dashboard en menos de 3 segundos. & ADMIN, SOPORTE \\
+RNF-003 & Persistencia y Escalabilidad & Uso de base de datos relacional MySQL con Prisma ORM y soporte para metadatos JSON dinámicos. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RNF-004 & Rendimiento en Búsquedas & Procesamiento de consultas masivas de inventario y reportes de dashboard en menos de 3 segundos. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
 RNF-005 & Disponibilidad y Concurrencia & Garantizar 99.8\% de disponibilidad para acceso simultáneo apoyado en bloqueos temporales (\textit{soft\_locks}). & Todos los roles \\
-RNF-006 & Arquitectura Limpia & Backend estructurado en NestJS bajo Arquitectura Hexagonal y principios SOLID para alta mantenibilidad. & ADMIN, SOPORTE \\
-RNF-007 & Trazabilidad y Auditoría & Registro automatizado de eventos críticos e historiales en tablas de auditoría y hojas de vida. & ADMIN, SOPORTE \\
+RNF-006 & Arquitectura Limpia & Backend estructurado en NestJS bajo Arquitectura Hexagonal y principios SOLID para alta mantenibilidad. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RNF-007 & Trazabilidad y Auditoría & Registro automatizado de eventos críticos e historiales en tablas de auditoría y hojas de vida. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
 RNF-008 & Compatibilidad Responsive & Interfaz frontend adaptable a distintos dispositivos y navegadores web modernos (Chrome, Edge, Firefox). & Todos los roles \\
 \end{longtable}
 \endgroup
@@ -400,7 +400,7 @@ Como evidencia de esta fase avanzada, se adjuntan el tablero de Jira, el gráfic
 \end{figure}
 
 \subsubsection{Fase 4: Frontend e Interfaces de Usuario (Sprint 5)}
-Se enfoca en la implementación del diseño responsivo y la construcción de las pantallas de interacción mediante Next.js y componentes estilizados, estructurando paneles modulares por roles cuyas actividades se reflejan en la Tabla \ref{tab:fase4}.
+Se enfoca en la implementación del diseño responsivo y la construcción de las pantallas de interacción mediante Vite + React y componentes estilizados, estructurando paneles modulares por roles cuyas actividades se reflejan en la Tabla \ref{tab:fase4}.
 
 \begingroup
 \small
@@ -423,7 +423,7 @@ Se enfoca en la implementación del diseño responsivo y la construcción de las
 \endfoot
 
 \bottomrule
-\multicolumn{3}{@{}p{\textwidth}}{\small \textit{Nota.} Tareas de diseño y desarrollo frontend con Next.js y componentes UI.} \\
+\multicolumn{3}{@{}p{\textwidth}}{\small \textit{Nota.} Tareas de diseño y desarrollo frontend con Vite + React y componentes UI.} \\
 \endlastfoot
 
 TR20 - Configuración UI & Configuración de estructura modular frontend, Tailwind y componentes UI. & 4 días \\
@@ -444,7 +444,7 @@ Como evidencia del desarrollo frontend, se presentan el tablero, el gráfico de 
 \vspace{0.2em}
 \includegraphics[width=0.92\textwidth]{tablero_sprint_5.png}
 \\[0.2em]
-{\small \textit{Nota.} Registro de tareas y componentes visuales desarrollados con Next.js y \textit{shadcn/ui}.}
+{\small \textit{Nota.} Registro de tareas y componentes visuales desarrollados con Vite + React y \textit{shadcn/ui}.}
 \end{figure}
 
 \begin{figure}[H]
@@ -591,7 +591,7 @@ Para garantizar el correcto desarrollo, despliegue y funcionamiento del sistema 
 \begin{itemize}
 \item \textbf{Entorno Backend y Lenguaje:} Node.js como motor de ejecución y TypeScript como lenguaje tipado para el desarrollo de la API.
 \item \textbf{Framework de Arquitectura:} NestJS estructurado bajo un enfoque modular y principios de código limpio.
-\item \textbf{Entorno Frontend:} Next.js con Arquitectura Modular Basada en Roles para interfaces responsivas y dinámicas.
+\item \textbf{Entorno Frontend:} Vite + React con Arquitectura Modular Basada en Roles para interfaces responsivas y dinámicas.
 \item \textbf{Gestión de Bases de Datos:} MySQL para datos transaccionales mediante Prisma ORM, y MongoDB para el almacenamiento no relacional del historial de auditoría e interacciones.
 \item \textbf{Control de Versiones y Documentación:} Git para la trazabilidad del código fuente y Swagger UI para la documentación interactiva de los endpoints.
 \end{itemize}
@@ -699,7 +699,7 @@ La ejecución del proyecto se proyecta en un período estructurado conforme al a
 \begin{enumerate}
 \item \textbf{Sprint 1:} Análisis de requerimientos y diseño de arquitectura base (Prisma, entidades y roles).
 \item \textbf{Sprint 2:} Desarrollo del backend, conexiones a base de datos, lógica de negocio, motor de autoasignación por zona y carga, y seguridad JWT.
-\item \textbf{Sprint 3:} Desarrollo del frontend (Next.js), interfaces de usuario y paneles de control con arquitectura modular por roles, tableros Kanban y gestión de citas con \textit{SoftLock}.
+\item \textbf{Sprint 3:} Desarrollo del frontend (Vite + React), interfaces de usuario y paneles de control con arquitectura modular por roles, tableros Kanban y gestión de citas con \textit{SoftLock}.
 \item \textbf{Sprint 4:} Pruebas de integración, validación de flujos de derivación, corrección de errores y despliegue final en producción.
 \end{enumerate}
 
