@@ -1,0 +1,11 @@
+# 2023-torres-helpdesk-incidencias
+
+- **URL de consulta:** Registro ALICIA: https://alicia.concytec.gob.pe/vufind/Record/UWIE_9e1c6d1aebdc76d3c53270c607f88b9c/Details. 
+- **Ámbito:** Nacional (Perú).
+- **Autor(es) y año:** Torres Hernández, Roger (2023). ORCID: 0009-0002-6785-5081.
+- **Título:** Sistema web para mejorar la gestión de incidencias del área de TI en una empresa privada, Lima 2023.
+- **Institución / Repositorio:** Universidad Privada Norbert Wiener, Facultad de Ingeniería y Negocios, Escuela Académico Profesional de Ingenierías. Tesis para optar el título profesional de Ingeniero de Sistemas e Informática. Asesor: Dr. Iparraguirre Villanueva, Orlando (ORCID: 0000-0001-8185-2034). Lima, Perú, 2023.
+- **Justificación de inclusión:** Respaldan la variable de gestión del servicio de soporte técnico (gestión de incidencias, trazabilidad y priorización) con evidencia cuantitativa (Z=-4,804; sig.=0,000) en una empresa privada de Lima. Limitación: no aborda control de inventario de activos TI ni atención a empresas clientes externas; alcance: soporte técnico interno de una empresa del rubro pesca.
+- **Metodología y muestra:** Cuantitativo, tipología aplicada, diseño preexperimental. Muestra: 60 registros de atención de incidencias (n=30 antes y n=30 después), seleccionados de manera aleatoria. Técnica: observación. Instrumentos validados por jueces. Variables: porcentaje de atención de incidencias cerradas, categorizadas y priorizadas, e incidencias reabiertas. Prueba de normalidad: Shapiro-Wilk; prueba inferencial: rangos de Wilcoxon.
+- **Resultados estadísticos clave:** Diferencias significativas en el porcentaje de atención de incidencias cerradas, categorizadas y priorizadas, e incidencias reabiertas (Z=-4,804; sig.=0,000). Anexos técnicos desarrollados en PHP/Laravel. Limitaciones: estudio realizado entre mayo y agosto de 2023 (tres meses) en una empresa del rubro pesca de Lima Metropolitana; información recabada vía WhatsApp y Zoom; costo del programador S/. 1.600.
+- **Texto integrado en LaTeX:** Insertado en `Estructura/capitulo2.tex`, `\subsection{Antecedentes Nacionales}`.
