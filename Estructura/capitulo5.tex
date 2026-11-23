@@ -30,7 +30,7 @@ Este rubro reúne los servicios digitales, infraestructura en la nube y herramie
 \multicolumn{5}{@{}p{\textwidth}}{\small \textit{Nota.} Detalle de los servicios digitales y de infraestructura requeridos para la puesta en marcha y despliegue del sistema web. Los importes en dólares se calcularon a partir de los costos en soles, utilizando un tipo de cambio referencial de S/ 3.42 por dólar estadounidense.} \\
 \endlastfoot
 
-Base de datos Cloud & EE. UU. & Supabase (DBHelpdesk) & S/ 84.33 & \$ 24.66 \\
+Base de datos Cloud & EE. UU. & MySQL / MongoDB / Redis (Cloud) & S/ 84.33 & \$ 24.66 \\
 Hosting / Servidor Local & Perú & Servidor Interno J\&P & S/ 0.00 & \$ 0.00 \\
 Dominio Web (Anual) & Perú & helpdesksoporte.pe & S/ 110.00 & \$ 32.17 \\
 Certificado SSL (HTTPS) & EE. UU. & Let's Encrypt (Free) & S/ 0.00 & \$ 0.00 \\
@@ -38,7 +38,7 @@ Certificado SSL (HTTPS) & EE. UU. & Let's Encrypt (Free) & S/ 0.00 & \$ 0.00 \\
 \end{longtable}
 \endgroup
 
-Los servicios digitales considerados comprenden la base de datos en la nube (\textit{Supabase}), el servidor de alojamiento (\textit{hosting}) para el despliegue del backend y frontend, y el registro del dominio web institucional, garantizando la disponibilidad y seguridad de la plataforma para los usuarios y técnicos de J\&P Periféricos S.A.C.
+Los servicios digitales considerados comprenden la base de datos en la nube (MySQL / MongoDB / Redis), el servidor de alojamiento (\textit{hosting}) para el despliegue del backend y frontend, y el registro del dominio web institucional, garantizando la disponibilidad y seguridad de la plataforma para los usuarios y técnicos de J\&P Periféricos S.A.C.
 
 \section{Costo de Mano de Obra}
 
@@ -331,7 +331,7 @@ De acuerdo con los cálculos anteriores, la depreciación acumulada de las tres 
 
 \subsection{El Costo de Licencia de Software y Depreciación}
 
-Además de las computadoras principales utilizadas por los desarrolladores, se consideran recursos de licenciamiento de software indispensables y equipamiento complementario de soporte. A continuación, la \textbf{Tabla 22} detalla los importes correspondientes a la licencia de SQL Server, las impresoras o ticketeras y la depreciación proporcional de las computadoras adicionales de soporte empleadas durante el proyecto.
+Además de las computadoras principales utilizadas por los desarrolladores, se consideran recursos de licenciamiento de software indispensables y equipamiento complementario de soporte. A continuación, la \textbf{Tabla 22} detalla los importes correspondientes a las impresoras o ticketeras y la depreciación proporcional de las computadoras adicionales de soporte empleadas durante el proyecto.
 
 \vspace{0.3cm}
 
@@ -359,12 +359,11 @@ Además de las computadoras principales utilizadas por los desarrolladores, se c
 \multicolumn{5}{@{}p{\textwidth}}{\small \textit{Nota.} Importes de licenciamiento y equipamiento complementario. Conversión a dólares utilizando un tipo de cambio referencial de S/ 3.42.} \\
 \endlastfoot
 
-SQL Server & 1 & S/ 150.00 & S/ 150.00 & \$ 43.86 \\
 Impresora / Ticketera & 2 & S/ 140.00 & S/ 280.00 & \$ 81.87 \\
 Depreciación PC adicional 1 & 2 & S/ 395.83 & S/ 791.66 & \$ 231.48 \\
 Depreciación PC adicional 2 & 3 & S/ 450.00 & S/ 1,350.00 & \$ 394.74 \\
 Depreciación PC adicional 3 & 3 & S/ 410.00 & S/ 1,230.00 & \$ 359.65 \\
-\textbf{Total} & & & \textbf{S/ 3,801.66} & \textbf{\$ 1,111.60} \\
+\textbf{Total} & & & \textbf{S/ 3,651.66} & \textbf{\$ 1,067.72} \\
 \end{longtable}
 \endgroup
 
@@ -476,10 +475,10 @@ A continuación se consolidan todos los rubros en el presupuesto general de la i
 
 Costo de materiales y servicios digitales & 194.33 & 56.83 \\
 Costo de mano de obra & 13,410.00 & 3,921.05 \\
-Costo de máquinas, herramientas y equipos & 4,081.66 & 1,193.47 \\
+Costo de máquinas, herramientas y equipos & 3,931.66 & 1,149.61 \\
 Otros costos de operación y conectividad & 718.20 & 210.00 \\
-\textbf{Total general de implementación} & \textbf{18,413.19} & \textbf{5,383.97} \\
+\textbf{Total general de implementación} & \textbf{18,254.19} & \textbf{5,337.48} \\
 \end{longtable}
 \endgroup
 
-La inversión estimada para implementar el sistema asciende a \textbf{S/ 18,404.19}, equivalente a US\$ 5,381.34.
+La inversión estimada para implementar el sistema asciende a \textbf{S/ 18,254.19}, equivalente a US\$ 5,337.48.
