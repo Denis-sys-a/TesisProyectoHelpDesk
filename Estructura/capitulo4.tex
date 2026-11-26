@@ -5,7 +5,7 @@
 Este capítulo presenta la estrategia de implementación del sistema web help-desk y control de activos TI, formalizada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}). Para ejecutar la mejora de forma ordenada, el plan se organiza bajo dos enfoques complementarios:
 
 \begin{itemize}
-    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM y MySQL).
+    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM, MySQL y MongoDB/Redis según el módulo y requerimiento).
     \item \textbf{Analítica y métricas (CRISP-DM):} Estructura el procesamiento del historial de incidencias, activos y auditoría para alimentar los tableros y KPIs gerenciales.
 \end{itemize}
 
@@ -48,14 +48,16 @@ Implementada para el control visual del flujo operativo de atención de tickets 
 \subsection{Requerimientos del Sistema}
 Para el correcto funcionamiento del sistema web help-desk, se han definido y clasificado los requerimientos funcionales y no funcionales que guiarán el desarrollo de la arquitectura y la base de datos.
 
+Para delimitar el alcance operativo y el control de acceso (\textit{RBAC}) de la plataforma, el sistema contempla seis roles principales: \textbf{Administrador} (gestión global de clientes, planes, zonas, catálogos, usuarios, auditoría y reportes), \textbf{Soporte técnico} (atención remota de tickets, gestión de inventario/licencias y derivación a campo), \textbf{Soporte in-situ} (atención presencial en sedes, actualización de hoja de vida de equipos y registro de visitas), \textbf{Cliente empresa} (supervisión de su organización, sedes y reportes corporativos), \textbf{Cliente sucursal} (administración operativa de su sede y áreas asignadas) y \textbf{Cliente trabajador} (registro y seguimiento de incidencias vinculadas a sus equipos).
+
 \subsubsection{Requerimientos Funcionales}
 Los requerimientos funcionales especifican las operaciones, interacciones y reglas de negocio que el software debe ejecutar de manera obligatoria para satisfacer las necesidades de los usuarios (administradores, personal técnico y clientes), cuyo detalle operativo se presenta en la Tabla \ref{tab:req_funcionales}.
 
 \begingroup
 \footnotesize
-\renewcommand{\arraystretch}{1.2}
-\begin{longtable}{@{} p{1.8cm} p{3.2cm} p{7.0cm} p{3.2cm} @{}}
-\caption{{Requerimientos Funcionales del Sistema}} \label{tab:req_funcionales} \\
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{1.6cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{6.5cm} >{\raggedright\arraybackslash}p{3.8cm} @{}}
+\caption{Requerimientos Funcionales del Sistema} \label{tab:req_funcionales} \\
 \toprule
 \textbf{Cod. Req.} & \textbf{Nombre} & \textbf{Descripción} & \textbf{Rol} \\
 \midrule
@@ -72,20 +74,20 @@ Los requerimientos funcionales especifican las operaciones, interacciones y regl
 \endfoot
 
 \bottomrule
-\multicolumn{4}{@{}p{\textwidth}}{\small \textit{Nota.} Detalle completo de los requerimientos funcionales del sistema web help-desk.} \\
+\multicolumn{4}{@{}p{\dimexpr1.6cm+2.9cm+6.5cm+3.8cm+6\tabcolsep\relax}}{\small \textit{Nota.} Detalle completo de los requerimientos funcionales del sistema web help-desk.} \\
 \endlastfoot
 
-RF-001 & Gestión de Usuarios y Autenticación & Registro, inicio de sesión con tokens JWT sin estado, cifrado Bcrypt, roles y control de sesiones concurrentes (\textit{soft\_locks}). & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU, CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL, CLIENTE\_TRABAJADOR \\
-RF-002 & Gestión Organizativa y Planes & Registro y administración de clientes vinculados a un plan de soporte (costo, vigencia y límite de equipos). & ADMINISTRADOR \\
-RF-003 & Gestión de Sucursales y Áreas & Administración de sedes físicas y departamentos operativos internos para la ubicación de activos y personal. & ADMINISTRADOR, CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL \\
-RF-004 & Cobertura Geográfica de Técnicos & Asociación mediante tabla pivote (\texttt{tecnicos\_zonas}) de técnicos de campo autorizados por zona geográfica. & ADMINISTRADOR \\
-RF-005 & Ciclo de Vida de Tickets & Reporte de incidencias vinculadas a equipos con generación de PIN y gestión de su máquina de estados. & CLIENTE\_EMPRESA, CLIENTE\_SUCURSAL, CLIENTE\_TRABAJADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RF-006 & Parque Informático de Equipos & Registro de equipos de cómputo (Desktop, Laptop) con estado operativo y vinculación al responsable. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RF-007 & Inventario de Hardware & Gestión maestro de componentes físicos, repuestos y su hoja de vida histórica (\texttt{registro\_hardware}). & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RF-008 & Gestión de Software y Licencias & Control de catálogo global de software, licencias, claves maestras y acoplamiento por endpoint. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RF-009 & Agendamiento de Visitas In-Situ & Programación de citas de soporte presencial vinculando ticket, técnico, sucursal y control anti-cruces. & SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RF-010 & Auditoría de Eventos Críticos & Registro histórico detallado de cambios sobre tickets y citas utilizando metadatos estructurados JSON. & ADMINISTRADOR \\
-RF-011 & Dashboards e Indicadores & Generación de reportes analíticos de volumen de tickets, tiempos de atención y cumplimiento de SLA. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RF-001 & Gestión de Usuarios y Autenticación & Registro, inicio de sesión con tokens JWT sin estado, cifrado Bcrypt, roles y control de sesiones concurrentes (\textit{soft\_locks}). & Todos los roles \\
+RF-002 & Gestión Organizativa y Planes & Registro y administración de clientes vinculados a un plan de soporte (costo, vigencia y límite de equipos). & Administrador \\
+RF-003 & Gestión de Sucursales y Áreas & Administración de sedes físicas y departamentos operativos internos para la ubicación de activos y personal. & Administrador, Cliente empresa, Cliente sucursal \\
+RF-004 & Cobertura Geográfica de Técnicos & Asociación mediante tabla pivote (\texttt{tecnicos\_zonas}) de técnicos de campo autorizados por zona geográfica. & Administrador \\
+RF-005 & Ciclo de Vida de Tickets & Reporte de incidencias vinculadas a equipos con generación de PIN y gestión de su máquina de estados. & Cliente empresa, Cliente sucursal, Cliente trabajador, Soporte técnico, Soporte in-situ \\
+RF-006 & Parque Informático de Equipos & Registro de equipos de cómputo (Desktop, Laptop) con estado operativo y vinculación al responsable. & Administrador, Soporte técnico, Soporte in-situ \\
+RF-007 & Inventario de Hardware & Gestión maestro de componentes físicos, repuestos y su hoja de vida histórica (\texttt{registro\_hardware}). & Administrador, Soporte técnico, Soporte in-situ \\
+RF-008 & Gestión de Software y Licencias & Control de catálogo global de software, licencias, claves maestras y acoplamiento por endpoint. & Administrador, Soporte técnico, Soporte in-situ \\
+RF-009 & Agendamiento de Visitas In-Situ & Programación de citas de soporte presencial vinculando ticket, técnico, sucursal y control anti-cruces. & Soporte técnico, Soporte in-situ \\
+RF-010 & Auditoría de Eventos Críticos & Registro histórico detallado de cambios sobre tickets y citas utilizando metadatos estructurados. & Administrador \\
+RF-011 & Dashboards e Indicadores & Generación de reportes analíticos de volumen de tickets, tiempos de atención y cumplimiento de SLA. & Administrador, Soporte técnico, Soporte in-situ \\
 \end{longtable}
 \endgroup
 
@@ -94,9 +96,9 @@ Los requerimientos no funcionales definen los atributos de calidad del sistema, 
 
 \begingroup
 \footnotesize
-\renewcommand{\arraystretch}{1.2}
-\begin{longtable}{@{} p{1.8cm} p{3.2cm} p{7.0cm} p{3.2cm} @{}}
-\caption{{Requerimientos No Funcionales del Sistema}} \label{tab:req_nofuncionales} \\
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{1.6cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{6.5cm} >{\raggedright\arraybackslash}p{3.8cm} @{}}
+\caption{Requerimientos No Funcionales del Sistema} \label{tab:req_nofuncionales} \\
 \toprule
 \textbf{Cod. Req.} & \textbf{Nombre} & \textbf{Descripción} & \textbf{Rol} \\
 \midrule
@@ -113,16 +115,16 @@ Los requerimientos no funcionales definen los atributos de calidad del sistema, 
 \endfoot
 
 \bottomrule
-\multicolumn{4}{@{}p{\textwidth}}{\small \textit{Nota.} Especificaciones de calidad y rendimiento técnico del sistema.} \\
+\multicolumn{4}{@{}p{\dimexpr1.6cm+2.9cm+6.5cm+3.8cm+6\tabcolsep\relax}}{\small \textit{Nota.} Especificaciones de calidad y rendimiento técnico del sistema.} \\
 \endlastfoot
 
 RNF-001 & Comunicación en Tiempo Real & Transmisión bidireccional y de baja latencia para notificaciones y estados de tickets mediante WebSockets. & Todos los roles \\
 RNF-002 & Seguridad e Integridad & Autenticación segura mediante JWT sin estado, Bcrypt y control de acceso basado en roles (RBAC). & Todos los roles \\
-RNF-003 & Persistencia y Escalabilidad & Uso de base de datos relacional MySQL con Prisma ORM y soporte para metadatos JSON dinámicos. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RNF-004 & Rendimiento en Búsquedas & Procesamiento de consultas masivas de inventario y reportes de dashboard en menos de 3 segundos. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RNF-003 & Persistencia y Escalabilidad & Persistencia relacional en MySQL con Prisma ORM para datos operativos, complementada con MongoDB y Redis para historial/caché. & Administrador, Soporte técnico, Soporte in-situ \\
+RNF-004 & Rendimiento en Búsquedas & Procesamiento de consultas masivas de inventario y reportes de dashboard en menos de 3 segundos. & Administrador, Soporte técnico, Soporte in-situ \\
 RNF-005 & Disponibilidad y Concurrencia & Garantizar 99.8\% de disponibilidad para acceso simultáneo apoyado en bloqueos temporales (\textit{soft\_locks}). & Todos los roles \\
-RNF-006 & Arquitectura Limpia & Backend estructurado en NestJS bajo Arquitectura Hexagonal y principios SOLID para alta mantenibilidad. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
-RNF-007 & Trazabilidad y Auditoría & Registro automatizado de eventos críticos e historiales en tablas de auditoría y hojas de vida. & ADMINISTRADOR, SOPORTE\_TECNICO, SOPORTE\_INSITU \\
+RNF-006 & Arquitectura Limpia & Backend estructurado en NestJS bajo Arquitectura Hexagonal y principios SOLID para alta mantenibilidad. & Administrador, Soporte técnico, Soporte in-situ \\
+RNF-007 & Trazabilidad y Auditoría & Registro automatizado de eventos críticos e historiales en tablas de auditoría y hojas de vida. & Administrador, Soporte técnico, Soporte in-situ \\
 RNF-008 & Compatibilidad Responsive & Interfaz frontend adaptable a distintos dispositivos y navegadores web modernos (Chrome, Edge, Firefox). & Todos los roles \\
 \end{longtable}
 \endgroup
@@ -131,19 +133,19 @@ RNF-008 & Compatibilidad Responsive & Interfaz frontend adaptable a distintos di
 El desarrollo e implementación de la mejora en J\&P Periféricos S.A.C. se estructura cronológicamente en iteraciones cortas agrupadas en fases técnicas, permitiendo asegurar entregas incrementales y controladas de la solución.
 
 \subsubsection{Fase 1: Análisis y Modelado (Sprints 0 - 1)}
-Esta fase inicial comprende la recopilación de especificaciones, el diseño conceptual de la arquitectura de datos, el modelado de procesos y la definición formal de los diagramas UML, cuyas actividades y plazos se detallan en la Tabla \ref{tab:fase1}.
+Esta fase inicial comprende la recopilación de especificaciones, el diseño conceptual de la arquitectura de datos, el modelado de procesos y la definición formal de los diagramas UML, cuyas actividades y plazos se detallan en la Tabla \ref{tab:sprint0} y la Tabla \ref{tab:sprint1}.
 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
-\caption{{Fase 1: Análisis y Modelado (Sprints 0 - 1)}} \label{tab:fase1} \\
+\caption{{Sprint 0: Análisis y Modelado (Sprint 0)}} \label{tab:sprint0} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
 \endfirsthead
 
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:fase1}} \textit{(Continuación)}} \\[0.4em]
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint0}} \textit{(Continuación)}} \\[0.4em]
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
@@ -162,25 +164,21 @@ TR01 - Alcance y Problemática & Definición del alcance del proyecto y problem�
 TR02 - Modelado de Negocio & Modelado del flujo de negocio y matriz de permisos por rol. & 5 días \\
 TR03 - Requisitos & Redacción de especificación de Requisitos Funcionales y No Funcionales. & 5 días \\
 TR04 - EDT / WBS & Construcción de la Estructura Desglosada de Trabajo y línea base. & 4 días \\
-TR05 - Análisis Hoja de Vida & Análisis de requerimientos para el módulo de Hoja de Vida de Equipos. & 4 días \\
-TR06 - Matriz CRUD & Elaboración de matriz CRUD de accesos y permisos por rol. & 4 días \\
-TR07 - Diagramas UML & Diseño de diagramas UML y especificaciones de Casos de Uso. & 6 días \\
-TR08 - Esquema Relacional & Creación del esquema relacional y enums en \texttt{schema.prisma}. & 4 días \\
-\textbf{Total Fase 1} & & \textbf{50 días} \\
+\textbf{Total Sprint 0} & & \textbf{32 días} \\
 \end{longtable}
 \endgroup
 
-Como evidencia del cumplimiento de esta fase inicial, a continuación se presentan los tableros de gestión, los gráficos de seguimiento (\textit{burndown charts}) y el diseño del esquema de base de datos (tarea TR08):
+El seguimiento de tareas y avance de horas del Sprint 0 se documenta en los tableros y métricas de gestión correspondientes.
 
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Tablero de Jira - Sprint 0 }
+\caption{Tablero de Jira - Sprint 0}
 \label{fig:evidencia_sprint_0}
 \vspace{0.2em}
 \includegraphics[width=0.92\textwidth]{tablero_sprint_0.png}
 \\[0.2em]
-{\small \textit{Nota.} Vista general del tablero de tareas correspondiente al análisis, modelado de negocio y arquitectura base}
+{\small \textit{Nota.} Vista general del tablero de tareas correspondiente al análisis, modelado de negocio y arquitectura base.}
 \end{figure}
 
 \begin{figure}[H]
@@ -194,6 +192,108 @@ Como evidencia del cumplimiento de esta fase inicial, a continuación se present
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 0.}
 \end{figure}
 
+La tarea \textbf{TR00} articula la planificación transversal del proyecto, las ceremonias de seguimiento y la formalización inicial respaldada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}), mientras que los entregables de \textbf{TR01}, \textbf{TR02} y \textbf{TR04} consolidan el alcance, los permisos por rol y la línea base de trabajo. Por su parte, la tarea \textbf{TR03} (especificación de Requerimientos Funcionales y No Funcionales) se encuentra desarrollada en detalle en la \textbf{Tabla \ref{tab:req_funcionales}} y la \textbf{Tabla \ref{tab:req_nofuncionales}}.
+
+Las tareas \textbf{TR01}, \textbf{TR02} y \textbf{TR04} consolidan el alcance, los permisos por rol y la línea base de entregables del proyecto.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Síntesis del Alcance y Problemática de Trazabilidad TI (TR01)}
+\label{tab:evidencia_tr01}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{11.2cm} @{}}
+\toprule
+\textbf{Componente} & \textbf{Definición Establecida} \\
+\midrule
+Problemática central & Atención dispersa por canales informales (WhatsApp, llamadas, hojas sueltas), falta de historial centralizado por equipo y desorden en visitas presenciales. \\
+Alcance funcional & Gestión de usuarios y roles (RBAC), clientes/sucursales/áreas, tickets con PIN, inventario ITAM (hardware, software y licencias), citas \textit{in-situ}, chat/notificaciones en tiempo real y reportes. \\
+Fuera de alcance inicial & Integraciones contables externas no contempladas en la versión base y aplicaciones móviles nativas separadas del portal web responsivo. \\
+\bottomrule
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia. Evidencia documental resumida de la delimitación de alcance y diagnóstico inicial del Sprint 0.}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Matriz de Alcance y Permisos por Rol del Sistema (TR02)}
+\label{tab:evidencia_tr02}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{6.6cm} >{\raggedright\arraybackslash}p{4.8cm} @{}}
+\toprule
+\textbf{Rol} & \textbf{Funciones Principales} & \textbf{Alcance de Datos} \\
+\midrule
+Administrador & Gestiona clientes, planes SLA, zonas, catálogos, usuarios, auditoría y reportes. & Global en todo el sistema. \\
+Soporte técnico & Atiende tickets de forma remota, gestiona inventario/licencias y deriva visitas. & Tickets asignados, zonas/activos habilitados y reportes operativos. \\
+Soporte in-situ & Ejecuta visitas presenciales, actualiza hoja de vida y registra repuestos/informes. & Citas asignadas, sedes de su zona y activos intervenidos. \\
+Cliente empresa & Supervisa su organización, sedes, equipos y métricas contractuales. & Restringido a su empresa y sucursales. \\
+Cliente sucursal & Administra operaciones, áreas y activos de su sede e incidencias locales. & Restringido a su sucursal. \\
+Cliente trabajador & Registra incidencias de sus equipos, consulta estado con PIN y usa el chat. & Restringido a sus equipos y propios tickets. \\
+\bottomrule
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia. Estructura de perfiles y niveles de acceso definida durante el modelado de negocio del Sprint 0.}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Estructura Desglosada de Trabajo y Línea Base del Proyecto (TR04)}
+\label{tab:evidencia_tr04}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{1.6cm} >{\raggedright\arraybackslash}p{5.0cm} >{\raggedright\arraybackslash}p{8.2cm} @{}}
+\toprule
+\textbf{Código} & \textbf{Paquete de Trabajo} & \textbf{Entregable de Línea Base} \\
+\midrule
+1.0 & Análisis y modelado & Alcance, problemática, flujos, permisos, RF/RNF, EDT/WBS, casos de uso UML y \texttt{schema.prisma}. \\
+2.0 & Backend core & Arquitectura NestJS/Prisma, JWT/RBAC, usuarios, zonas, auditoría, clientes, sucursales, SLA, ITAM y base de tickets. \\
+3.0 & Backend avanzado & Motor de citas \textit{in-situ} con control anti-cruces, WebSockets, Redis y endpoints de dashboard. \\
+4.0 & Frontend UI & Interfaz en React/Vite y Tailwind/\textit{shadcn/ui} para login, jerarquía organizacional, ITAM, tickets, chat y dashboard. \\
+5.0 & Calidad y despliegue & Documentación Swagger, pruebas unitarias con Jest, exportación PDF y despliegue en producción. \\
+\bottomrule
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia. Descomposición de entregables y línea base de trabajo establecida en el Sprint 0.}
+\end{table}
+
+\vspace{0.3cm}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\caption{{Sprint 1: Análisis Detallado y Configuración Inicial Backend (Sprint 1)}} \label{tab:sprint1} \\
+\toprule
+\textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
+\midrule
+\endfirsthead
+
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint1}} \textit{(Continuación)}} \\[0.4em]
+\toprule
+\textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{3}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
+\bottomrule
+\multicolumn{3}{@{}p{\textwidth}}{\small \textit{Nota.} Cronograma y entregables detallados del sprint.} \\
+\endlastfoot
+
+TR05 - Análisis Hoja de Vida & Análisis de requerimientos para el módulo de Hoja de Vida de Equipos. & 4 días \\
+TR06 - Matriz CRUD & Elaboración de matriz CRUD de accesos y permisos por rol. & 4 días \\
+TR07 - Diagramas UML & Diseño de diagramas UML y especificaciones de Casos de Uso. & 6 días \\
+TR08 - Esquema Relacional & Creación del esquema relacional y enums en \texttt{schema.prisma}. & 4 días \\
+\textbf{Total Sprint 1} & & \textbf{18 días} \\
+\end{longtable}
+\endgroup
+
+El avance y seguimiento del Sprint 1 se respaldan en su tablero y gráfico \textit{burndown}.
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
@@ -202,7 +302,7 @@ Como evidencia del cumplimiento de esta fase inicial, a continuación se present
 \vspace{0.2em}
 \includegraphics[width=0.92\textwidth]{tablero_sprint_1.png}
 \\[0.2em]
-{\small \textit{Nota.} Vista general del tablero de tareas correspondiente al análisis detallado, diagramas UML y configuración inicial Backend}
+{\small \textit{Nota.} Vista general del tablero de tareas correspondiente al análisis detallado, diagramas UML y configuración inicial Backend.}
 \end{figure}
 
 \begin{figure}[H]
@@ -216,31 +316,132 @@ Como evidencia del cumplimiento de esta fase inicial, a continuación se present
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 1.}
 \end{figure}
 
+Las tareas \textbf{TR05} y \textbf{TR06} definen la estructura funcional de la hoja de vida y la matriz CRUD por perfil.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Especificación de Análisis del Módulo de Hoja de Vida de Equipos (TR05)}
+\label{tab:evidencia_tr05}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{11.2cm} @{}}
+\toprule
+\textbf{Aspecto Analizado} & \textbf{Definición del Módulo} \\
+\midrule
+Identificación y ubicación & Código/serie del activo, tipo de equipo (Desktop, Laptop, etc.), estado operativo y vinculación con empresa, sucursal, área y usuario asignado. \\
+Historial de hardware & Registro cronológico de componentes físicos instalados, reemplazados o retirados (discos, memorias, periféricos) y repuestos utilizados en campo. \\
+Software y licencias asociadas & Control de aplicaciones instaladas, licencias asignadas y claves vinculadas al equipo para mantener trazabilidad de uso. \\
+Historial de incidencias y visitas & Consulta centralizada de tickets reportados sobre el equipo, atenciones remotas, visitas \textit{in-situ} realizadas y observaciones técnicas. \\
+Visibilidad por rol (RBAC) & Restricción de consulta según perfil: acceso amplio para soporte y administración, y acotado a su sede o equipo asignado para usuarios cliente. \\
+\bottomrule
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia. Síntesis del análisis funcional y de trazabilidad para la hoja de vida de equipos en el Sprint 1.}
+\end{table}
+
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\caption{Matriz CRUD Resumida de Accesos por Rol (TR06)}
+\label{tab:evidencia_tr06}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{4.6cm} @{}}
+\toprule
+\textbf{Módulo del Sistema} & \textbf{Admin.} & \textbf{Soporte Téc.} & \textbf{Soporte In-Situ} & \textbf{Clientes (Emp. / Suc. / Trab.)} \\
+\midrule
+Usuarios y zonas & C, L, A, E & L & L & Sin acceso (o consulta acotada) \\
+Clientes, sedes y planes & C, L, A, E & L & L & Emp. / Suc.: L / A (su alcance) \\
+Equipos, hardware y licencias & C, L, A, E & C, L, A & L, A (en campo) & Emp. / Suc.: L; Trab.: L (su equipo) \\
+Tickets y citas \textit{in-situ} & C, L, A, E & C, L, A & L, A (visitas) & Trab.: C, L; Emp. / Suc.: L (su alcance) \\
+Auditoría y reportes & L & L & L & Emp. / Suc.: L (su alcance) \\
+\bottomrule
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia. \textbf{C} = Crear, \textbf{L} = Leer, \textbf{A} = Actualizar, \textbf{E} = Eliminar. Permisos sujetos al alcance organizacional o de zona de cada rol.}
+\end{table}
+
+La evidencia de \textbf{TR07} reúne los diagramas de secuencia UML de diagnóstico y asignación automática, mientras que \textbf{TR08} detalla el modelo entidad-relación en Prisma.
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Esquema Relacional implementado en \texttt{schema.prisma}}
-\label{fig:evidencia_schema_prisma}
+\caption{Diagrama de Secuencia UML - CU-SR-01: Diagnóstico y Evaluación de Derivación (TR07)}
+\label{fig:evidencia_tr07_diagnostico}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{schema_prisma.png}
+\includegraphics[width=0.95\textwidth]{cu_sr_01_diagnostico.png}
 \\[0.2em]
-{\small \textit{Nota.} Definición de modelos, entidades y enumeraciones relacionales en el archivo de configuración de Prisma.}
+{\small \textit{Nota.} Elaboración propia. Modelado de interacción del soporte remoto para consulta de hoja de vida, atención vía chat y derivación a campo.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Diagrama de Secuencia UML - CU-SR-02: Asignación Automática de Soporte In-Situ (TR07)}
+\label{fig:evidencia_tr07_asignacion}
+\vspace{0.2em}
+\includegraphics[width=0.95\textwidth]{cu_sr_02_asignacion.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Modelado transaccional del algoritmo de autoasignación por zona geográfica, carga relativa y bloqueo temporal (\textit{SoftLock}).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Diagrama Entidad-Relación en Prisma - Parte 1: Planes, Clientes, Zonas, Sucursales y Áreas (TR08)}
+\label{fig:evidencia_tr08_bd_1}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth,height=0.72\textheight,keepaspectratio]{bd_parte1.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia a partir de \texttt{schema.prisma}. Estructura organizativa, sedes y zonas geográficas.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Diagrama Entidad-Relación en Prisma - Parte 2: Roles, Usuarios y Zonas de Técnicos (TR08)}
+\label{fig:evidencia_tr08_bd_2}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth,height=0.72\textheight,keepaspectratio]{bd_parte2.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia a partir de \texttt{schema.prisma}. Gestión de usuarios, perfiles y asignación de técnicos a zonas.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Diagrama Entidad-Relación en Prisma - Parte 3: Equipos, Hardware, Historial y Software (TR08)}
+\label{fig:evidencia_tr08_bd_3}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth,height=0.72\textheight,keepaspectratio]{bd_parte3.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia a partir de \texttt{schema.prisma}. Inventario de activos TI, componentes, historial de cambios y licencias.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Diagrama Entidad-Relación en Prisma - Parte 4: Tickets, Citas In-Situ, Bloqueos y Auditoría (TR08)}
+\label{fig:evidencia_tr08_bd_4}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth,height=0.72\textheight,keepaspectratio]{bd_parte4.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia a partir de \texttt{schema.prisma}. Flujo de incidencias, programación de visitas, bloqueos y auditoría.}
 \end{figure}
 
 \subsubsection{Fase 2: Backend Core y Módulos Iniciales (Sprints 2 - 3)}
-Durante esta etapa se ejecuta la construcción principal de la lógica del servidor, implementando los módulos de autenticación segura, gestión de usuarios, clientes, sucursales, planes SLA y el control transaccional del inventario ITAM, cuyas tareas ejecutadas se presentan en la Tabla \ref{tab:fase2}.
+Durante esta etapa se ejecuta la construcción principal de la lógica del servidor, implementando los módulos de autenticación segura, gestión de usuarios, clientes, sucursales, planes SLA y el control transaccional del inventario ITAM, cuyas tareas ejecutadas se presentan en la Tabla \ref{tab:sprint2} y la Tabla \ref{tab:sprint3}.
 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
-\caption{{Fase 2: Backend Core y Módulos Iniciales (Sprints 2 - 3)}} \label{tab:fase2} \\
+\caption{{Sprint 2: Backend Core - Autenticación, Usuarios y Jerarquía (Sprint 2)}} \label{tab:sprint2} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
 \endfirsthead
 
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:fase2}} \textit{(Continuación)}} \\[0.4em]
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint2}} \textit{(Continuación)}} \\[0.4em]
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
@@ -258,16 +459,11 @@ TR09 - Configuración NestJS & Configuración con Arquitectura Hexagonal, Prisma
 TR10 - Autenticación JWT & Desarrollo de Autenticación JWT y Guards de Control de Acceso por Roles. & 5 días \\
 TR11 - CRUD Usuarios y Zonas & Implementación de CRUD de Usuarios, Zonas geográficas y Auditoría. & 6 días \\
 TR12 - Backend Clientes & Desarrollo del backend de Clientes con flujo de confirmación por correo. & 5 días \\
-TR13 - Sucursales y Áreas & Gestión de Sucursales/Áreas y provisión de usuario por sucursal. & 5 días \\
-TR14 - Gestión SLA & Implementación de gestión backend de Planes y Acuerdos de Nivel de Servicio. & 5 días \\
-TR15 - Lógica Inventario ITAM & Desarrollo de lógica backend de Inventario ITAM y Hoja de Vida de Activos. & 6 días \\
-TR16 - Control de Software & Implementación de gestión backend de Software y Control de Licencias. & 5 días \\
-TR17 - Ciclo de Vida Ticket & Desarrollo del ciclo de vida del Ticket (estado pendiente y asignación). & 6 días \\
-\textbf{Total Fase 2} & & \textbf{48 días} \\
+\textbf{Total Sprint 2} & & \textbf{21 días} \\
 \end{longtable}
 \endgroup
 
-Como evidencia de la ejecución del núcleo del servidor y gestión de inventario, se muestran los tableros, los gráficos de seguimiento y la implementación técnica:
+El seguimiento del Sprint 2 se refleja en su tablero de tareas y gráfico \textit{burndown}.
 
 \begin{figure}[H]
 \centering
@@ -291,13 +487,162 @@ Como evidencia de la ejecución del núcleo del servidor y gestión de inventari
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 2.}
 \end{figure}
 
+Las evidencias de \textbf{TR09} a \textbf{TR12} documentan la estructura hexagonal con Prisma, la autenticación JWT, la gestión de usuarios/zonas/auditoría y el alta transaccional de clientes con activación por correo.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR09: Configuración de proyecto NestJS con Arquitectura Hexagonal y Prisma}
+\label{fig:evidencia_tr09}
+\vspace{0.2em}
+\includegraphics[width=0.45\textwidth]{evidencia_tr09.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Estructura modular del servidor bajo Arquitectura Hexagonal, inyección de dependencias y conexión con Prisma Client.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR10 (Parte 1): Implementación de \texttt{JwtAuthGuard}}
+\label{fig:evidencia_tr10_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr10_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Validación de firma JWT, existencia de usuario en repositorio y verificación de estado activo.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR10 (Parte 2): Autenticación y emisión de token JWT en Postman}
+\label{fig:evidencia_tr10_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr10_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Petición \texttt{POST /auth/login} con respuesta \texttt{200 OK} y payload del usuario autenticado.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR11 (Parte 1): Endpoint de creación de usuarios en Swagger}
+\label{fig:evidencia_tr11_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr11_usuarios_api.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Documentación del endpoint \texttt{POST /usuario/create}, reglas por rol y respuesta \texttt{201} en Swagger.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR11 (Parte 2): Persistencia de usuarios en base de datos}
+\label{fig:evidencia_tr11_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr11_usuarios_bd.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Registros almacenados en la tabla de usuarios con contraseñas cifradas y vinculación de rol y jerarquía.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR11 (Parte 3): Endpoints de gestión de zonas en Swagger}
+\label{fig:evidencia_tr11_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr11_zonas_api.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Operaciones de consulta, creación, actualización y cambio de estado de zonas en Swagger.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR11 (Parte 4): Trazabilidad de eventos en la tabla de auditoría}
+\label{fig:evidencia_tr11_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr11_auditoria_bd.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Registro histórico de eventos, usuario ejecutor, \textit{payload} y marca de tiempo en base de datos.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR12 (Parte 1): Especificación y \textit{payload} de registro de clientes en Swagger}
+\label{fig:evidencia_tr12_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr12_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Endpoint \texttt{POST /clientes} con registro transaccional de empresa, usuario responsable y sucursal principal.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR12 (Parte 2): Respuestas HTTP y validaciones del registro de clientes}
+\label{fig:evidencia_tr12_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr12_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Estructura de respuesta exitosa (\texttt{201}) y manejo de errores de validación (\texttt{400}), autenticación (\texttt{401}) y permisos (\texttt{403}).}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR12 (Parte 3): Notificación por correo para activación de cuenta}
+\label{fig:evidencia_tr12_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr12_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Correo electrónico enviado por el sistema con enlace de activación y creación de contraseña con vigencia de 24 horas.}
+\end{figure}
+
+\vspace{0.3cm}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\caption{{Sprint 3: Backend Core - Sucursales, SLA, Inventario ITAM y Licencias (Sprint 3)}} \label{tab:sprint3} \\
+\toprule
+\textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
+\midrule
+\endfirsthead
+
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint3}} \textit{(Continuación)}} \\[0.4em]
+\toprule
+\textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{3}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
+\bottomrule
+\multicolumn{3}{@{}p{\textwidth}}{\small \textit{Nota.} Cronograma y entregables detallados del sprint.} \\
+\endlastfoot
+
+TR13 - Sucursales y Áreas & Gestión de Sucursales/Áreas y provisión de usuario por sucursal. & 5 días \\
+TR14 - Gestión SLA & Implementación de gestión backend de Planes y Acuerdos de Nivel de Servicio. & 5 días \\
+TR15 - Lógica Inventario ITAM & Desarrollo de lógica backend de Inventario ITAM y Hoja de Vida de Activos. & 6 días \\
+TR16 - Control de Software & Implementación de gestión backend de Software y Control de Licencias. & 5 días \\
+TR17 - Ciclo de Vida Ticket & Desarrollo del ciclo de vida del Ticket (estado pendiente y asignación). & 6 días \\
+\textbf{Total Sprint 3} & & \textbf{27 días} \\
+\end{longtable}
+\endgroup
+
+El avance y seguimiento de horas del Sprint 3 se registran en las siguientes figuras.
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
 \caption{Tablero de Jira - Sprint 3}
 \label{fig:evidencia_sprint_3}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{img/tablero_sprint_3.png}
+\includegraphics[width=0.92\textwidth]{tablero_sprint_3.png}
 \\[0.2em]
 {\small \textit{Nota.} Estado de avance del Backend en Sucursales, SLA, Inventario ITAM y Licencias.}
 \end{figure}
@@ -313,31 +658,232 @@ Como evidencia de la ejecución del núcleo del servidor y gestión de inventari
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 3.}
 \end{figure}
 
+Las evidencias de \textbf{TR13} y \textbf{TR14} abarcan los endpoints de sucursales, áreas y planes de servicio, incluyendo provisión de cuentas locales y validaciones en Swagger.
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Evidencia de ejecución de tareas del backend en NestJS}
-\label{fig:evidencia_tarea_backend}
+\caption{Evidencia de ejecución - TR13 (Parte 1): Endpoints de Áreas y Sucursales en Swagger}
+\label{fig:evidencia_tr13_a}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{evidencia_tarea_sprint_2_3.png}
+\includegraphics[width=0.92\textwidth]{evidencia_tr13_a.png}
 \\[0.2em]
-{\small \textit{Nota.} Implementación de controladores, servicios y Guards de seguridad basados en roles (RBAC).}
+{\small \textit{Nota.} Elaboración propia. Catálogo de rutas de gestión, consulta, actualización y cambio de estado para áreas y sucursales.}
 \end{figure}
 
-\subsubsection{Fase 3: Backend Avanzado, Motor de Asignación y Tiempo Real (Sprint 4)}
-Esta fase comprende el desarrollo de la lógica compleja de negocio, integrando el motor de derivación de citas presenciales, comunicación bidireccional mediante WebSockets y caché en Redis, cuyo resumen de actividades se observa en la Tabla \ref{tab:fase3}.
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR13 (Parte 2): Registro transaccional de sucursal y encargado local}
+\label{fig:evidencia_tr13_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr13_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Especificación y cuerpo de \texttt{POST /sucursales} para crear la sucursal y provisionar la cuenta del encargado.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR13 (Parte 3): Respuestas HTTP en creación de sucursal}
+\label{fig:evidencia_tr13_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr13_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Respuesta exitosa (\texttt{201}) con identificadores generados y manejo de errores de validación, permisos y existencia.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR13 (Parte 4): Endpoint de creación de áreas en Swagger}
+\label{fig:evidencia_tr13_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr13_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Registro de áreas operativas asociadas a una sucursal mediante \texttt{POST /areas}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR14 (Parte 1): Endpoints de gestión de planes en Swagger}
+\label{fig:evidencia_tr14_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr14_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Rutas para listar, consultar por ID, crear, actualizar y alternar estado de planes en \texttt{/planes}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR14 (Parte 2): Consulta de planes activos y condiciones de servicio}
+\label{fig:evidencia_tr14_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr14_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Ejecución de \texttt{GET /planes} con respuesta \texttt{200} retornando planes configurados, servicios incluidos, precios y límite de equipos.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR14 (Parte 3): Registro de un nuevo plan en Swagger}
+\label{fig:evidencia_tr14_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr14_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Especificación y cuerpo de \texttt{POST /planes/create} con respuestas \texttt{201} y \texttt{400}.}
+\end{figure}
+
+% --- EVIDENCIA TR15: INVENTARIO ITAM Y HOJA DE VIDA ---
+
+Las capturas de \textbf{TR15} muestran las operaciones de gestión y trazabilidad de equipos y componentes de hardware, junto con la consulta de su hoja de vida técnica.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR15 (Parte 1): Endpoints de gestión de equipos y componentes en Swagger}
+\label{fig:evidencia_tr15_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr15_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Operaciones de registro, consulta de hoja de vida, asignación y montaje/reemplazo de componentes en \texttt{/equipos}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR15 (Parte 2): Endpoints de gestión y trazabilidad de hardware en Swagger}
+\label{fig:evidencia_tr15_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr15_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Endpoints de listado filtrable, ficha técnica, hoja de vida y transición de estados con trazabilidad en \texttt{/hardware}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR15 (Parte 3): Consulta de hoja de vida de equipo en Swagger}
+\label{fig:evidencia_tr15_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr15_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Ejecución de \texttt{GET /equipos/1} con respuesta \texttt{200} retornando datos generales, serie, ubicación y estado del activo.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR15 (Parte 4): Consulta de hoja de vida y ubicación de hardware}
+\label{fig:evidencia_tr15_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr15_e.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Ejecución de \texttt{GET /hardware/1} con respuesta \texttt{200} mostrando detalle técnico, estado y equipo/ubicación actual.}
+\end{figure}
+
+% --- EVIDENCIA TR16: GESTIÓN DE SOFTWARE Y CONTROL DE LICENCIAS ---
+
+La evidencia de \textbf{TR16} respalda la administración del catálogo de software, asignación de licencias a equipos y consulta de la bóveda de credenciales.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR16 (Parte 1): Endpoints de gestión de software y control de licencias en Swagger}
+\label{fig:evidencia_tr16_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr16_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Rutas para listar, registrar, actualizar, asignar/liberar equipos y consultar la bóveda de software en \texttt{/software}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR16 (Parte 2): Consulta de bóveda de software y asignaciones}
+\label{fig:evidencia_tr16_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr16_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Ejecución de \texttt{GET /software/1/boveda} con respuesta \texttt{200} mostrando capacidad de licencias, llave maestra y equipos vinculados.}
+\end{figure}
+
+% --- EVIDENCIA TR17: AUTOASIGNACIÓN DE SOPORTE Y GESTIÓN DE TICKETS ---
+
+La evidencia de \textbf{TR17} cubre la autoasignación automática de tickets pendientes por cron y WebSockets, además de los endpoints de registro y asignación de soporte.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR17 (Parte 1): Caso de uso de autoasignación de tickets pendientes}
+\label{fig:evidencia_tr17_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr17_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Implementación de \texttt{AutoAssignPendingTicketsUseCase} evaluando umbral de tiempo, técnicos remotos disponibles y carga de trabajo.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR17 (Parte 2): Programación periódica y notificación por WebSocket}
+\label{fig:evidencia_tr17_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr17_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Ejecución periódica en \texttt{TicketsCronService} y emisión de eventos en tiempo real al tablero y al técnico asignado.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR17 (Parte 3): Endpoints de gestión y asignación de tickets en Swagger}
+\label{fig:evidencia_tr17_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr17_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Rutas de consulta, registro, cierre, reapertura y asignación de soporte en \texttt{/ticket}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR17 (Parte 4): Registro de ticket inicializado en estado pendiente}
+\label{fig:evidencia_tr17_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr17_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Especificación y cuerpo de ejemplo de \texttt{POST /ticket} con respuestas \texttt{201} y \texttt{400}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR17 (Parte 5): Asignación manual o reasignación de soporte en Swagger}
+\label{fig:evidencia_tr17_e}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr17_e.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Endpoint \texttt{PATCH /ticket/\{id\}/assign-support} para asignar o cambiar el usuario de soporte de un ticket y pasar su estado a \textit{Asignado}, con respuestas \texttt{200}, \texttt{400} y \texttt{404}.}
+\end{figure}
+
+\subsubsection{Sprint 4: Backend Avanzado, Motor de Asignación y Tiempo Real (Sprint 4)}
+Esta fase comprende el desarrollo de la lógica compleja de negocio, integrando el motor de derivación de citas presenciales, comunicación bidireccional mediante WebSockets y caché en Redis, cuyo resumen de actividades se observa en la Tabla \ref{tab:sprint4}.
 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
-\caption{{Fase 3: Backend Avanzado, Motor de Asignación y Tiempo Real (Sprint 4)}} \label{tab:fase3} \\
+\caption{{Sprint 4: Backend Avanzado, Motor de Asignación y Tiempo Real (Sprint 4)}} \label{tab:sprint4} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
 \endfirsthead
 
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:fase3}} \textit{(Continuación)}} \\[0.4em]
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint4}} \textit{(Continuación)}} \\[0.4em]
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
@@ -353,11 +899,11 @@ Esta fase comprende el desarrollo de la lógica compleja de negocio, integrando 
 
 TR18 - Citas Presenciales & Desarrollo del backend de derivación y gestión de Citas Presenciales. & 5 días \\
 TR19 - WebSockets y Redis & Implementación de WebSockets con Redis para Chat y Endpoints de Dashboard. & 6 días \\
-\textbf{Total Fase 3} & & \textbf{11 días} \\
+\textbf{Total Sprint 4} & & \textbf{11 días} \\
 \end{longtable}
 \endgroup
 
-Como evidencia de esta fase avanzada, se adjuntan el tablero de Jira, el gráfico de seguimiento y la lógica de programación del motor de citas:
+El seguimiento del Sprint 4 se observa en su tablero y gráfico \textit{burndown}.
 
 \begin{figure}[H]
 \centering
@@ -381,31 +927,171 @@ Como evidencia de esta fase avanzada, se adjuntan el tablero de Jira, el gráfic
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 4.}
 \end{figure}
 
+% --- EVIDENCIA TR18: ENDPOINTS, ASIGNACIÓN IN-SITU, SOFTLOCK Y DERIVACIÓN ---
+
+La evidencia correspondiente a la tarea \textbf{TR18} documenta el flujo de programación de visitas presenciales, combinando la exposición de rutas en Swagger con la lógica de asignación automática por zona geográfica, agrupamiento de hasta tres atenciones por sucursal, control de disponibilidad y bloqueo temporal (\textit{SoftLock}).
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Evidencia del motor de citas y control anti-cruces}
-\label{fig:evidencia_tarea_sprint_4}
+\caption{Evidencia de ejecución - TR18: Endpoints de citas de soporte y \textit{SoftLock} en Swagger}
+\label{fig:evidencia_tr18_endpoints}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{evidencia_tarea_sprint_4.png}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_endpoints.png}
 \\[0.2em]
-{\small \textit{Nota.} Implementación del algoritmo de autoasignación por zonas geográficas y gestión de franjas horarias.}
+{\small \textit{Nota.} Elaboración propia. Rutas de consulta y derivación en \texttt{/citas-soporte} y autoasignación, disponibilidad y bloqueo temporal en \texttt{/soft-lock}.}
 \end{figure}
 
-\subsubsection{Fase 4: Frontend e Interfaces de Usuario (Sprint 5)}
-Se enfoca en la implementación del diseño responsivo y la construcción de las pantallas de interacción mediante Vite + React y componentes estilizados, estructurando paneles modulares por roles cuyas actividades se reflejan en la Tabla \ref{tab:fase4}.
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 1): Validación de sucursal y filtro de técnicos \textit{in-situ} por zona}
+\label{fig:evidencia_tr18_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Inicio de \texttt{AutoAssignInsituUseCase.execute} con franjas estándar, verificación de zona geográfica y filtrado de técnicos activos con rol \texttt{SOPORTE\_INSITU}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 2): Evaluación de agendas, citas y bloqueos activos por técnico}
+\label{fig:evidencia_tr18_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Consulta de citas y \textit{softlocks} por fecha, identificación de visitas en la misma sucursal y cálculo de carga operativa.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 3): Priorización por afinidad de sucursal y límite de tres tickets}
+\label{fig:evidencia_tr18_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Regla que reutiliza una franja existente en la misma sucursal cuando tiene menos de tres tickets programados para optimizar desplazamientos.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 4): Asignación por menor carga, franjas libres y mapeo horario}
+\label{fig:evidencia_tr18_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Contingencia ordenando por carga operativa, selección de primera franja libre de citas y \textit{softlocks} vigentes, y conversión de hora a franja.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 5): Consulta de citas y \textit{softlocks} activos para franjas horarias}
+\label{fig:evidencia_tr18_e}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_e.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Primera parte de \texttt{GetAvailableSlotsUseCase.execute} obteniendo citas confirmadas y bloqueos temporales vigentes del técnico en la fecha.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 6): Evaluación de disponibilidad, misma sucursal y tope de tres tickets}
+\label{fig:evidencia_tr18_f}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_f.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Reglas de disponibilidad por franja validando coincidencia de sucursal, límite menor a tres citas, ausencia de bloqueos y mapeo de horas.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 7): Validación de \textit{softlock}, creación de cita y derivación a \textit{In-Situ}}
+\label{fig:evidencia_tr18_g}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_g.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Primera parte de \texttt{CreateCitaAndDerivateTicketUseCase.execute} verificando validez y expiración del \textit{softlock}, registrando la cita y derivando el ticket.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR18 (Parte 8): Auditoría de derivación, liberación de \textit{softlock} y mapeo de horas}
+\label{fig:evidencia_tr18_h}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr18_h.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Registro de auditoría de la derivación, eliminación del \textit{softlock} consumido y conversión de la franja seleccionada a horas de inicio y fin.}
+\end{figure}
+
+% --- EVIDENCIA TR19: CHAT EN TIEMPO REAL, WEBSOCKETS Y REDIS ---
+
+La evidencia de \textbf{TR19} muestra la implementación del chat en tiempo real mediante WebSockets, el control de salas y permisos sobre el ticket, y la gestión de presencia y canales Pub/Sub en Redis.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR19 (Parte 1): Gateway de WebSockets y control de conexión/presencia}
+\label{fig:evidencia_tr19_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr19_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Configuración de \texttt{ChatGateway} en el \textit{namespace} \texttt{chat} y gestión de estados en línea/fuera de línea al conectar o desconectar clientes.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR19 (Parte 2): Unión a salas, historial y recepción de mensajes}
+\label{fig:evidencia_tr19_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr19_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Manejadores \texttt{join\_room} (con envío de \texttt{chat\_history}) y \texttt{send\_message} en \texttt{ChatGateway}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR19 (Parte 3): Validación de permisos, persistencia y cambio de estado del ticket}
+\label{fig:evidencia_tr19_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr19_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Lógica de \texttt{SendMessageUseCase} verificando acceso sobre el ticket, guardando el mensaje, iniciando el chat del ticket y publicando en Redis.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR19 (Parte 4): Gestión de usuarios en línea y publicación en Redis Pub/Sub}
+\label{fig:evidencia_tr19_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr19_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Implementación de \texttt{RedisAdapter} para almacenar conexiones activas y difundir mensajes en canales de Redis.}
+\end{figure}
+
+\subsubsection{Sprint 5: Frontend e Interfaces de Usuario (Sprint 5)}
+Se enfoca en la implementación del diseño responsivo y la construcción de las pantallas de interacción mediante Vite + React y componentes estilizados, estructurando paneles modulares por roles cuyas actividades se reflejan en la Tabla \ref{tab:sprint5}.
 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
-\caption{{Fase 4: Frontend e Interfaces de Usuario (Sprint 5)}} \label{tab:fase4} \\
+\caption{{Sprint 5: Frontend e Interfaces de Usuario (Sprint 5)}} \label{tab:sprint5} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
 \endfirsthead
 
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:fase4}} \textit{(Continuación)}} \\[0.4em]
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint5}} \textit{(Continuación)}} \\[0.4em]
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
@@ -423,11 +1109,11 @@ TR20 - Configuración UI & Configuración de estructura modular frontend, Tailwi
 TR21 - Pantallas Base Frontend & Desarrollo de pantallas frontend de Login, Usuarios y Zonas con \textit{shadcn/ui}. & 6 días \\
 TR22 - Jerarquía Organizacional & Desarrollo de interfaces modulares para la Jerarquía Organizacional. & 5 días \\
 TR23 - Módulos Operativos & Pantallas de Inventario ITAM, Tickets, Cronograma de Citas, Chat y Dashboard. & 7 días \\
-\textbf{Total Fase 4} & & \textbf{22 días} \\
+\textbf{Total Sprint 5} & & \textbf{22 días} \\
 \end{longtable}
 \endgroup
 
-Como evidencia del desarrollo frontend, se presentan el tablero, el gráfico de seguimiento y las pantallas principales de la interfaz de usuario:
+El avance y seguimiento de horas del Sprint 5 se documentan en las siguientes figuras.
 
 \begin{figure}[H]
 \centering
@@ -451,53 +1137,223 @@ Como evidencia del desarrollo frontend, se presentan el tablero, el gráfico de 
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 5.}
 \end{figure}
 
+% --- EVIDENCIA TR20: ESTRUCTURA DE CARPETAS DEL FRONTEND (ARQUITECTURA MODULAR) ---
+
+La evidencia de \textbf{TR20} ilustra la arquitectura modular del \textit{frontend}, diferenciando los componentes compartidos de \texttt{src/components} frente a los encapsulados dentro de cada módulo en \texttt{src/modules}.
+
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Vistas operativas principales del sistema frontend (Dashboard - Administrador)}
-\label{fig:evidencia_vistas_frontend_1}
+\caption{Evidencia de ejecución - TR20 (Parte 1): Organización modular en \texttt{src} y estructura del módulo \texttt{administrador}}
+\label{fig:evidencia_tr20_a}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{img/evidencia_frontend_sprint_5_1.png}
+\includegraphics[width=0.72\textwidth,height=0.68\textheight,keepaspectratio]{evidencia_tr20_a.png}
 \\[0.2em]
-{\small \textit{Nota.} Pantallas clave correspondiente al panel de control.}
+{\small \textit{Nota.} Elaboración propia. Distribución de carpetas transversales y módulos por rol/dominio en \texttt{src/modules}, con encapsulamiento interno de \texttt{components}, \texttt{data}, \texttt{pages}, \texttt{types} y rutas.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Vistas operativas principales del sistema frontend (Módulos Equipos ITAM)}
-\label{fig:evidencia_vistas_frontend_2}
+\caption{Evidencia de ejecución - TR20 (Parte 2): Componentes generales y compartidos en \texttt{src/components}}
+\label{fig:evidencia_tr20_b}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{img/evidencia_frontend_sprint_5_2.png}
+\includegraphics[width=0.72\textwidth,height=0.68\textheight,keepaspectratio]{evidencia_tr20_b.png}
 \\[0.2em]
-{\small \textit{Nota.} Pantallas clave correspondiente a gestión de equipos.}
+{\small \textit{Nota.} Elaboración propia. Componentes reutilizables disponibles para distintos módulos y vistas (por ejemplo, \texttt{hardware}, \texttt{usuario}, \texttt{layout}, \texttt{table} y \texttt{ui}), a diferencia de los componentes locales a cada módulo.}
+\end{figure}
+
+% --- EVIDENCIA TR21: AUTENTICACIÓN Y GESTIÓN DE USUARIOS ---
+
+La evidencia de \textbf{TR21} presenta el flujo de inicio de sesión y las interfaces de administración de usuarios, incluyendo filtros, registro y edición con campos contextuales por rol.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR21 (Parte 1): Interfaz de inicio de sesión al sistema}
+\label{fig:evidencia_tr21_a}
+\vspace{0.2em}
+\includegraphics[width=0.72\textwidth,height=0.65\textheight,keepaspectratio]{evidencia_tr21_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Formulario de autenticación mediante correo y contraseña con enlace de recuperación de credenciales.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \captionsetup{justification=centering}
-\caption{Vistas operativas principales del sistema frontend (Módulos ITAM y Tickets)}
-\label{fig:evidencia_vistas_frontend_3}
+\caption{Evidencia de ejecución - TR21 (Parte 2): Panel principal de gestión de usuarios, métricas y filtros}
+\label{fig:evidencia_tr21_b}
 \vspace{0.2em}
-\includegraphics[width=0.92\textwidth]{img/evidencia_frontend_sprint_5_3.png}
+\includegraphics[width=0.92\textwidth]{evidencia_tr21_b.png}
 \\[0.2em]
-{\small \textit{Nota.} Pantallas clave correspondiente al ciclo de vida de ticket.}
+{\small \textit{Nota.} Elaboración propia. Vista administrativa con contadores generales, búsqueda, filtrado por rol y estado, carga masiva CSV y tabla de usuarios registrados.}
 \end{figure}
 
-\subsubsection{Fase 5: Calidad, Documentación y Despliegue (Sprint 6)}
-Fase final orientada a la validación mediante pruebas unitarias, documentación técnica de endpoints mediante Swagger y la puesta en producción del sistema, cuyas tareas se enumeran en la Tabla \ref{tab:fase5}.
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR21 (Parte 3): Modal de registro de nuevo usuario y selección de rol}
+\label{fig:evidencia_tr21_c}
+\vspace{0.2em}
+\includegraphics[width=0.72\textwidth,height=0.68\textheight,keepaspectratio]{evidencia_tr21_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Formulario de creación con datos personales, corporativos y perfil de acceso con campos contextuales según el rol seleccionado.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR21 (Parte 4): Modal de edición de usuario, reglas de rol y restablecimiento de clave}
+\label{fig:evidencia_tr21_d}
+\vspace{0.2em}
+\includegraphics[width=0.72\textwidth,height=0.68\textheight,keepaspectratio]{evidencia_tr21_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Actualización de datos y permisos del usuario, indicación contextual del rol y opción para restablecer contraseña.}
+\end{figure}
+
+% --- EVIDENCIA TR22: GESTIÓN DE CLIENTES, SUCURSALES Y ÁREAS ---
+
+La evidencia de \textbf{TR22} reúne las vistas principales para administrar la jerarquía organizacional de clientes, sucursales y áreas internas.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR22 (Parte 1): Módulo de gestión de clientes y directorio corporativo}
+\label{fig:evidencia_tr22_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr22_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Vista principal de clientes con indicadores generales, filtros por tipo y estado, acceso a creación de nueva empresa y listado con planes de soporte asociados.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR22 (Parte 2): Módulo de gestión de sucursales y sedes por empresa}
+\label{fig:evidencia_tr22_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr22_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Administración de sedes vinculadas a cada empresa cliente, zona geográfica, responsable local, exportación CSV y registro de nuevas sucursales.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR22 (Parte 3): Módulo de gestión de áreas y organización por sucursal}
+\label{fig:evidencia_tr22_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr22_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Distribución de departamentos o áreas internas asignadas por empresa y sucursal, con responsable de contacto y control de estado.}
+\end{figure}
+
+% --- EVIDENCIA TR23: INVENTARIO TI, TICKETS/CHAT, CRONOGRAMA DE CITAS Y DASHBOARD ---
+
+La evidencia de \textbf{TR23} abarca las interfaces operativas del sistema: inventario TI (equipos, hardware y software), mesa de ayuda con chat en tiempo real, cronograma de citas con geolocalización y dashboard de operaciones.
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 1): Gestión y asignación de inventario de equipos TI}
+\label{fig:evidencia_tr23_a}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_a.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Vista de inventario de equipos con métricas de stock y asignación, filtros multi-criterio, exportación CSV y acciones para asignar o liberar equipos.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 2): Gestión de componentes de hardware y repuestos}
+\label{fig:evidencia_tr23_b}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_b.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Catálogo de componentes físicos (RAM, almacenamiento, etc.) con indicadores de disponibilidad, filtros por sede/área/estado y control de instalación.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 3): Gestión de software y control de licenciamiento}
+\label{fig:evidencia_tr23_c}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_c.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Administración de programas y lotes de licencias con seguimiento de cupos ocupados/libres, modelo de licenciamiento, vigencia y exportación CSV.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 4): Mesa de ayuda IT y seguimiento de tickets}
+\label{fig:evidencia_tr23_d}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_d.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Consola de tickets con indicadores de atención y SLA, filtros por estado y organización, y listado con técnico asignado y estado del incidente.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 5): Vista de ticket y canal de soporte directo en tiempo real}
+\label{fig:evidencia_tr23_e}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_e.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Detalle del ticket junto al chat en tiempo real entre solicitante y soporte, con datos del equipo afectado, historial de mensajes y descarga de \textit{logs}.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 6): Cronograma de citas y planificación de visitas técnicas}
+\label{fig:evidencia_tr23_f}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_f.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Calendario operativo semanal y diario de citas \textit{in-situ} con filtros por empresa, sede y estado, y programación de visitas por técnico.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 7): Detalle de cita técnica y geolocalización de la sede}
+\label{fig:evidencia_tr23_g}
+\vspace{0.2em}
+\includegraphics[width=0.75\textwidth,height=0.68\textheight,keepaspectratio]{evidencia_tr23_g.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Modal con información del cliente y sucursal, técnico asignado, área solicitante, franja horaria, observaciones y ubicación geográfica de la sede.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\captionsetup{justification=centering}
+\caption{Evidencia de ejecución - TR23 (Parte 8): Dashboard de operaciones IT del administrador}
+\label{fig:evidencia_tr23_h}
+\vspace{0.2em}
+\includegraphics[width=0.92\textwidth]{evidencia_tr23_h.png}
+\\[0.2em]
+{\small \textit{Nota.} Elaboración propia. Panel ejecutivo con métricas clave, ranking de incidencias por cliente, evolución de requerimientos creados frente a resueltos y agenda diaria.}
+\end{figure}
+
+\subsubsection{Sprint 6: Calidad, Documentación y Despliegue (Sprint 6)}
+Fase final orientada a la validación mediante pruebas unitarias, documentación técnica de endpoints mediante Swagger y la puesta en producción del sistema, cuyas tareas se enumeran en la Tabla \ref{tab:sprint6}.
 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
-\caption{{Fase 5: Calidad, Documentación y Despliegue (Sprint 6)}} \label{tab:fase5} \\
+\caption{{Sprint 6: Calidad, Documentación y Despliegue (Sprint 6)}} \label{tab:sprint6} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
 \endfirsthead
 
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:fase5}} \textit{(Continuación)}} \\[0.4em]
+\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:sprint6}} \textit{(Continuación)}} \\[0.4em]
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
 \midrule
@@ -515,11 +1371,11 @@ TR24 - Documentación Swagger & Documentación de endpoints y DTOs del Backend u
 TR25 - Pruebas Unitarias Jest & Implementación y ejecución de Pruebas Unitarias en el Backend con Jest. & 5 días \\
 TR26 - Módulo de Exportación & Desarrollo de módulo de exportación de documentos PDF. & 5 días \\
 TR27 - Despliegue en Producción & Subida de base de datos, backend y frontend al servidor de producción. & 4 días \\
-\textbf{Total Fase 5} & & \textbf{18 días} \\
+\textbf{Total Sprint 6} & & \textbf{18 días} \\
 \end{longtable}
 \endgroup
 
-Para esta etapa final, se adjunta el tablero de seguimiento actual:
+El estado actual del Sprint 6 se refleja en su tablero de seguimiento.
 
 \begin{figure}[H]
 \centering
@@ -532,12 +1388,12 @@ Para esta etapa final, se adjunta el tablero de seguimiento actual:
 {\small \textit{Nota.} Estado actual del tablero para las actividades de documentación en Swagger, pruebas unitarias y despliegue.}
 \end{figure}
 
-Nota: Las actividades correspondientes al Sprint 6 se encuentran actualmente en ejecución, abarcando las pruebas de integración finales y la puesta en producción del sistema web.
+\textit{Nota:} Las actividades correspondientes al Sprint 6 se encuentran actualmente en ejecución, abarcando las pruebas de integración finales y la puesta en producción del sistema web.
 
 \section{Consideraciones técnicas, operativas y ambientales para la implementación de la mejora}
 
 \subsection{Consideraciones Técnicas}
-La arquitectura de la solución requiere compatibilidad con navegadores web modernos, protocolos de comunicación cifrada mediante HTTPS, autenticación basada en JSON Web Tokens (JWT) y una Arquitectura Modular Basada en Roles en el Frontend. El backend implementa NestJS, TypeScript, MySQL (con Prisma ORM) y Redis para la gestión transaccional y concurrente, aspecto fundamental para garantizar el correcto funcionamiento del algoritmo de reservas temporales (\textit{SoftLock}) y la autoasignación concurrente de citas.
+La arquitectura de la solución requiere compatibilidad con navegadores web modernos, protocolos de comunicación cifrada mediante HTTPS, autenticación basada en JSON Web Tokens (JWT) y una Arquitectura Modular Basada en Roles en el Frontend. El backend implementa NestJS, TypeScript, MySQL (con Prisma ORM), MongoDB y Redis para la gestión transaccional, el historial de eventos y el control concurrente, aspecto fundamental para garantizar el correcto funcionamiento del algoritmo de reservas temporales (\textit{SoftLock}) y la autoasignación concurrente de citas.
 
 \subsection{Consideraciones Operativas}
 La puesta en marcha de la plataforma demanda una transición ordenada desde los canales informales (chats de WhatsApp, llamadas telefónicas) y registros dispersos en hojas de cálculo hacia el sistema Web Help-Desk centralizado. Esto optimiza de forma directa la operación diaria de la empresa J\&P Periféricos S.A.C. mediante los siguientes ejes operativos:
@@ -625,12 +1481,9 @@ La administración física de los dispositivos tecnológicos contempla dos mecan
 \caption{Proceso de Gestión y Registro de Hardware (ITAM)}
 \label{fig:proceso_gestion_hardware}
 \vspace{0.4em}
-
 \includegraphics[width=0.95\textwidth]{Proceso de Gestión y Registro de Hardware (ITAM).png}
-
 \vspace{0.4em}
 {\small \textit{Nota.} Flujo de decisión entre registro unitario, carga por lote en Excel y mantenimiento por el técnico de soporte.}
-
 \end{figure}
 
 \subsection{Proceso de Gestión de Software y Licencias (ITAM)}
@@ -643,12 +1496,9 @@ La gestión del catálogo de aplicaciones corporativas y asignación de licencia
 \caption{Proceso de Gestión de Software y Licencias (ITAM)}
 \label{fig:proceso_gestion_software}
 \vspace{0.4em}
-
 \includegraphics[width=0.95\textwidth]{Proceso de Gestión de Software y Licencias (ITAM).png}
-
 \vspace{0.4em}
 {\small \textit{Nota.} Representación del alta en el catálogo global y la asignación de claves de activación al activo correspondiente.}
-
 \end{figure}
 
 \subsection{Proceso de Gestión de Tickets y Soporte Técnico Remoto}
@@ -661,12 +1511,9 @@ El flujo principal de atención remota ante incidencias tecnológicas inicia con
 \caption{Proceso de Gestión de Tickets y Soporte Técnico Remoto}
 \label{fig:proceso_tickets_soporte_remoto}
 \vspace{0.4em}
-
 \includegraphics[width=0.95\textwidth]{Proceso de Gestión de Tickets y Soporte Técnico Remoto.png}
-
 \vspace{0.4em}
 {\small \textit{Nota.} Flujo transaccional desde el registro del ticket, la atención vía WebSockets y la derivación inteligente a soporte in-situ.}
-
 \end{figure}
 
 \subsection{Proceso de Soporte In-Situ y Ciclo de Vida de la Cita}
@@ -679,21 +1526,19 @@ Para aquellas incidencias que demandan intervención física en las instalacione
 \caption{Proceso de Soporte In-Situ y Ciclo de Vida de la Cita}
 \label{fig:proceso_soporte_insitu}
 \vspace{0.4em}
-
 \includegraphics[width=0.95\textwidth]{Proceso de Soporte In-Situ y Ciclo de Vida de la Cita.png}
-
 \vspace{0.4em}
 {\small \textit{Nota.} Ciclo de vida de la cita presencial y atención según los escenarios de solución inmediata o espera de repuestos.}
-
 \end{figure}
 
 \section{Cronograma de ejecución de la mejora}
-La ejecución del proyecto se proyecta en un período estructurado conforme al avance de los sprints de desarrollo:
+La ejecución del proyecto se organiza en seis sprints incrementales (\textbf{Sprint 0} a \textbf{Sprint 6}), distribuidos desde el análisis y modelado hasta la calidad y despliegue:
 \begin{enumerate}
-\item \textbf{Sprint 1:} Análisis de requerimientos y diseño de arquitectura base (Prisma, entidades y roles).
-\item \textbf{Sprint 2:} Desarrollo del backend, conexiones a base de datos, lógica de negocio, motor de autoasignación por zona y carga, y seguridad JWT.
-\item \textbf{Sprint 3:} Desarrollo del frontend (Vite + React), interfaces de usuario y paneles de control con arquitectura modular por roles, tableros Kanban y gestión de citas con \textit{SoftLock}.
-\item \textbf{Sprint 4:} Pruebas de integración, validación de flujos de derivación, corrección de errores y despliegue final en producción.
+\item \textbf{Sprint 0 y Sprint 1:} Análisis del alcance, modelado de negocio, requisitos, EDT/WBS, matriz CRUD, diagramas UML y esquema de base de datos.
+\item \textbf{Sprint 2 y Sprint 3:} Desarrollo del \textit{backend core} (autenticación JWT, RBAC, usuarios, zonas, auditoría, clientes, sucursales, áreas, planes SLA, inventario ITAM, licencias y base de tickets).
+\item \textbf{Sprint 4:} Desarrollo del \textit{backend avanzado} (motor de citas \textit{in-situ} con \textit{SoftLock}, WebSockets y Redis para chat/notificaciones y métricas de \textit{dashboard}).
+\item \textbf{Sprint 5:} Desarrollo del \textit{frontend} modular en Vite + React con vistas de autenticación, usuarios, jerarquía organizacional, inventario ITAM, tickets, chat, cronograma de citas y \textit{dashboard}.
+\item \textbf{Sprint 6:} Documentación Swagger, pruebas unitarias con Jest, exportación de documentos en PDF y despliegue en producción.
 \end{enumerate}
 
 \newpage
@@ -706,12 +1551,9 @@ A continuación, se presenta el diagrama de Gantt que detalla la planificación 
 \caption{Cronograma de Ejecución y Planificación del Proyecto (Parte 1)}
 \label{fig:cronograma_ejecucion_1}
 \vspace{0.3em}
-
 \includegraphics[width=0.98\textwidth, trim=0 0 0 0, clip]{Cronograma-Proyecto-1.png}
-
 \vspace{-0.4em}
 {\small \textit{Nota.} Elaboración propia basada en la planificación del sistema Help-Desk centralizado en Microsoft Project. Primera parte del cronograma.}
-
 \end{figure}
 
 \begin{figure}[H]
@@ -720,12 +1562,9 @@ A continuación, se presenta el diagrama de Gantt que detalla la planificación 
 \caption{Cronograma de Ejecución y Planificación del Proyecto (Parte 2)}
 \label{fig:cronograma_ejecucion_2}
 \vspace{0.3em}
-
 \includegraphics[width=0.98\textwidth, trim=0 0 0 0, clip]{Cronograma-Proyecto-2.png}
-
 \vspace{-0.4em}
 {\small \textit{Nota.} Elaboración propia basada en la planificación del sistema Help-Desk centralizado en Microsoft Project. Segunda parte del cronograma.}
-
 \end{figure}
 
 Como se observa en la figura, el porcentaje de completado de las tareas está representado mediante una escala de colores en la columna correspondiente. El \textbf{color verde oscuro} indica las fases y tareas concluidas al 100\% (valor máximo), correspondientes a la arquitectura base, desarrollo del backend y la mayor parte del frontend. El \textbf{color amarillo} denota una tarea en curso con un avance parcial del 66\% (correspondiente a pantallas de inventario ITAM, tickets, chat y dashboard). Por último, el \textbf{color rojo} señala las actividades pendientes con un avance del 0\%, vinculadas a la fase final de control de calidad, exportación PDF y despliegue en producción.
@@ -736,7 +1575,7 @@ Como se observa en la figura, el porcentaje de completado de las tareas está re
 Durante el proceso de implantación y puesta en marcha de la solución tecnológica centralizada, se han identificado diversos factores limitantes de carácter técnico, operativo y organizacional que podrían influir en la adopción del sistema. Estos aspectos se clasifican y detallan a continuación según los actores involucrados:
 
 \begin{itemize}
-\item \textbf{Limitaciones asociadas a la empresa (J\&P Periféricos S.A.C. - JYP) y su infraestructura tecnológica:}
+\item \textbf{Limitaciones asociadas a la empresa (J\&P Periféricos S.A.C.) y su infraestructura tecnológica:}
 \begin{itemize}
 \item \textbf{Dependencia de la infraestructura de red y servidores:} Al operar bajo una arquitectura web modular con comunicaciones en tiempo real mediante WebSockets (para notificaciones y el chat del ticket) y transacciones síncronas a través de Prisma ORM sobre MySQL, cualquier interrupción en el suministro eléctrico o caída del servidor en producción afecta de manera directa la continuidad operativa de la plataforma de ayuda.
 \item \textbf{Validación y carga inicial masiva de datos:} La precisión del módulo de inventario (ITAM) depende críticamente de la calidad de los datos iniciales migrados. Errores humanos durante la importación masiva mediante plantillas de Excel o en el registro de series y componentes pueden generar inconsistencias transitorias en las hojas de vida de los equipos.
@@ -745,9 +1584,6 @@ Durante el proceso de implantación y puesta en marcha de la solución tecnológ
 \item \textbf{Limitaciones asociadas al personal de soporte técnico:}
 \begin{itemize}
     \item \textbf{Curva de adaptación a los flujos automatizados:} El personal técnico debe habituarse rigurosamente al motor de asignación automática por zonas, al uso de estados transaccionales (pendientes, en camino, en progreso, espera de repuestos) y a los bloqueos de concurrencia (\textit{SoftLock}), lo cual demanda un periodo inicial de supervisión para evitar la manipulación incorrecta de los estados del ticket.
-
-\newpage
-
     \item \textbf{Cuellos de botella en la atención in-situ:} La gestión de citas presenciales está condicionada por la disponibilidad horaria de los técnicos de campo y la distribución geográfica de las sucursales. Ante incidencias masivas concurrentes, la capacidad de respuesta física puede verse saturada temporalmente.
 \end{itemize}
 
