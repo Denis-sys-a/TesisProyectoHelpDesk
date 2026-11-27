@@ -6,7 +6,6 @@ Este capítulo presenta la estrategia de implementación del sistema web help-de
 
 \begin{itemize}
     \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM, MySQL y MongoDB/Redis según el módulo y requerimiento).
-    \item \textbf{Analítica y métricas (CRISP-DM):} Estructura el procesamiento del historial de incidencias, activos y auditoría para alimentar los tableros y KPIs gerenciales.
 \end{itemize}
 
 A continuación se detallan las metodologías, requerimientos y fases de ejecución del plan.
@@ -138,7 +137,7 @@ Esta fase inicial comprende la recopilación de especificaciones, el diseño con
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 0: Análisis y Modelado (Sprint 0)}} \label{tab:sprint0} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -263,7 +262,7 @@ Cliente trabajador & Registra incidencias de sus equipos, consulta estado con PI
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 1: Análisis Detallado y Configuración Inicial Backend (Sprint 1)}} \label{tab:sprint1} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -362,7 +361,7 @@ Auditoría y reportes & L & L & L & Emp. / Suc.: L (su alcance) \\
 
 \vspace{-0.5em}
 
-La evidencia de \textbf{TR07} reúne los diagramas de secuencia UML de diagnóstico y asignación automática, mientras que \textbf{TR08} detalla el modelo entidad-relación en Prisma.
+La evidencia de \textbf{TR07} reúne los diagramas de secuencia UML de diagnóstico y asignación automática, mientras que \textbf{TR08} detalla el modelo entidad-relación en Prisma (Figuras \ref{fig:evidencia_tr08_bd_1}, \ref{fig:evidencia_tr08_bd_2}, \ref{fig:evidencia_tr08_bd_3} y \ref{fig:evidencia_tr08_bd_4}).
 
 \vspace{-0.4em}
 
@@ -442,7 +441,7 @@ Durante esta etapa se ejecuta la construcción principal de la lógica del servi
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 2: Backend Core - Autenticación, Usuarios y Jerarquía (Sprint 2)}} \label{tab:sprint2} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -616,7 +615,7 @@ Las evidencias de \textbf{TR09} a \textbf{TR12} documentan la estructura hexagon
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 3: Backend Core - Sucursales, SLA, Inventario ITAM y Licencias (Sprint 3)}} \label{tab:sprint3} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -890,7 +889,7 @@ Esta fase comprende el desarrollo de la lógica compleja de negocio, integrando 
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 4: Backend Avanzado, Motor de Asignación y Tiempo Real (Sprint 4)}} \label{tab:sprint4} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -1118,7 +1117,7 @@ Se enfoca en la implementación del diseño responsivo y la construcción de las
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 5: Frontend e Interfaces de Usuario (Sprint 5)}} \label{tab:sprint5} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
@@ -1382,7 +1381,7 @@ Fase final orientada a la validación mediante pruebas unitarias, documentación
 \begingroup
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{8.8cm} p{3.0cm} @{}}
+\begin{longtable}{@{} p{3.0cm} p{8.5cm} p{2.8cm} @{}}
 \caption{{Sprint 6: Calidad, Documentación y Despliegue (Sprint 6)}} \label{tab:sprint6} \\
 \toprule
 \textbf{Actividad / Tarea} & \textbf{Descripción del Entregable} & \textbf{Duración / Plazo} \\
