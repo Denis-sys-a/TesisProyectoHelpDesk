@@ -2,200 +2,126 @@
 
 \section{Beneficio técnico y/o económico esperado de la mejora / Innovación / Creatividad}
 
-La implementación del Sistema Web Help-Desk Centralizado en J\&P Periféricos S.A.C. genera beneficios significativos que optimizan de manera integral los procesos operativos, el control del parque informático y la atención de soporte técnico. A partir de los requerimientos y problemáticas identificadas en el diagnóstico inicial, los beneficios esperados se detallan a continuación:
+La implementación del \textbf{Sistema Web Help-Desk Centralizado} en \textbf{J\&P Periféricos S.A.C.} está orientada a resolver el problema principal de desorganización y falta de trazabilidad en la gestión de incidencias y el control del inventario informático multinivel (empresa cliente, sucursal, área y trabajador) para clientes corporativos externos. Desde la ingeniería de software (arquitectura hexagonal en NestJS con TypeScript, Prisma ORM sobre MySQL, MongoDB para historial de chats, Redis Pub/Sub y WebSockets en tiempo real, y \textit{frontend} modular en Vite + React con \textit{shadcn/ui}) y las prácticas de \textbf{ITSM / ITIL v4 e ITAM}, los beneficios esperados se estructuran en dimensiones técnicas y económicas:
 
 \begin{itemize}
-    \item \textbf{Centralización y trazabilidad de solicitudes:} Elimina por completo la dependencia de canales informales (llamadas y WhatsApp sin registro), garantizando que el 100\% de las incidencias sean registradas formalmente con un código PIN único y un flujo de estados auditable.
-    \item \textbf{Optimización del tiempo en la gestión de activos (ITAM):} Reduce drásticamente el tiempo de búsqueda manual en hojas de Excel desactualizadas mediante una base de datos centralizada que provee de manera inmediata la hoja de vida histórica, componentes instalados y licencias de software por equipo y cliente.
-    \item \textbf{Eliminación de cruces de agenda en visitas in-situ:} Gracias al motor de autoasignación por zonas geográficas y gestión de franjas horarias con control anti-cruces, se agrupan las atenciones presenciales de manera eficiente, reduciendo los tiempos muertos, los desplazamientos duplicados y los costos de traslado.
-    \item \textbf{Cumplimiento riguroso de los Acuerdos de Nivel de Servicio (SLA):} Permite monitorear de forma automatizada los límites de cobertura de los contratos vigentes de cada cliente corporativo, asegurando una atención oportuna de las incidencias críticas.
-    \item \textbf{Mejora en la toma de decisiones gerenciales:} Incorpora un módulo de tableros de control (Dashboards) con indicadores clave de rendimiento (KPIs) como el Tiempo Medio de Reparación (MTTR), Tiempo Medio de Respuesta (MTTA), Resolución al Primer Contacto (FCR) y la Satisfacción del Cliente (CSAT).
-    \item \textbf{Incremento de la confianza y retención de clientes:} Ofrece una plataforma transparente, rápida y estructurada que eleva la calidad percibida del servicio técnico, fortaleciendo la relación comercial a largo plazo con los clientes corporativos de J\&P Periféricos S.A.C.
+    \item \textbf{Centralización y trazabilidad integral de solicitudes (SPOC):} Reemplaza el ingreso informal por llamadas telefónicas y mensajes de WhatsApp sin registro (Causa CA2) mediante una consola web centralizada donde cada incidencia se registra con un código PIN único, máquina de estados auditable y registro de eventos críticos (\texttt{auditoria\_eventos}), asegurando que no se pierdan solicitudes ni se dupliquen atenciones.
+    \item \textbf{Agilidad y exactitud en la gestión de activos TI (ITAM):} Sustituye las planillas dispersas y desactualizadas de Excel (Causa CA1) por un expediente digital multinivel con hoja de vida técnica por equipo, trazabilidad de componentes físicos instalados/reemplazados (\texttt{hardware} y \texttt{registro\_hardware}) y bóveda de licencias de software (\texttt{software} y \texttt{software\_equipos}), reduciendo el tiempo de búsqueda previa al diagnóstico.
+    \item \textbf{Optimización de visitas técnicas \textit{in-situ} y control de concurrencia:} Incorpora un motor de autoasignación por zona geográfica (\texttt{tecnicos\_zonas}), evaluación de carga laboral, agrupación de hasta tres atenciones en una misma sucursal y franja horaria, y bloqueos temporales (\textit{soft\_locks}), reduciendo los cruces de agenda (Causa CA3), los traslados duplicados y los tiempos muertos en ruta.
+    \item \textbf{Estandarización del escalamiento y validación digital de planes y SLA:} Formaliza el flujo de derivación desde soporte remoto hacia soporte \textit{in-situ} con registro del motivo y antecedentes del ticket (Causa CA4), al tiempo que centraliza los planes de soporte (vigencia, servicios incluidos, precios y límite de equipos) para evitar atenciones fuera de cobertura y mejorar el cumplimiento de los Acuerdos de Nivel de Servicio (Causa CA5).
+    \item \textbf{Analítica continua y soporte a la decisión gerencial:} Automatiza el cálculo y visualización de indicadores clave de rendimiento (\textbf{MTTA, MTTR, FCR y CSAT}) y métricas operativas en el \textit{dashboard} (Causas CA6 y CA7), eliminando la consolidación manual de reportes a fin de mes y brindando información objetiva para evaluar la calidad del servicio.
+    \item \textbf{Retención y confianza de clientes corporativos:} Provee transparencia sobre el estado de las incidencias, el historial de intervenciones y el cumplimiento de tiempos pactados, fortaleciendo la relación comercial de J\&P Periféricos S.A.C. con sus empresas clientes.
 \end{itemize}
 
 \section{Relación de beneficio / costo}
 
-Para evaluar la rentabilidad financiera y la viabilidad económica del proyecto de mejora, se aplica el análisis de la relación Beneficio/Costo ($B/C$) y el período de recuperación de la inversión, contrastando los costos totales de implementación frente a los ahorros y beneficios económicos generados por la eliminación de las ineficiencias operativas.
+La evaluación económica contrasta la \textbf{inversión total de implementación} cuantificada en el Capítulo V (\textbf{S/ 18,254.19} o \textbf{US\$ 5,337.48} al tipo de cambio referencial de S/ 3.42) frente a los \textbf{ahorros operativos} derivados de mitigar las ineficiencias diagnosticadas en el Capítulo III, aplicando el indicador de relación \textbf{Beneficio/Costo (B/C)} y el \textbf{período de recuperación de la inversión (\textit{Payback})}.
 
 \subsection{Identificación de la Pérdida Económica}
 
-Tal como se determinó en el análisis cuantitativo del Capítulo 3 (sección 3.4.3), la empresa J\&P Periféricos S.A.C. venía experimentando pérdidas económicas recurrentes a causa de las deficiencias operativas en el área de soporte técnico. Para cuantificar este impacto, se desglosan las tres causas principales identificadas en la Tabla 1 y su estimación económica mensual y anual:
+A partir del diagnóstico cuantitativo del Capítulo III ---basado en el registro empírico de 5 meses (mayo a septiembre de 2026, con un total de 395 atenciones, una plantilla operativa de 3 técnicos y un costo hora-hombre de \textbf{S/ 25.00})--- se identifican las pérdidas económicas directas asociadas a las tres causas principales priorizadas en el análisis de Pareto, cuyo consolidado mensual y anual se detalla en la Tabla \ref{tab:perdida_economica_cap6}:
 
-\vspace{0.3cm}
+\begin{enumerate}
+    \item \textbf{Causa CA1 --- Búsqueda manual de datos de equipos en archivos Excel desactualizados:} Se registraron 103 atenciones con demora en 5 meses (26\% promedio), con una paralización estimada de 25 minutos por incidencia. El impacto en los 5 meses asciende a \textbf{S/ 1,072.90}, equivalente a un promedio mensual de \textbf{S/ 214.58} y una proyección anual (12 meses) de \textbf{S/ 2,574.96}.
+    \item \textbf{Causa CA2 --- Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro:} Se registraron 149 solicitudes informales en 5 meses (38\% promedio), con un tiempo improductivo promedio de 30 minutos por solicitud. El impacto en los 5 meses asciende a \textbf{S/ 1,862.50}, equivalente a un promedio mensual de \textbf{S/ 372.50} y una proyección anual (12 meses) de \textbf{S/ 4,470.00}.
+    \item \textbf{Causa CA3 --- Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ}:} Se registraron 81 visitas presenciales afectadas por cruces de agenda y reprogramaciones en 5 meses (20\% promedio), con un tiempo muerto promedio de 20 minutos y sobrecostos operativos de traslado. El impacto en los 5 meses asciende a \textbf{S/ 675.00}, equivalente a un promedio mensual de \textbf{S/ 135.00} y una proyección anual (12 meses) de \textbf{S/ 1,620.00}.
+\end{enumerate}
 
-\begingroup
+\begin{table}[H]
+\centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{3.2cm} p{4.2cm} p{2.8cm} r @{}}
-\caption{{Lista de causas principales asociadas al problema y estimación de pérdidas económicas}} \label{tab:perdida_mensual} \\
+\caption{Consolidado de Pérdidas Económicas Operativas Identificadas (Situación Actual)}
+\label{tab:perdida_economica_cap6}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{1.2cm} >{\raggedright\arraybackslash}p{5.2cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedleft\arraybackslash}p{2.0cm} >{\raggedleft\arraybackslash}p{2.2cm} >{\raggedleft\arraybackslash}p{1.6cm} @{}}
 \toprule
-\textbf{Causa Raíz} & \textbf{Descripción de la Pérdida} & \textbf{Tipo de Pérdida} & \textbf{Estimación Mensual} \\
+\textbf{Código} & \textbf{Causa Raíz Principal} & \textbf{Tipo de Pérdida} & \textbf{Estimación Mensual (S/.)} & \textbf{Proyección Anual (S/.)} & \textbf{Part. (\%)} \\
 \midrule
-\endfirsthead
-
-\multicolumn{4}{@{}l}{\textbf{Tabla \ref{tab:perdida_mensual}} \textit{(Continuación)}} \\[0.4em]
-\toprule
-\textbf{Causa Raíz} & \textbf{Descripción de la Pérdida} & \textbf{Tipo de Pérdida} & \textbf{Estimación Mensual} \\
+CA1 & Búsqueda manual de datos de equipos en archivos Excel desactualizados & Operativa / Horas-Hombre & 214.58 & 2,574.96 & 29.72\% \\
+CA2 & Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro & Operativa / Horas-Hombre & 372.50 & 4,470.00 & 51.59\% \\
+CA3 & Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ} & Operativa / Logística & 135.00 & 1,620.00 & 18.70\% \\
 \midrule
-\endhead
-
-\midrule
-\multicolumn{4}{r}{\textit{Continúa en la siguiente página\dots}} \\
-\endfoot
-
+\textbf{Total} & \textbf{Pérdida económica operativa total} & \textbf{Directa (H-H y Traslados)} & \textbf{722.08} & \textbf{8,664.96} & \textbf{100.00\%} \\
 \bottomrule
-\multicolumn{4}{@{}p{\textwidth}}{\small \textit{Nota.} Lista de causas principales identificadas y su respectiva estimación de pérdida económica mensual en el área de soporte técnico.} \\
-\endlastfoot
-
-\textbf{CA1:} Búsqueda manual de datos de equipos en archivos Excel desactualizados. & 
-- Demoras en la localización de historiales.\newline - Falta de expedientes técnicos de equipos. & 
-Operativa / Horas-Hombre & 
-S/ 214.58 \\[10pt]
-
-\textbf{CA2:} Recepción y comunicación por canales informales (WhatsApp / Llamadas). & 
-- Tiempos improductivos.\newline - Solicitudes traspapeladas por falta de un canal centralizado. & 
-Operativa / Horas-Hombre & 
-S/ 372.50 \\[10pt]
-
-\textbf{CA3:} Descoordinación y reubicación de horarios por cruces en visitas in-situ. & 
-- Tiempos muertos y reprocesos.\newline - Traslados duplicados en atenciones presenciales. & 
-Operativa / Logística & 
-S/ 135.00 \\ 
-
-\midrule
-\multicolumn{3}{r}{\textbf{Total Estimado Mensual:}} & \textbf{S/ 722.08} \\
-\end{longtable}
-\endgroup
-
-Proyectando las pérdidas operativas mensuales al período de un año (12 meses), se obtiene el impacto económico acumulado que afecta anualmente a la organización:
-
-\vspace{0.3cm}
-
-\begingroup
-\small
-\renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{6.8cm} c r @{}}
-\caption{{Proyección anual de las pérdidas económicas operativas en el área de soporte técnico}} \label{tab:perdida_anual} \\
-\toprule
-\textbf{Causa Raíz Principal} & \textbf{Meses} & \textbf{Estimación Anual (S/.)} \\
-\midrule
-\endfirsthead
-
-\multicolumn{3}{@{}l}{\textbf{Tabla \ref{tab:perdida_anual}} \textit{(Continuación)}} \\[0.4em]
-\toprule
-\textbf{Causa Raíz Principal} & \textbf{Meses} & \textbf{Estimación Anual (S/.)} \\
-\midrule
-\endhead
-
-\midrule
-\multicolumn{3}{r}{\textit{Continúa en la siguiente página\dots}} \\
-\endfoot
-
-\bottomrule
-\multicolumn{3}{@{}p{\textwidth}}{\small \textit{Nota.} Proyección de las pérdidas económicas anuales derivadas de las ineficiencias operativas del área de soporte técnico.} \\
-\endlastfoot
-
-CA1: Búsqueda manual de activos en archivos Excel. & 12 meses & S/ 2,574.96 \\
-CA2: Recepción por canales informales sin registro. & 12 meses & S/ 4,470.00 \\
-CA3: Descoordinación y cruces en visitas presenciales in-situ. & 12 meses & S/ 1,620.00 \\ 
-\midrule
-\textbf{Total General de Pérdida Económica Anual} & \textbf{12 meses} & \textbf{S/ 8,664.96} \\
-\end{longtable}
-\endgroup
-
-De acuerdo con la tabla anterior, las pérdidas económicas anuales estimadas ascienden a \textbf{S/ 8,664.96}. Este monto representa el impacto financiero aproximado de mantener un proceso operativo basado en validaciones manuales, baja automatización, trazabilidad limitada y ausencia de un sistema centralizado de ayuda. La cifra se considera prudente, debido a que solo toma como base horas técnicas improductivas y traslados ineficientes, sin incluir posibles pérdidas indirectas relacionadas con interrupciones prolongadas de servicio, insatisfacción de clientes corporativos o afectación reputacional.
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia a partir del diagnóstico cuantitativo del Capítulo III (serie mayo--septiembre de 2026 proyectada a 12 meses). Por criterio conservador, no incluye costos indirectos por \textit{downtime} prolongado del cliente ni penalidades.}
+\end{table}
 
 \subsection{Identificación de los beneficios del sistema}
 
-La implementación del sistema web Help-Desk centralizado y el módulo de gestión de activos (ITAM) permite mitigar las deficiencias operativas detectadas, logrando una eficiencia estimada de recuperación del \textbf{85.0\%} sobre las pérdidas anuales de la empresa.
+Con la puesta en marcha del sistema web centralizado, se estima una \textbf{eficiencia de recuperación del 85.0\%} sobre las pérdidas operativas anuales identificadas. Se asume un \textbf{15.0\% de pérdida residual} debido a factores operativos no eliminables al 100\% en el corto plazo, tales como la curva de aprendizaje de los usuarios finales, eventuales reportes incompletos iniciales o saturación puntual de técnicos de campo ante picos de visitas presenciales:
 
-\vspace{0.3cm}
+\begin{equation}
+\text{Ahorro Anual Proyectado} = \text{Pérdida Anual} \times \text{Eficiencia de Recuperación}
+\end{equation}
 
-\vspace{0.3cm}
+\begin{equation}
+\text{Ahorro Anual Proyectado} = \text{S/ } 8,664.96 \times 0.85 = \text{S/ } 7,365.22
+\end{equation}
 
-\begingroup
+\begin{equation}
+\text{Pérdida Residual Estimada (15\%)} = \text{S/ } 8,664.96 - \text{S/ } 7,365.22 = \text{S/ } 1,299.74
+\end{equation}
+
+La síntesis comparativa entre las pérdidas actuales, el ahorro proyectado, la pérdida residual y la inversión requerida se muestra en la Tabla \ref{tab:resumen_beneficios_cap6}.
+
+\begin{table}[H]
+\centering
 \small
 \renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{4.2cm} c p{4.2cm} c @{}}
-\caption{{Análisis de eficiencia y recuperación económica esperada}} \label{tab:eficiencia_recuperacion} \\
+\caption{Resumen de Ahorros Anuales Proyectados e Inversión del Proyecto}
+\label{tab:resumen_beneficios_cap6}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{9.2cm} >{\raggedleft\arraybackslash}p{3.0cm} >{\raggedleft\arraybackslash}p{2.4cm} @{}}
 \toprule
-\textbf{Pérdidas Anuales} & \textbf{Representan \%} & \textbf{Costo Total de la Implementación} & \textbf{\% de Eficiencia de Recuperación} \\
+\textbf{Concepto Económico / Operativo} & \textbf{Valor (S/.)} & \textbf{Proporción (\%)} \\
 \midrule
-\endfirsthead
-
-\multicolumn{4}{@{}l}{\textbf{Tabla \ref{tab:eficiencia_recuperacion}} \textit{(Continuación)}} \\[0.4em]
-\toprule
-\textbf{Pérdidas Anuales} & \textbf{Representan \%} & \textbf{Costo Total de la Implementación} & \textbf{\% de Eficiencia de Recuperación} \\
+Pérdida económica anual estimada (situación actual) & 8,664.96 & 100.0\% \\
+Ahorro anual proyectado por eficiencia del sistema (85.0\%) & 7,365.22 & 85.0\% \\
+Pérdida residual estimada tras la mejora (15.0\%) & 1,299.74 & 15.0\% \\
 \midrule
-\endhead
-
-\midrule
-\multicolumn{4}{r}{\textit{Continúa en la siguiente página\dots}} \\
-\endfoot
-
+\textbf{Inversión total de implementación (Capítulo V)} & \textbf{18,254.19} & \textbf{---} \\
 \bottomrule
-\multicolumn{4}{@{}p{\textwidth}}{\small \textit{Nota.} Resumen de la inversión frente a las pérdidas anuales operativas de soporte técnico.} \\
-\endlastfoot
-
-S/ 8,664.96 & 100\% & S/ 18,254.19 & 85.0\% \\
-\end{longtable}
-\endgroup
-
-\vspace{0.2cm}
-
-\begingroup
-\small
-\renewcommand{\arraystretch}{1.25}
-\begin{longtable}{@{} p{8.2cm} r @{}}
-\caption{{Cálculo del ahorro total anual proyectado}} \label{tab:ahorro_anual} \\
-\toprule
-\textbf{Descripción} & \textbf{Monto (S/.)} \\
-\midrule
-\endfirsthead
-
-\multicolumn{2}{@{}l}{\textbf{Tabla \ref{tab:ahorro_anual}} \textit{(Continuación)}} \\[0.4em]
-\toprule
-\textbf{Descripción} & \textbf{Monto (S/.)} \\
-\midrule
-\endhead
-
-\midrule
-\multicolumn{2}{r}{\textit{Continúa en la siguiente página\dots}} \\
-\endfoot
-
-\bottomrule
-\multicolumn{2}{@{}p{\textwidth}}{\small \textit{Nota.} Para calcular el ahorro total se emplea la fórmula: $\text{Ahorro Anual} = \text{Pérdidas Anuales} \times \text{Eficiencia de Recuperación}$, y las pérdidas residuales corresponden a la diferencia entre las pérdidas iniciales y el ahorro total.} \\
-\endlastfoot
-
-Pérdidas anuales actuales & S/ 8,664.96 \\
-Pérdidas estimadas después de la mejora (15\%) & S/ 1,299.74 \\
-\midrule
-\textbf{TOTAL, AHORRO ANUAL} & \textbf{S/ 7,365.22} \\
-\end{longtable}
-\endgroup
+\end{tabular}
+\\[0.3em]
+{\small \textit{Nota.} Elaboración propia a partir de la estimación de ahorro operativo anual y el presupuesto consolidado del Capítulo V.}
+\end{table}
 
 \subsection{Relación de beneficio / Costo}
 
-Para determinar la rentabilidad de la inversión realizada en el proyecto, se calcula la ratio Beneficio/Costo ($B/C$) dividiendo el beneficio o ahorro total generado entre el costo total de la implementación obtenido en el Capítulo 5 (\textbf{S/ 18,254.19}).
+Para determinar el retorno directo por unidad monetaria invertida en el primer año de operación, se calcula la relación \textbf{Beneficio / Costo ($\text{B/C}$)} contrastando el ahorro anual proyectado (\textbf{S/ 7,365.22}) frente al costo total de implementación (\textbf{S/ 18,254.19}):
 
 \begin{equation}
-\text{Relación Beneficio / Costo} = \frac{\text{Ahorro Anual}}{\text{Costo de Inversión}} = \frac{7,365.22}{18,254.19} = 0.40
+\text{B/C}_{\text{anual}} = \frac{\text{Ahorro Anual}}{\text{Costo de Inversión}} = \frac{7,365.22}{18,254.19} \approx 0.40
 \end{equation}
 
-\noindent \textbf{Análisis:} El resultado obtenido indica que por cada sol invertido en la implementación del sistema web Help-Desk, se obtiene un retorno en ahorro operativo valorizado en \textbf{S/. 0.40} anuales.
+\textbf{Fundamentación e interpretación del resultado:}
+\begin{itemize}
+    \item En una evaluación estática a \textbf{1 año}, el índice $\text{B/C} = 0.40$ significa que por cada \textbf{S/ 1.00} invertido en la implementación del sistema, se recuperan \textbf{S/ 0.40} en ahorro directo de horas-hombre y logística durante el primer año.
+    \item Este resultado obedece a que el proyecto incluye un componente relevante de desarrollo de software a medida (mano de obra de tres desarrolladores en 149 días laborables, que representa el 73.5\% de la inversión total) y equipamiento/soporte, mientras que el ahorro base se calcula de forma conservadora sobre una muestra operativa acotada (395 atenciones en 5 meses).
+    \item Si se proyecta el ahorro acumulado en un horizonte operativo de \textbf{3 años} ($\text{S/ } 7,365.22 \times 3 = \text{S/ } 22,095.66$), el beneficio acumulado supera la inversión inicial (ratio acumulado a 3 años de \textbf{1.21}), y a \textbf{5 años} ---alineado con la vida útil de los equipos de cómputo del Capítulo V--- alcanza \textbf{S/ 36,826.10} (ratio acumulado a 5 años de \textbf{2.02}), además de habilitar la comercialización modular externa señalada en el Capítulo I como vía adicional de retorno para J\&P Periféricos S.A.C.
+\end{itemize}
 
 \subsection{Relación Costo/beneficio (Tiempo Recuperación)}
 
-El tiempo de recuperación de la inversión (Payback) determina el período exacto en el cual la empresa J\&P Periféricos S.A.C. recuperará el capital invertido (\textbf{S/ 18,254.19}) mediante los beneficios y ahorros anuales generados por la solución tecnológica (\textbf{S/ 7,365.22}).
+El período de recuperación de la inversión (\textit{Payback}) indica el tiempo necesario para que los ahorros operativos acumulados igualen el costo total de implementación (\textbf{S/ 18,254.19}), asumiendo un flujo constante de ahorro anual de \textbf{S/ 7,365.22} (equivalente a \textbf{S/ 613.77} mensuales):
 
 \begin{equation}
-\text{Tiempo de Recuperación} = \frac{\text{Costo de Inversión}}{\text{Ahorro Anual}} = \frac{18,254.19}{7,365.22} = 2.48 \text{ años}
+\text{Tiempo de Recuperación} = \frac{\text{Costo de Inversión}}{\text{Ahorro Anual}} = \frac{18,254.19}{7,365.22} \approx 2.48\text{ años}
 \end{equation}
 
-Realizando la conversión a meses y días:
-\begin{align*}
-2.48 \times 12 \text{ meses} &= 29.76 \text{ meses (2 años y 6 meses)} \\
-0.00 \times 30 \text{ días} &\approx 0 \text{ días}
-\end{align*}
+Convirtiendo la fracción decimal a meses y días:
 
-\noindent \textbf{Análisis:} Significa que la inversión total realizada se recuperará en un tiempo aproximado de \textbf{2 años y 6 meses}, a partir del cual todos los ahorros generados constituirán una ganancia neta para la rentabilidad operativa de J\&P Periféricos S.A.C.
+\begin{equation}
+2.48\text{ años} \times 12\text{ meses/año} = 29.76\text{ meses}
+\end{equation}
+
+\begin{equation}
+29\text{ meses} + (0.76 \times 30\text{ días}) = 29\text{ meses y } 22.8\text{ días} \approx 2\text{ años, } 5\text{ meses y } 23\text{ días}\ (\approx 2.5\text{ años})
+\end{equation}
+
+\textbf{Fundamentación e interpretación del resultado:}
+\begin{itemize}
+    \item Bajo los supuestos conservadores de carga operativa y eficiencia de recuperación del 85\%, J\&P Periféricos S.A.C. recupera la inversión total en aproximadamente \textbf{2 años y 6 meses} (29.76 meses).
+    \item A partir de ese punto de equilibrio, los ahorros operativos generados por la trazabilidad de tickets, el expediente ITAM multinivel y la programación sin cruces de visitas \textit{in-situ} representan un beneficio neto recurrente para la empresa, el cual puede acelerarse en la medida en que crezca el volumen de incidencias atendidas y se incorporen clientes corporativos adicionales a la plataforma.
+\end{itemize}
