@@ -2,7 +2,7 @@
 
 ## Project
 
-LaTeX thesis (SENATI "Proyecto de Innovación") in Spanish, APA 7. Title: "Sistema Web Help-Desk Centralizado para la Gestión del Servicio de Soporte Técnico y Control de Inventario de Activos TI en J&P Periféricos S.A.C." Authors: Jack Daniel Leandro Hernández, Giovanni Denis Jara Hilario, Alvaro Jesus Solis Rivadeneyra; advisor Mg. Jose Armando Tiznado Ubillus.
+LaTeX thesis (SENATI "Proyecto de Innovación") in Spanish, APA 7. Title: "Sistema Web Help Desk Centralizado para la Gestión del Servicio de Soporte Técnico y Control de Inventario de Activos TI en J&P Periféricos S.A.C." Authors: Jack Daniel Leandro Hernández, Giovanni Denis Jara Hilario, Alvaro Jesus Solis Rivadeneyra; advisor Mg. Jose Armando Tiznado Ubillus.
 
 No application code in this repo — only the thesis document. Build artifacts live in `build/` (gitignored).
 
@@ -37,8 +37,9 @@ No application code in this repo — only the thesis document. Build artifacts l
 ## Flujo de Aprobación y Trazabilidad de Antecedentes
 
 Cuando se proponga o agregue un antecedente a la tesina:
+
 1. **Propuesta y aprobación obligatoria (antes de editar `.tex`):**
-   - Explica explícitamente **por qué conviene implementar ese antecedente** (cómo aporta datos estadísticos reales y cómo se vincula con las variables: Gestión del Servicio de Soporte Técnico Help-Desk y Control de Inventario de Activos TI).
+   - Explica explícitamente **por qué conviene implementar ese antecedente** (cómo aporta datos estadísticos reales y cómo se vincula con las variables: Gestión del Servicio de Soporte Técnico Help Desk y Control de Inventario de Activos TI).
    - Detente y espera mi aprobación explícita ("Aprobado") antes de escribir en los archivos `.tex` o crear archivos.
 2. **Al recibir aprobación:**
    - Crea un archivo Markdown individual en `docs/antecedentes/` con el formato `YYYY-apellido-clave.md` (ejemplo: `2024-quispe-helpdesk.md`).

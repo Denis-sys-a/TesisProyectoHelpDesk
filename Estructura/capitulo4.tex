@@ -2,7 +2,7 @@
 
 \section{Plan de Acción de la Mejora Propuesta}
 
-Este capítulo presenta la estrategia de implementación del sistema web help-desk y control de activos TI, formalizada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}). Para ejecutar la mejora de forma ordenada, el plan se organiza bajo dos enfoques complementarios:
+Este capítulo presenta la estrategia de implementación del sistema web help desk y control de activos TI, formalizada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}). Para ejecutar la mejora de forma ordenada, el plan se organiza bajo dos enfoques complementarios:
 
 \begin{itemize}
     \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM, MySQL y MongoDB/Redis según el módulo y requerimiento).
@@ -46,7 +46,7 @@ Implementada para el control visual del flujo operativo de atención de tickets 
 \end{itemize}
 
 \subsection{Requerimientos del Sistema}
-Para el correcto funcionamiento del sistema web help-desk, se han definido y clasificado los requerimientos funcionales y no funcionales que guiarán el desarrollo de la arquitectura y la base de datos.
+Para el correcto funcionamiento del sistema web help desk, se han definido y clasificado los requerimientos funcionales y no funcionales que guiarán el desarrollo de la arquitectura y la base de datos.
 
 Para delimitar el alcance operativo y el control de acceso (\textit{RBAC}) de la plataforma, el sistema contempla seis roles principales: \textbf{Administrador} (gestión global de clientes, planes, zonas, catálogos, usuarios, auditoría y reportes), \textbf{Soporte técnico} (atención remota de tickets, gestión de inventario/licencias y derivación a campo), \textbf{Soporte in-situ} (atención presencial en sedes, actualización de hoja de vida de equipos y registro de visitas), \textbf{Cliente empresa} (supervisión de su organización, sedes y reportes corporativos), \textbf{Cliente sucursal} (administración operativa de su sede y áreas asignadas) y \textbf{Cliente trabajador} (registro y seguimiento de incidencias vinculadas a sus equipos).
 
@@ -74,7 +74,7 @@ Los requerimientos funcionales especifican las operaciones, interacciones y regl
 \endfoot
 
 \bottomrule
-\multicolumn{4}{@{}p{\dimexpr1.6cm+2.9cm+6.5cm+3.8cm+6\tabcolsep\relax}}{\small \textit{Nota.} Detalle completo de los requerimientos funcionales del sistema web help-desk.} \\
+\multicolumn{4}{@{}p{\dimexpr1.6cm+2.9cm+6.5cm+3.8cm+6\tabcolsep\relax}}{\small \textit{Nota.} Detalle completo de los requerimientos funcionales del sistema web help desk.} \\
 \endlastfoot
 
 RF-001 & Gestión de Usuarios y Autenticación & Registro, inicio de sesión con tokens JWT sin estado, cifrado Bcrypt, roles y control de sesiones concurrentes (\textit{soft\_locks}). & Todos los roles \\
@@ -1432,7 +1432,7 @@ El estado actual del Sprint 6 se refleja en su tablero de seguimiento.
 La arquitectura de la solución requiere compatibilidad con navegadores web modernos, protocolos de comunicación cifrada mediante HTTPS, autenticación basada en JSON Web Tokens (JWT) y una Arquitectura Modular Basada en Roles en el Frontend. El backend implementa NestJS, TypeScript, MySQL (con Prisma ORM), MongoDB y Redis para la gestión transaccional, el historial de eventos y el control concurrente, aspecto fundamental para garantizar el correcto funcionamiento del algoritmo de reservas temporales (\textit{SoftLock}) y la autoasignación concurrente de citas.
 
 \subsection{Consideraciones Operativas}
-La puesta en marcha de la plataforma demanda una transición ordenada desde los canales informales (chats de WhatsApp, llamadas telefónicas) y registros dispersos en hojas de cálculo hacia el sistema Web Help-Desk centralizado. Esto optimiza de forma directa la operación diaria de la empresa J\&P Periféricos S.A.C. mediante los siguientes ejes operativos:
+La puesta en marcha de la plataforma demanda una transición ordenada desde los canales informales (chats de WhatsApp, llamadas telefónicas) y registros dispersos en hojas de cálculo hacia el sistema Web Help Desk centralizado. Esto optimiza de forma directa la operación diaria de la empresa J\&P Periféricos S.A.C. mediante los siguientes ejes operativos:
 
 \begin{itemize}
 \item \textbf{Formalización del Ingreso de Solicitudes:} Los usuarios finales ya no reportarán fallas por vías informales u opacas; cada incidencia generará formalmente un ticket de soporte asociado a un código PIN único, garantizando un registro centralizado y trazable.
@@ -1463,7 +1463,7 @@ La implementación del sistema aporta beneficios directos desde la perspectiva a
 
 \section{Recursos técnicos para la implementación de la mejora}
 
-Para garantizar el correcto desarrollo, despliegue y funcionamiento del sistema Web Help-Desk centralizado, se han estructurado los recursos técnicos en tres categorías esenciales:
+Para garantizar el correcto desarrollo, despliegue y funcionamiento del sistema Web Help Desk centralizado, se han estructurado los recursos técnicos en tres categorías esenciales:
 
 \subsection{Infraestructura de Servidores y Conectividad}
 \begin{itemize}
@@ -1593,7 +1593,7 @@ A continuación, se presenta el diagrama de Gantt que detalla la planificación 
 \vspace{0.05em}
 \includegraphics[width=0.92\textwidth,height=0.33\textheight,keepaspectratio, trim=0 0 0 0, clip]{Cronograma-Proyecto-1.png}
 \\[0.05em]
-{\scriptsize \textit{Nota.} Elaboración propia basada en la planificación del sistema Help-Desk centralizado en Microsoft Project. Primera parte del cronograma.}
+{\scriptsize \textit{Nota.} Elaboración propia basada en la planificación del sistema Help Desk centralizado en Microsoft Project. Primera parte del cronograma.}
 \end{figure}
 
 \vspace{-0.4em}
@@ -1606,7 +1606,7 @@ A continuación, se presenta el diagrama de Gantt que detalla la planificación 
 \vspace{0.05em}
 \includegraphics[width=0.92\textwidth,height=0.33\textheight,keepaspectratio, trim=0 0 0 0, clip]{Cronograma-Proyecto-2.png}
 \\[0.05em]
-{\scriptsize \textit{Nota.} Elaboración propia basada en la planificación del sistema Help-Desk centralizado en Microsoft Project. Segunda parte del cronograma.}
+{\scriptsize \textit{Nota.} Elaboración propia basada en la planificación del sistema Help Desk centralizado en Microsoft Project. Segunda parte del cronograma.}
 \end{figure}
 
 \vspace{-0.2em}
