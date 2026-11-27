@@ -2,126 +2,269 @@
 
 \section{Beneficio técnico y/o económico esperado de la mejora / Innovación / Creatividad}
 
-La implementación del \textbf{Sistema Web Help Desk Centralizado} en \textbf{J\&P Periféricos S.A.C.} está orientada a resolver el problema principal de desorganización y falta de trazabilidad en la gestión de incidencias y el control del inventario informático multinivel (empresa cliente, sucursal, área y trabajador) para clientes corporativos externos. Desde la ingeniería de software (arquitectura hexagonal en NestJS con TypeScript, Prisma ORM sobre MySQL, MongoDB para historial de chats, Redis Pub/Sub y WebSockets en tiempo real, y \textit{frontend} modular en Vite + React con \textit{shadcn/ui}) y las prácticas de \textbf{ITSM / ITIL v4 e ITAM}, los beneficios esperados se estructuran en dimensiones técnicas y económicas:
+La implementación del \textbf{Sistema Web Help-Desk Centralizado} en \textbf{J\&P Periféricos S.A.C.} está orientada a resolver el problema principal de desorganización y falta de trazabilidad en la gestión de incidencias y el control del inventario informático multinivel (empresa cliente, sucursal, área y trabajador) para clientes corporativos externos. Desde el diseño técnico y operativo del proyecto ---arquitectura hexagonal en \textit{NestJS} con \textit{TypeScript}, \textit{Prisma ORM} sobre \textit{MySQL}, \textit{MongoDB} para historial de chats e interacciones, \textit{Redis Pub/Sub} y \textit{WebSockets} en tiempo real, y \textit{frontend} modular en \textit{Vite + React} con \textit{shadcn/ui}--- y las buenas prácticas de gestión de servicios de TI (\textit{ITSM / ITIL v4}) y administración de activos (\textit{ITAM}), los beneficios esperados se estructuran en una dimensión \textbf{técnica} y otra \textbf{económica}.
 
-\begin{itemize}
-    \item \textbf{Centralización y trazabilidad integral de solicitudes (SPOC):} Reemplaza el ingreso informal por llamadas telefónicas y mensajes de WhatsApp sin registro (Causa CA2) mediante una consola web centralizada donde cada incidencia se registra con un código PIN único, máquina de estados auditable y registro de eventos críticos (\texttt{auditoria\_eventos}), asegurando que no se pierdan solicitudes ni se dupliquen atenciones.
-    \item \textbf{Agilidad y exactitud en la gestión de activos TI (ITAM):} Sustituye las planillas dispersas y desactualizadas de Excel (Causa CA1) por un expediente digital multinivel con hoja de vida técnica por equipo, trazabilidad de componentes físicos instalados/reemplazados (\texttt{hardware} y \texttt{registro\_hardware}) y bóveda de licencias de software (\texttt{software} y \texttt{software\_equipos}), reduciendo el tiempo de búsqueda previa al diagnóstico.
-    \item \textbf{Optimización de visitas técnicas \textit{in-situ} y control de concurrencia:} Incorpora un motor de autoasignación por zona geográfica (\texttt{tecnicos\_zonas}), evaluación de carga laboral, agrupación de hasta tres atenciones en una misma sucursal y franja horaria, y bloqueos temporales (\textit{soft\_locks}), reduciendo los cruces de agenda (Causa CA3), los traslados duplicados y los tiempos muertos en ruta.
-    \item \textbf{Estandarización del escalamiento y validación digital de planes y SLA:} Formaliza el flujo de derivación desde soporte remoto hacia soporte \textit{in-situ} con registro del motivo y antecedentes del ticket (Causa CA4), al tiempo que centraliza los planes de soporte (vigencia, servicios incluidos, precios y límite de equipos) para evitar atenciones fuera de cobertura y mejorar el cumplimiento de los Acuerdos de Nivel de Servicio (Causa CA5).
-    \item \textbf{Analítica continua y soporte a la decisión gerencial:} Automatiza el cálculo y visualización de indicadores clave de rendimiento (\textbf{MTTA, MTTR, FCR y CSAT}) y métricas operativas en el \textit{dashboard} (Causas CA6 y CA7), eliminando la consolidación manual de reportes a fin de mes y brindando información objetiva para evaluar la calidad del servicio.
-    \item \textbf{Retención y confianza de clientes corporativos:} Provee transparencia sobre el estado de las incidencias, el historial de intervenciones y el cumplimiento de tiempos pactados, fortaleciendo la relación comercial de J\&P Periféricos S.A.C. con sus empresas clientes.
+\subsection{Beneficio técnico esperado}
+
+El beneficio técnico se sustenta en la articulación de módulos especializados sobre una estructura multiinquilino y multinivel que reemplaza las hojas de cálculo aisladas y los canales informales por flujos estructurados, trazables y auditables, validados funcionalmente y sometidos a pruebas de carga con \textit{k6} en un entorno local de pruebas, cuyos resultados comparativos se presentan en la Tabla~\ref{tab:resultados-k6}. En la Tabla~\ref{tab:beneficios_tecnicos_cap6} se sintetiza cada beneficio técnico, su vínculo con las causas del diagnóstico y su fundamento operativo.
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTcapwidth}{\linewidth}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{0.22\linewidth} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}p{0.32\linewidth} >{\raggedright\arraybackslash}p{0.32\linewidth} @{}}
+\caption*{\textbf{Tabla \ref{tab:beneficios_tecnicos_cap6}} \\ \textit{Matriz de Beneficios Técnicos Esperados del Sistema Web Help-Desk Centralizado}} \label{tab:beneficios_tecnicos_cap6} \\
+\toprule
+\textbf{Dimensión técnica} & \textbf{Causas} & \textbf{Mejora implementada} & \textbf{Fundamento y efecto operativo} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{@{}l}{\textbf{Tabla \ref{tab:beneficios_tecnicos_cap6}} \textit{(Continuación)}} \\[0.3em]
+\toprule
+\textbf{Dimensión técnica} & \textbf{Causas} & \textbf{Mejora implementada} & \textbf{Fundamento y efecto operativo} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{4}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
+\bottomrule
+\multicolumn{4}{@{}p{\linewidth}}{\footnotesize \textit{Nota.} Elaboración propia a partir del diseño funcional del sistema, el diagnóstico operativo y los indicadores resumidos en la Tabla~\ref{tab:resultados-k6}.} \\
+\endlastfoot
+
+Recepción y trazabilidad de solicitudes & CA2 & Registro web de tickets con código \textit{PIN} único, estados auditables y bitácora de eventos críticos. & Elimina la pérdida y duplicidad de pedidos recibidos por \textit{WhatsApp} o llamadas sin registro, asegurando trazabilidad de principio a fin. \\
+\addlinespace[4pt]
+Inventario multinivel de activos TI (ITAM) & CA1 & Expediente digital por empresa, sucursal, área y trabajador; historial de \textit{hardware} y licencias de \textit{software}. & Reemplaza archivos \textit{Excel} dispersos y desactualizados, acelerando la consulta de especificaciones, garantías y mantenimientos previos. \\
+\addlinespace[4pt]
+Agenda y visitas \textit{in-situ} sin cruces & CA3 & Autoasignación por zona geográfica, balance de carga, agrupación por sucursal/franja y \textit{SoftLock}. & Reduce choques de horarios, reprogramaciones de última hora y tiempos muertos en desplazamientos a sedes de clientes. \\
+\addlinespace[4pt]
+Escalamiento y control digital de SLA & CA4, CA5 & Flujo formal de derivación con motivo/antecedentes y validación digital de planes, límites y \textit{SLA}. & Evita re-diagnósticos repetitivos al escalar casos y previene atenciones fuera de cobertura o incumplimiento de tiempos pactados. \\
+\addlinespace[4pt]
+Métricas, reportes y estabilidad técnica & CA6, CA7 & \textit{Dashboard} con \textit{MTTA}, \textit{MTTR}, \textit{FCR} y \textit{CSAT}; reportes automatizados y pruebas de carga en \textit{k6}. & Sustituye cierres manuales de fin de mes por monitoreo continuo y respalda la operación con 0\,\% de fallos \textit{HTTP} hasta 75 VUs según la Tabla~\ref{tab:resultados-k6}. \\
+\end{longtable}
+\endgroup
+
+Cada fila de la matriz relaciona un componente del sistema con las causas operativas identificadas y con el comportamiento registrado en la Tabla~\ref{tab:resultados-k6} para las corridas de 25 y 75 usuarios virtuales, respaldando la consistencia del registro de tickets y del agendamiento bajo concurrencia controlada en el entorno de pruebas.
+
+\subsection{Beneficio económico esperado}
+
+Desde la perspectiva económica, el beneficio de la mejora se fundamenta en la \textbf{reducción del tiempo improductivo} del equipo de soporte técnico e \textit{in-situ} ---valorizado a \textbf{S/ 12,00/hora} sobre la línea base observada en el período \textbf{del 1 de mayo al 30 de septiembre de 2026} con 5 meses, 395 atenciones y 3 técnicos operativos--- aplicando una \textbf{eficiencia de recuperación del 85,0\,\%} y un \textbf{15,0\,\% de pérdida residual} por adaptación operativa y picos de demanda.
+
+El beneficio económico se desglosa en cuatro líneas complementarias:
+
+\begin{itemize}[leftmargin=1.27cm]
+    \item \textbf{Ahorro directo por mitigación de causas principales (CA1–CA3):} En mayo–septiembre de 2026, las tres causas priorizadas acumularon \textbf{S/ 1 733,00}, equivalentes a \textbf{S/ 346,60/mes} en promedio y \textbf{S/ 4 159,20} proyectados a 12 meses. Con el 85,0\,\% de recuperación, generan un ahorro estimado de \textbf{S/ 294,61 mensuales} y \textbf{S/ 3 535,32 anuales}, recuperando horas técnicas antes absorbidas por búsquedas en \textit{Excel}, transcripción de mensajes informales y reubicación de visitas.
+    \item \textbf{Ahorro adicional por control integral de procesos y reportes (CA4–CA7):} Las cuatro causas restantes del diagnóstico ---retraso en escalamiento/historial (\textbf{CA4}), verificación manual de \textit{SLA} (\textbf{CA5}), reportes mensuales manuales (\textbf{CA6}) y control manual de indicadores (\textbf{CA7})--- sumaron \textbf{S/ 868,20} en los 5 meses, es decir, \textbf{S/ 173,64/mes} en promedio y \textbf{S/ 2 083,68} anuales. Al 85,0\,\% de recuperación, aportan \textbf{S/ 147,59 mensuales} y \textbf{S/ 1 771,13 anuales}, elevando el ahorro anual potencial a \textbf{S/ 5 306,45}.
+    \item \textbf{Liberación de capacidad operativa sin incremento de planilla:} Las horas técnicas recuperadas permiten atender mayor volumen de incidencias y visitas con los mismos tres técnicos operativos, conteniendo presiones de sobrecosto laboral conforme crece la operación.
+    \item \textbf{Prevención de costos ocultos, penalidades y escalamiento comercial:} La validación digital de planes y \textit{SLA} reduce atenciones fuera de cobertura o demoras críticas, mientras que la trazabilidad y los indicadores \textit{KPI} fortalecen la retención de clientes corporativos y habilitan la expansión comercial del servicio.
 \end{itemize}
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTcapwidth}{\linewidth}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{0.34\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} @{}}
+\caption*{\textbf{Tabla \ref{tab:beneficios_economicos_cap6}} \\ \textit{Detalle de Beneficios Económicos Esperados por Grupo de Causas (Base Mayo–Septiembre 2026)}} \label{tab:beneficios_economicos_cap6} \\
+\toprule
+\textbf{Grupo de causas / concepto} & \textbf{Pérdida 5 meses (S/)} & \textbf{Proy. anual (S/)} & \textbf{Ahorro mensual (S/)} & \textbf{Ahorro anual 85\,\% (S/)} \\
+\midrule
+\endfirsthead
+
+\multicolumn{5}{@{}l}{\textbf{Tabla \ref{tab:beneficios_economicos_cap6}} \textit{(Continuación)}} \\[0.3em]
+\toprule
+\textbf{Grupo de causas / concepto} & \textbf{Pérdida 5 meses (S/)} & \textbf{Proy. anual (S/)} & \textbf{Ahorro mensual (S/)} & \textbf{Ahorro anual 85\,\% (S/)} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{5}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
+\bottomrule
+\multicolumn{5}{@{}p{\linewidth}}{\footnotesize \textit{Nota.} Elaboración propia con $C_{\text{H-H}} = \text{S/ 12,00/hora}$, serie mayo–septiembre de 2026 de 5 meses, proyección anual $= (\text{Pérdida 5 meses}/5) \times 12$ y ahorro al 85,0\,\%. La suma de subtotales puede variar en S/ 0,01 por redondeo.} \\
+\endlastfoot
+
+Causas principales priorizadas (CA1–CA3) & 1 733,00 & 4 159,20 & 294,61 & 3 535,32 \\
+Causas complementarias (CA4–CA7) & 868,20 & 2 083,68 & 147,59 & 1 771,13 \\
+\midrule
+\textbf{Total integral del diagnóstico (CA1–CA7)} & \textbf{2 601,20} & \textbf{6 242,88} & \textbf{442,20} & \textbf{5 306,45} \\
+\end{longtable}
+\endgroup
+
+Al consolidar ambos grupos, el ahorro anual estimado asciende a \textbf{S/ 5 306,45} y \textbf{S/ 442,20/mes}, lo que equivale a recuperar \textbf{442,20 horas-hombre al año} a una tarifa de \textbf{S/ 12,00/hora}, o \textbf{294,61 horas-hombre/año} si se contabilizan únicamente las causas principales \textbf{CA1–CA3}.
 
 \section{Relación de beneficio / costo}
 
-La evaluación económica contrasta la \textbf{inversión total de implementación} cuantificada en el Capítulo V (\textbf{S/ 18,254.19} o \textbf{US\$ 5,337.48} al tipo de cambio referencial de S/ 3.42) frente a los \textbf{ahorros operativos} derivados de mitigar las ineficiencias diagnosticadas en el Capítulo III, aplicando el indicador de relación \textbf{Beneficio/Costo (B/C)} y el \textbf{período de recuperación de la inversión (\textit{Payback})}.
+La evaluación económica contrasta la \textbf{inversión total de implementación} determinada en el presupuesto del proyecto, equivalente a \textbf{S/ 18 254,19} o \textbf{US\$ 5 337,48} al tipo de cambio referencial de S/ 3,42 por dólar, frente a los \textbf{ahorros operativos anuales} derivados de reducir las pérdidas por tiempo improductivo cuantificadas en el diagnóstico operativo, con un costo operativo de hora-hombre de \textbf{S/ 12,00/hora} para el personal de soporte técnico e \textit{in-situ}.
+
+Para mantener total rigor y coherencia con el diagnóstico del área, se presenta el cálculo sobre las \textbf{tres causas raíz principales priorizadas (CA1–CA3)} como escenario conservador de evaluación económica directa, y se detalla también su relación frente al \textbf{total de causas diagnosticadas (CA1–CA7)} para brindar una lectura integral del impacto operativo.
 
 \subsection{Identificación de la Pérdida Económica}
 
-A partir del diagnóstico cuantitativo del Capítulo III ---basado en el registro empírico de 5 meses (mayo a septiembre de 2026, con un total de 395 atenciones, una plantilla operativa de 3 técnicos y un costo hora-hombre de \textbf{S/ 25.00})--- se identifican las pérdidas económicas directas asociadas a las tres causas principales priorizadas en el análisis de Pareto, cuyo consolidado mensual y anual se detalla en la Tabla \ref{tab:perdida_economica_cap6}:
+El período de cinco meses empleado en la cuantificación corresponde específicamente al intervalo \textbf{del 1 de mayo al 30 de septiembre de 2026} (\textbf{mayo, junio, julio, agosto y septiembre de 2026}), período previo a la puesta en marcha operativa plena del sistema y durante el cual se registraron \textbf{395 atenciones totales} con una plantilla de \textbf{3 técnicos operativos} y un costo de hora-hombre de \textbf{S/ 12,00/hora}.
 
-\begin{enumerate}
-    \item \textbf{Causa CA1 --- Búsqueda manual de datos de equipos en archivos Excel desactualizados:} Se registraron 103 atenciones con demora en 5 meses (26\% promedio), con una paralización estimada de 25 minutos por incidencia. El impacto en los 5 meses asciende a \textbf{S/ 1,072.90}, equivalente a un promedio mensual de \textbf{S/ 214.58} y una proyección anual (12 meses) de \textbf{S/ 2,574.96}.
-    \item \textbf{Causa CA2 --- Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro:} Se registraron 149 solicitudes informales en 5 meses (38\% promedio), con un tiempo improductivo promedio de 30 minutos por solicitud. El impacto en los 5 meses asciende a \textbf{S/ 1,862.50}, equivalente a un promedio mensual de \textbf{S/ 372.50} y una proyección anual (12 meses) de \textbf{S/ 4,470.00}.
-    \item \textbf{Causa CA3 --- Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ}:} Se registraron 81 visitas presenciales afectadas por cruces de agenda y reprogramaciones en 5 meses (20\% promedio), con un tiempo muerto promedio de 20 minutos y sobrecostos operativos de traslado. El impacto en los 5 meses asciende a \textbf{S/ 675.00}, equivalente a un promedio mensual de \textbf{S/ 135.00} y una proyección anual (12 meses) de \textbf{S/ 1,620.00}.
+Los valores mensuales y tiempos improductivos utilizados provienen de tres fuentes operativas internas de J\&P Periféricos S.A.C. durante mayo–septiembre de 2026: primero, la revisión de los registros operativos disponibles como hojas de cálculo de inventario y control, historial de tickets o atenciones, contratos y acuerdos de nivel de servicio SLA, agendas de visitas técnicas e informes mensuales emitidos; segundo, la observación directa del flujo de recepción, diagnóstico, derivación y programación de visitas; y tercero, la estimación operativa en campo consensuada con el equipo técnico respecto a los minutos promedio invertidos en tareas no productivas o repetitivas por cada incidencia.
+
+La pérdida económica por tiempo improductivo se calcula mediante la expresión:
+
+\[
+\text{Pérdida Económica (S/)} = N_{\text{eventos}} \times \left(\frac{t_{\text{perdido (min)}}}{60}\right) \times C_{\text{H-H}}
+\]
+
+donde $N_{\text{eventos}}$ es el número de ocurrencias registradas o identificadas en el período de mayo a septiembre de 2026, $t_{\text{perdido (min)}}$ es el tiempo promedio improductivo por ocurrencia en minutos y $C_{\text{H-H}} = \text{S/ 12,00/hora}$.
+
+El desglose de las tres causas principales priorizadas (\textbf{CA1–CA3}) para el período \textbf{mayo–septiembre de 2026} y su proyección anual a 12 meses, multiplicando el promedio mensual de los 5 meses por 12, se detalla a continuación y se resume en la Tabla~\ref{tab:perdida_economica_cap6}:
+
+\begin{enumerate}[leftmargin=1.27cm]
+    \item \textbf{Causa CA1 --- Búsqueda manual de datos de equipos en archivos Excel desactualizados:} Se identificaron 103 atenciones con demora en los 5 meses, equivalentes al 26\,\% promedio sobre 395 atenciones, con un tiempo perdido promedio de 25 minutos por incidencia y 42,92 horas acumuladas. A S/ 12,00/hora, genera \textbf{S/ 515,00} en mayo–septiembre de 2026, \textbf{S/ 103,00/mes} en promedio y \textbf{S/ 1 236,00} proyectados a 12 meses.
+    \item \textbf{Causa CA2 --- Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro:} Se contabilizaron 149 solicitudes informales en los 5 meses, equivalentes al 38\,\% promedio sobre 395 atenciones, con un tiempo improductivo promedio de 30 minutos por solicitud por transcripción, repreguntas y seguimiento disperso y 74,50 horas acumuladas. A S/ 12,00/hora, genera \textbf{S/ 894,00} en mayo–septiembre de 2026, \textbf{S/ 178,80/mes} en promedio y \textbf{S/ 2 145,60} proyectados a 12 meses.
+    \item \textbf{Causa CA3 --- Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ}:} Se registraron 81 visitas con cruce de agenda y reprogramación en los 5 meses, equivalentes al 20\,\% promedio sobre 395 atenciones, con un tiempo muerto promedio de 20 minutos por visita y 27,00 horas acumuladas. A S/ 12,00/hora, genera \textbf{S/ 324,00} en mayo–septiembre de 2026, \textbf{S/ 64,80/mes} en promedio y \textbf{S/ 777,60} proyectados a 12 meses.
 \end{enumerate}
 
-\begin{table}[H]
-\centering
+\begingroup
 \small
-\renewcommand{\arraystretch}{1.25}
-\caption{Consolidado de Pérdidas Económicas Operativas Identificadas (Situación Actual)}
-\label{tab:perdida_economica_cap6}
-\begin{tabular}{@{} >{\raggedright\arraybackslash}p{1.2cm} >{\raggedright\arraybackslash}p{5.2cm} >{\raggedright\arraybackslash}p{3.0cm} >{\raggedleft\arraybackslash}p{2.0cm} >{\raggedleft\arraybackslash}p{2.2cm} >{\raggedleft\arraybackslash}p{1.6cm} @{}}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTcapwidth}{\linewidth}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{0.10\linewidth} >{\raggedright\arraybackslash}p{0.34\linewidth} >{\raggedleft\arraybackslash}p{0.14\linewidth} >{\raggedleft\arraybackslash}p{0.14\linewidth} >{\raggedleft\arraybackslash}p{0.14\linewidth} >{\raggedleft\arraybackslash}p{0.12\linewidth} @{}}
+\caption*{\textbf{Tabla \ref{tab:perdida_economica_cap6}} \\ \textit{Consolidado de Pérdidas Económicas Operativas de Causas Principales (CA1–CA3)}} \label{tab:perdida_economica_cap6} \\
 \toprule
-\textbf{Código} & \textbf{Causa Raíz Principal} & \textbf{Tipo de Pérdida} & \textbf{Estimación Mensual (S/.)} & \textbf{Proyección Anual (S/.)} & \textbf{Part. (\%)} \\
+\textbf{Código} & \textbf{Causa raíz principal} & \textbf{Pérdida 5 meses (S/)} & \textbf{Prom. mensual (S/)} & \textbf{Proy. anual (S/)} & \textbf{Part. (\%)} \\
 \midrule
-CA1 & Búsqueda manual de datos de equipos en archivos Excel desactualizados & Operativa / Horas-Hombre & 214.58 & 2,574.96 & 29.72\% \\
-CA2 & Recepción y comunicación por canales informales (WhatsApp/llamadas) sin registro & Operativa / Horas-Hombre & 372.50 & 4,470.00 & 51.59\% \\
-CA3 & Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ} & Operativa / Logística & 135.00 & 1,620.00 & 18.70\% \\
+\endfirsthead
+
+\multicolumn{6}{@{}l}{\textbf{Tabla \ref{tab:perdida_economica_cap6}} \textit{(Continuación)}} \\[0.3em]
+\toprule
+\textbf{Código} & \textbf{Causa raíz principal} & \textbf{Pérdida 5 meses (S/)} & \textbf{Prom. mensual (S/)} & \textbf{Proy. anual (S/)} & \textbf{Part. (\%)} \\
 \midrule
-\textbf{Total} & \textbf{Pérdida económica operativa total} & \textbf{Directa (H-H y Traslados)} & \textbf{722.08} & \textbf{8,664.96} & \textbf{100.00\%} \\
+\endhead
+
+\midrule
+\multicolumn{6}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
 \bottomrule
-\end{tabular}
-\\[0.3em]
-{\small \textit{Nota.} Elaboración propia a partir del diagnóstico cuantitativo del Capítulo III (serie mayo--septiembre de 2026 proyectada a 12 meses). Por criterio conservador, no incluye costos indirectos por \textit{downtime} prolongado del cliente ni penalidades.}
-\end{table}
+\multicolumn{6}{@{}p{\linewidth}}{\footnotesize \textit{Nota.} Elaboración propia a partir de los registros y observación de mayo–septiembre de 2026 con $C_{\text{H-H}} = \text{S/ 12,00/hora}$, \textit{Prom. mensual} $= \text{Pérdida 5 meses}/5$ y \textit{Proy. anual} $= \text{Prom. mensual} \times 12$. Por criterio conservador, no incluye costos indirectos por \textit{downtime} ni penalidades de clientes.} \\
+\endlastfoot
+
+CA1 & Búsqueda manual de datos de equipos en archivos \textit{Excel} desactualizados & 515,00 & 103,00 & 1 236,00 & 29,72\,\% \\
+\addlinespace[4pt]
+CA2 & Recepción y comunicación por canales informales (\textit{WhatsApp}/llamadas) sin registro & 894,00 & 178,80 & 2 145,60 & 51,59\,\% \\
+\addlinespace[4pt]
+CA3 & Descoordinación y reubicación de horarios por cruces en visitas \textit{in-situ} & 324,00 & 64,80 & 777,60 & 18,70\,\% \\
+\midrule
+\textbf{Subtotal} & \textbf{Causas principales priorizadas (CA1–CA3)} & \textbf{1 733,00} & \textbf{346,60} & \textbf{4 159,20} & \textbf{100,00\,\%} \\
+\end{longtable}
+\endgroup
+
+Dentro de estas tres causas principales, con \textbf{S/ 1 733,00} en cinco meses, \textbf{S/ 346,60/mes} y \textbf{S/ 4 159,20/año}, \textbf{CA2} explica el \textbf{51,59\,\%} del impacto económico, \textbf{CA1} el \textbf{29,72\,\%} y \textbf{CA3} el \textbf{18,70\,\%}.
+
+De manera complementaria, si se consideran las siete causas raíz del diagnóstico (\textbf{CA1–CA7}, que añaden \textbf{CA4} por S/ 285,00 en 5 meses o S/ 684,00/año; \textbf{CA5} por S/ 223,20 en 5 meses o S/ 535,68/año; \textbf{CA6} por S/ 240,00 en 5 meses o S/ 576,00/año; y \textbf{CA7} por S/ 120,00 en 5 meses o S/ 288,00/año), la pérdida acumulada en mayo–septiembre de 2026 asciende a \textbf{S/ 2 601,20}, equivalente a un promedio mensual de \textbf{S/ 520,24} y una proyección anual de \textbf{S/ 6 242,88}.
 
 \subsection{Identificación de los beneficios del sistema}
 
-Con la puesta en marcha del sistema web centralizado, se estima una \textbf{eficiencia de recuperación del 85.0\%} sobre las pérdidas operativas anuales identificadas. Se asume un \textbf{15.0\% de pérdida residual} debido a factores operativos no eliminables al 100\% en el corto plazo, tales como la curva de aprendizaje de los usuarios finales, eventuales reportes incompletos iniciales o saturación puntual de técnicos de campo ante picos de visitas presenciales:
+Con la operación del \textbf{Sistema Web Help-Desk Centralizado}, se estima una \textbf{eficiencia de recuperación del 85,0\,\%} sobre las pérdidas operativas proyectadas, manteniendo un \textbf{15,0\,\% de pérdida residual} asociada a factores operativos no eliminables de forma inmediata, como la curva de adaptación de usuarios y técnicos, registros iniciales incompletos o picos de atención presencial:
 
-\begin{equation}
+\[
 \text{Ahorro Anual Proyectado} = \text{Pérdida Anual} \times \text{Eficiencia de Recuperación}
-\end{equation}
+\]
 
-\begin{equation}
-\text{Ahorro Anual Proyectado} = \text{S/ } 8,664.96 \times 0.85 = \text{S/ } 7,365.22
-\end{equation}
+Aplicando este criterio sobre la proyección anual conservadora de las causas principales, igual a \textbf{S/ 4 159,20} y derivada del período mayo–septiembre de 2026:
 
-\begin{equation}
-\text{Pérdida Residual Estimada (15\%)} = \text{S/ } 8,664.96 - \text{S/ } 7,365.22 = \text{S/ } 1,299.74
-\end{equation}
+\[
+\text{Ahorro Anual}_{\text{CA1–CA3}} = \text{S/ } 4\ 159,20 \times 0,85 = \text{S/ } 3\ 535,32
+\]
 
-La síntesis comparativa entre las pérdidas actuales, el ahorro proyectado, la pérdida residual y la inversión requerida se muestra en la Tabla \ref{tab:resumen_beneficios_cap6}.
+\[
+\text{Pérdida Residual}_{\text{CA1–CA3}} = \text{S/ } 4\ 159,20 - \text{S/ } 3\ 535,32 = \text{S/ } 623,88
+\]
 
-\begin{table}[H]
-\centering
+En el escenario integral de las siete causas \textbf{CA1–CA7}, con pérdida anual proyectada de S/ 6 242,88, el ahorro anual al 85,0\,\% equivale a \textbf{S/ 5 306,45} y la pérdida residual anual al 15,0\,\% es de \textbf{S/ 936,43}.
+
+\begingroup
 \small
-\renewcommand{\arraystretch}{1.25}
-\caption{Resumen de Ahorros Anuales Proyectados e Inversión del Proyecto}
-\label{tab:resumen_beneficios_cap6}
-\begin{tabular}{@{} >{\raggedright\arraybackslash}p{9.2cm} >{\raggedleft\arraybackslash}p{3.0cm} >{\raggedleft\arraybackslash}p{2.4cm} @{}}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\LTcapwidth}{\linewidth}
+\begin{longtable}{@{} >{\raggedright\arraybackslash}p{0.52\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} >{\raggedleft\arraybackslash}p{0.16\linewidth} >{\raggedleft\arraybackslash}p{0.14\linewidth} @{}}
+\caption*{\textbf{Tabla \ref{tab:resumen_beneficios_cap6}} \\ \textit{Resumen de Ahorros Anuales Proyectados e Inversión del Proyecto}} \label{tab:resumen_beneficios_cap6} \\
 \toprule
-\textbf{Concepto Económico / Operativo} & \textbf{Valor (S/.)} & \textbf{Proporción (\%)} \\
+\textbf{Concepto económico / operativo} & \textbf{Base CA1–CA3 (S/)} & \textbf{Base CA1–CA7 (S/)} & \textbf{Proporción} \\
 \midrule
-Pérdida económica anual estimada (situación actual) & 8,664.96 & 100.0\% \\
-Ahorro anual proyectado por eficiencia del sistema (85.0\%) & 7,365.22 & 85.0\% \\
-Pérdida residual estimada tras la mejora (15.0\%) & 1,299.74 & 15.0\% \\
+\endfirsthead
+
+\multicolumn{4}{@{}l}{\textbf{Tabla \ref{tab:resumen_beneficios_cap6}} \textit{(Continuación)}} \\[0.3em]
+\toprule
+\textbf{Concepto económico / operativo} & \textbf{Base CA1–CA3 (S/)} & \textbf{Base CA1–CA7 (S/)} & \textbf{Proporción} \\
 \midrule
-\textbf{Inversión total de implementación (Capítulo V)} & \textbf{18,254.19} & \textbf{---} \\
+\endhead
+
+\midrule
+\multicolumn{4}{r}{\textit{Continúa en la siguiente página\dots}} \\
+\endfoot
+
 \bottomrule
-\end{tabular}
-\\[0.3em]
-{\small \textit{Nota.} Elaboración propia a partir de la estimación de ahorro operativo anual y el presupuesto consolidado del Capítulo V.}
-\end{table}
+\multicolumn{4}{@{}p{\linewidth}}{\footnotesize \textit{Nota.} Elaboración propia a partir de la línea base mayo–septiembre de 2026 proyectada a 12 meses, el presupuesto de implementación de S/ 18 254,19 y el supuesto de recuperación del 85,0\,\%.} \\
+\endlastfoot
+
+Pérdida económica anual estimada (situación actual) & 4 159,20 & 6 242,88 & 100,0\,\% \\
+\addlinespace[4pt]
+Ahorro anual proyectado por eficiencia del sistema (85,0\,\%) & 3 535,32 & 5 306,45 & 85,0\,\% \\
+\addlinespace[4pt]
+Pérdida residual anual estimada tras la mejora (15,0\,\%) & 623,88 & 936,43 & 15,0\,\% \\
+\midrule
+\textbf{Inversión total de implementación} & \textbf{18 254,19} & \textbf{18 254,19} & \textbf{---} \\
+\end{longtable}
+\endgroup
+
+Al contrastar ambos escenarios frente a la inversión de \textbf{S/ 18 254,19}, el ahorro anual estimado alcanza \textbf{S/ 3 535,32} sobre las causas principales con \textbf{S/ 623,88} de pérdida residual anual, y \textbf{S/ 5 306,45} sobre el total de las siete causas con \textbf{S/ 936,43} de pérdida residual anual.
 
 \subsection{Relación de beneficio / Costo}
 
-Para determinar el retorno directo por unidad monetaria invertida en el primer año de operación, se calcula la relación \textbf{Beneficio / Costo ($\text{B/C}$)} contrastando el ahorro anual proyectado (\textbf{S/ 7,365.22}) frente al costo total de implementación (\textbf{S/ 18,254.19}):
+La relación \textbf{Beneficio / Costo} en el primer año de operación se calcula dividiendo el ahorro anual proyectado entre la inversión total de implementación de \textbf{S/ 18 254,19}:
 
-\begin{equation}
-\text{B/C}_{\text{anual}} = \frac{\text{Ahorro Anual}}{\text{Costo de Inversión}} = \frac{7,365.22}{18,254.19} \approx 0.40
-\end{equation}
+\[
+\text{B/C}_{\text{anual}} = \frac{\text{Ahorro Anual}}{\text{Costo de Inversión}}
+\]
+
+En el escenario conservador basado en las causas principales (\textbf{CA1–CA3}):
+
+\[
+\text{B/C}_{\text{anual (CA1–CA3)}} = \frac{3\ 535,32}{18\ 254,19} \approx 0,19
+\]
+
+Considerando el ahorro anual integral de \textbf{CA1–CA7} igual a S/ 5 306,45, el ratio anual es $\text{B/C}_{\text{anual (CA1–CA7)}} = \frac{5\ 306,45}{18\ 254,19} \approx 0,29$.
 
 \textbf{Fundamentación e interpretación del resultado:}
-\begin{itemize}
-    \item En una evaluación estática a \textbf{1 año}, el índice $\text{B/C} = 0.40$ significa que por cada \textbf{S/ 1.00} invertido en la implementación del sistema, se recuperan \textbf{S/ 0.40} en ahorro directo de horas-hombre y logística durante el primer año.
-    \item Este resultado obedece a que el proyecto incluye un componente relevante de desarrollo de software a medida (mano de obra de tres desarrolladores en 149 días laborables, que representa el 73.5\% de la inversión total) y equipamiento/soporte, mientras que el ahorro base se calcula de forma conservadora sobre una muestra operativa acotada (395 atenciones en 5 meses).
-    \item Si se proyecta el ahorro acumulado en un horizonte operativo de \textbf{3 años} ($\text{S/ } 7,365.22 \times 3 = \text{S/ } 22,095.66$), el beneficio acumulado supera la inversión inicial (ratio acumulado a 3 años de \textbf{1.21}), y a \textbf{5 años} ---alineado con la vida útil de los equipos de cómputo del Capítulo V--- alcanza \textbf{S/ 36,826.10} (ratio acumulado a 5 años de \textbf{2.02}), además de habilitar la comercialización modular externa señalada en el Capítulo I como vía adicional de retorno para J\&P Periféricos S.A.C.
+\begin{itemize}[leftmargin=1.27cm]
+    \item \textbf{Evaluación anual:} En el primer año de operación, el ratio B/C es de 0,19 en CA1–CA3 y de 0,29 en CA1–CA7, de modo que por cada \textbf{S/ 1,00} invertido se recuperan \textbf{S/ 0,19} o \textbf{S/ 0,29} en el cómputo de las siete causas en ahorro directo de horas-hombre del personal de soporte.
+    \item \textbf{Estructura de la inversión y criterio conservador:} La inversión de \textbf{S/ 18 254,19} concentra S/ 13 410,00, equivalentes al 73,5\,\%, en mano de obra de desarrollo de software a medida durante 149 días laborables, además de equipamiento y servicios operativos, mientras que el ahorro base se valoriza de forma conservadora a una tarifa de \textbf{S/ 12,00/hora} sobre el volumen histórico de cinco meses de mayo a septiembre de 2026.
+    \item \textbf{Proyección multianual y valor estratégico:} A lo largo de los cinco años de vida útil de los equipos de cómputo contemplados en el presupuesto, el ahorro acumulado con base \textbf{CA1–CA3} alcanza \textbf{S/ 17 676,60} con un ratio acumulado a 5 años de 0,97, y con base \textbf{CA1–CA7} llega a \textbf{S/ 26 532,25} con un ratio acumulado a 5 años de 1,45, superando la inversión inicial. A ello se suman los beneficios operativos ---trazabilidad integral, cumplimiento de SLA, indicadores gerenciales y estabilidad ante picos de carga--- que respaldan la operación corporativa y el escalamiento del servicio.
 \end{itemize}
 
 \subsection{Relación Costo/beneficio (Tiempo Recuperación)}
 
-El período de recuperación de la inversión (\textit{Payback}) indica el tiempo necesario para que los ahorros operativos acumulados igualen el costo total de implementación (\textbf{S/ 18,254.19}), asumiendo un flujo constante de ahorro anual de \textbf{S/ 7,365.22} (equivalente a \textbf{S/ 613.77} mensuales):
+El período de recuperación de la inversión o \textit{Payback} determina el tiempo necesario para que los ahorros operativos acumulados igualen la inversión total de \textbf{S/ 18 254,19}, bajo un flujo constante de ahorro anual:
 
-\begin{equation}
-\text{Tiempo de Recuperación} = \frac{\text{Costo de Inversión}}{\text{Ahorro Anual}} = \frac{18,254.19}{7,365.22} \approx 2.48\text{ años}
-\end{equation}
+\[
+\text{Tiempo de Recuperación} = \frac{\text{Costo de Inversión}}{\text{Ahorro Anual}}
+\]
+
+Para el escenario conservador basado en las causas principales \textbf{CA1–CA3}, con ahorro anual de \textbf{S/ 3 535,32} y mensual de \textbf{S/ 294,61}:
+
+\[
+\text{Tiempo de Recuperación}_{\text{CA1–CA3}} = \frac{18\ 254,19}{3\ 535,32} \approx 5,16\text{ años}
+\]
 
 Convirtiendo la fracción decimal a meses y días:
 
-\begin{equation}
-2.48\text{ años} \times 12\text{ meses/año} = 29.76\text{ meses}
-\end{equation}
+\[
+5,16\text{ años} \times 12\text{ meses/año} = 61,92\text{ meses} \approx 5\text{ años, } 1\text{ mes y } 28\text{ días}
+\]
 
-\begin{equation}
-29\text{ meses} + (0.76 \times 30\text{ días}) = 29\text{ meses y } 22.8\text{ días} \approx 2\text{ años, } 5\text{ meses y } 23\text{ días}\ (\approx 2.5\text{ años})
-\end{equation}
+En el escenario integral de las siete causas \textbf{CA1–CA7}, con ahorro anual de S/ 5 306,45 y mensual de S/ 442,20, el tiempo de recuperación es de $\frac{18\ 254,19}{5\ 306,45} \approx 3,44\text{ años}$, equivalentes a \textbf{41,28 meses} o \textbf{3 años, 5 meses y 8 días}.
 
 \textbf{Fundamentación e interpretación del resultado:}
-\begin{itemize}
-    \item Bajo los supuestos conservadores de carga operativa y eficiencia de recuperación del 85\%, J\&P Periféricos S.A.C. recupera la inversión total en aproximadamente \textbf{2 años y 6 meses} (29.76 meses).
-    \item A partir de ese punto de equilibrio, los ahorros operativos generados por la trazabilidad de tickets, el expediente ITAM multinivel y la programación sin cruces de visitas \textit{in-situ} representan un beneficio neto recurrente para la empresa, el cual puede acelerarse en la medida en que crezca el volumen de incidencias atendidas y se incorporen clientes corporativos adicionales a la plataforma.
+\begin{itemize}[leftmargin=1.27cm]
+    \item Bajo el criterio conservador de valorizar únicamente el ahorro directo de horas-hombre a \textbf{S/ 12,00/hora} sobre las causas principales \textbf{CA1–CA3} a partir de la línea base mayo–septiembre de 2026, el retorno directo de la inversión se extiende alrededor de \textbf{5,16 años}, y de \textbf{3,44 años} si se contabilizan las siete causas \textbf{CA1–CA7}.
+    \item Este plazo refleja que el ahorro monetizado proviene exclusivamente de evitar tiempos muertos internos del soporte técnico, sin incorporar ingresos adicionales por expansión de cartera de clientes corporativos ni costos evitados por rotura de SLA o pérdida de clientes. En la medida en que crezca el número de empresas clientes, sedes y tickets gestionados en la plataforma, el ahorro operativo unitario y el retorno efectivo de la mejora se verán favorecidos.
 \end{itemize}
