@@ -1,6 +1,8 @@
 \chapter[CAPÍTULO VII]{CONCLUSIONES}
 
-\section{Prueba de estrés y validación de rendimiento}
+\section{Conclusiones respecto a los objetivos del Proyecto de Mejora / Innovación / Creatividad}
+
+\subsection{Prueba de estrés y validación de rendimiento}
 
 Con el fin de evaluar el comportamiento del backend del Sistema Web Help Desk Centralizado bajo condiciones de concurrencia controlada, se ejecutó una prueba de estrés mediante la herramienta \textit{k6} en un contenedor Docker aislado, conectado al servicio en ejecución local en el puerto 3000, junto con los componentes de apoyo (MongoDB en el puerto 27017 y Redis en el puerto 6379) y la base de datos de pruebas desplegados mediante Docker Compose. El script de carga se mantuvo separado del código fuente principal para no alterar la lógica operativa de la aplicación.
 
@@ -56,8 +58,6 @@ Al triplicar el pico de concurrencia de 25 a 75 VUs dentro de una ventana tempor
 
 Desde el punto de vista metodológico, estas mediciones se obtuvieron en un entorno local de pruebas mediante simulación de usuarios virtuales sobre el backend y los contenedores de apoyo. En consecuencia, los resultados respaldan la estabilidad funcional y los tiempos de respuesta del sistema bajo concurrencia controlada en dicho entorno, pero no equivalen al comportamiento continuo de un servidor productivo dedicado ni al tráfico sostenido de múltiples clientes reales en operación.
 
-\section{Conclusiones respecto a los objetivos del Proyecto de Mejora / Innovación}
-
 \subsection{Resultados}
 
 La implementación del Sistema Web Help Desk Centralizado en J\&P Periféricos S.A.C. permitió alcanzar los objetivos planteados para la gestión del servicio de soporte técnico y el control de inventario de activos TI orientados a empresas clientes externas. Los resultados operativos y de validación funcional y técnica alcanzados se resumen a continuación, alineados con cada objetivo específico:
@@ -100,7 +100,7 @@ El aporte principal del proyecto consiste en unificar en una sola plataforma web
 
 En relación con el rendimiento, los resultados de la sección 7.1 muestran que el backend mantuvo 0\,\% de fallos HTTP y 0\,\% de errores inesperados tanto a 25 VUs como a 75 VUs, completando 2 478 iteraciones y creando 2 478 tickets en la corrida más exigente, aunque la latencia \textit{p95} general pasó de 117,42 ms a 468,69 ms y la latencia \textit{p95} de autenticación subió de 246,01 ms a 849,08 ms al triplicar la carga. Ello evidencia estabilidad bajo concurrencia controlada en el entorno de pruebas, pero también un aumento perceptible en los tiempos de respuesta (en especial en la autenticación) al crecer la carga simultánea y las escrituras, lo que delimita su alcance a un entorno local de prueba y señala puntos de optimización para escenarios productivos de mayor concurrencia.
 
-\subsection{Conclusión}
+\subsection{Conclusiónes}
 
 Se concluye que el desarrollo e implementación del Sistema Web Help Desk Centralizado para la gestión del servicio de soporte técnico y el control de inventario de activos TI en J\&P Periféricos S.A.C. responde de manera integral al problema principal identificado: la desorganización y falta de trazabilidad centralizada en la gestión de solicitudes de soporte técnico y registro de inventario informático multinivel. La solución sustituye los canales informales de recepción (llamadas telefónicas y WhatsApp sin registro) por un flujo de tickets estandarizado con código PIN único y estados auditables; centraliza el expediente e inventario de activos TI (hardware y software) por empresa, sucursal, área y trabajador; coordina las visitas \textit{in-situ} sin cruces de agenda mediante autoasignación por zona geográfica; valida de forma automatizada los planes, contratos y acuerdos de nivel de servicio de cada cliente corporativo; estandariza la derivación y el escalamiento de tickets; y ofrece tableros de control con indicadores clave (MTTA, MTTR, FCR y CSAT) para la evaluación objetiva del desempeño técnico. Asimismo, la prueba de estrés verificó que el backend sostiene picos de hasta 75 usuarios virtuales en el entorno local de pruebas sin fallos HTTP ni errores inesperados, con latencias \textit{p95} generales de 117,42 ms a 25 VUs y 468,69 ms a 75 VUs.
 
