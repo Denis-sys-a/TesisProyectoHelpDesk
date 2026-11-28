@@ -5,13 +5,13 @@
 Este capítulo presenta la estrategia de implementación del sistema web help desk y control de activos TI, formalizada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}). Para ejecutar la mejora de forma ordenada, el plan se organiza bajo dos enfoques complementarios:
 
 \begin{itemize}
-    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina \textbf{Scrum} para las entregas incrementales por \textit{sprints} y \textbf{Kanban} para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM, MySQL y MongoDB/Redis según el módulo y requerimiento).
+    \item \textbf{Gestión y desarrollo (\textit{Scrumban}):} Combina Scrum para las entregas incrementales por \textit{sprints} y Kanban para el control visual del flujo y límites \textit{WIP} (\textit{Frontend} en Vite + React; \textit{Backend} en NestJS con Prisma ORM, MySQL y MongoDB/Redis según el módulo y requerimiento).
 \end{itemize}
 
 A continuación se detallan las metodologías, requerimientos y fases de ejecución del plan.
 
 \subsection{Metodología Scrum}
-La metodología \textbf{Scrum} permite gestionar el ciclo de vida del desarrollo del software mediante iteraciones cortas denominadas \textit{sprints}.
+La metodología Scrum permite gestionar el ciclo de vida del desarrollo del software mediante iteraciones cortas denominadas \textit{sprints}.
 \begin{itemize}
 \item \textbf{Aplicación en el proyecto:} Se aplica en la planificación y entrega incremental de los módulos del sistema (Módulo de Autenticación y Usuarios, Gestión de Clientes y Sucursales, Gestión de Tickets, Control de Equipos/Hardware o Software, y el motor de Citas).
 \item \textbf{Impacto operativo:} Facilita la adaptación continua a los requerimientos prioritarios del negocio mediante la gestión del \textit{Product Backlog} y \textit{Sprint Backlog}, asegurando entregas funcionales probadas al final de cada ciclo de desarrollo.
@@ -47,7 +47,7 @@ Implementada para el control visual del flujo operativo de atención de tickets 
 \subsection{Requerimientos del Sistema}
 Para el correcto funcionamiento del sistema web help desk, se han definido y clasificado los requerimientos funcionales y no funcionales que guiarán el desarrollo de la arquitectura y la base de datos.
 
-Para delimitar el alcance operativo y el control de acceso (\textit{RBAC}) de la plataforma, el sistema contempla seis roles principales: \textbf{Administrador} (gestión global de clientes, planes, zonas, catálogos, usuarios, auditoría y reportes), \textbf{Soporte técnico} (atención remota de tickets, gestión de inventario/licencias y derivación a campo), \textbf{Soporte in-situ} (atención presencial en sedes, actualización de hoja de vida de equipos y registro de visitas), \textbf{Cliente empresa} (supervisión de su organización, sedes y reportes corporativos), \textbf{Cliente sucursal} (administración operativa de su sede y áreas asignadas) y \textbf{Cliente trabajador} (registro y seguimiento de incidencias vinculadas a sus equipos).
+Para delimitar el alcance operativo y el control de acceso (\textit{RBAC}) de la plataforma, el sistema contempla seis roles principales: \textit{Administrador} (gestión global de clientes, planes, zonas, catálogos, usuarios, auditoría y reportes), \textit{Soporte técnico} (atención remota de tickets, gestión de inventario/licencias y derivación a campo), \textit{Soporte in-situ} (atención presencial en sedes, actualización de hoja de vida de equipos y registro de visitas), \textit{Cliente empresa} (supervisión de su organización, sedes y reportes corporativos), \textit{Cliente sucursal} (administración operativa de su sede y áreas asignadas) y \textit{Cliente trabajador} (registro y seguimiento de incidencias vinculadas a sus equipos).
 
 \subsubsection{Requerimientos Funcionales}
 Los requerimientos funcionales especifican las operaciones, interacciones y reglas de negocio que el software debe ejecutar de manera obligatoria para satisfacer las necesidades de los usuarios (administradores, personal técnico y clientes), cuyo detalle operativo se presenta en la Tabla \ref{tab:req_funcionales}.
@@ -191,7 +191,7 @@ El seguimiento de tareas y avance de horas del Sprint 0 se documenta en los tabl
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 0.}
 \end{figure}
 
-La tarea \textbf{TR00} articula la planificación transversal del proyecto, las ceremonias de seguimiento y la formalización inicial respaldada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}), mientras que los entregables de \textbf{TR01}, \textbf{TR02} y \textbf{TR04} consolidan el alcance, los permisos por rol y la línea base de trabajo. Por su parte, la tarea \textbf{TR03} (especificación de Requerimientos Funcionales y No Funcionales) se encuentra desarrollada en detalle en la \textbf{Tabla \ref{tab:req_funcionales}} y la \textbf{Tabla \ref{tab:req_nofuncionales}}.
+La tarea TR00 articula la planificación transversal del proyecto, las ceremonias de seguimiento y la formalización inicial respaldada en el \hyperlink{anexo4_acta}{Anexo 4} (\textit{Acta de Constitución del Proyecto}), mientras que los entregables de TR01, TR02 y TR04 consolidan el alcance, los permisos por rol y la línea base de trabajo. Por su parte, la tarea TR03 (especificación de Requerimientos Funcionales y No Funcionales) se encuentra desarrollada en detalle en la Tabla \ref{tab:req_funcionales} y la Tabla \ref{tab:req_nofuncionales}.
 
 \begin{table}[H]
 \centering
@@ -315,7 +315,7 @@ El avance y seguimiento del Sprint 1 se respaldan en su tablero y gráfico \text
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 1.}
 \end{figure}
 
-Las tareas \textbf{TR05} y \textbf{TR06} definen la estructura funcional de la hoja de vida y la matriz CRUD por perfil.
+Las tareas TR05 y TR06 definen la estructura funcional de la hoja de vida y la matriz CRUD por perfil.
 
 \begin{table}[H]
 \centering
@@ -356,12 +356,12 @@ Auditoría y reportes & L & L & L & Emp. / Suc.: L (su alcance) \\
 \bottomrule
 \end{tabular}
 \\[0.15em]
-{\scriptsize \textit{Nota.} Elaboración propia. \textbf{C} = Crear, \textbf{L} = Leer, \textbf{A} = Actualizar, \textbf{E} = Eliminar. Permisos sujetos al alcance organizacional o de zona de cada rol.}
+{\scriptsize \textit{Nota.} Elaboración propia. \textit{C} = Crear, \textit{L} = Leer, \textit{A} = Actualizar, \textit{E} = Eliminar. Permisos sujetos al alcance organizacional o de zona de cada rol.}
 \end{table}
 
 \vspace{-0.5em}
 
-La evidencia de \textbf{TR07} reúne los diagramas de secuencia UML de diagnóstico y asignación automática, mientras que \textbf{TR08} detalla el modelo entidad-relación en Prisma (Figuras \ref{fig:evidencia_tr08_bd_1}, \ref{fig:evidencia_tr08_bd_2}, \ref{fig:evidencia_tr08_bd_3} y \ref{fig:evidencia_tr08_bd_4}).
+La evidencia de TR07 reúne los diagramas de secuencia UML de diagnóstico y asignación automática, mientras que TR08 detalla el modelo entidad-relación en Prisma (Figuras \ref{fig:evidencia_tr08_bd_1}, \ref{fig:evidencia_tr08_bd_2}, \ref{fig:evidencia_tr08_bd_3} y \ref{fig:evidencia_tr08_bd_4}).
 
 \vspace{-0.4em}
 
@@ -494,7 +494,7 @@ El seguimiento del Sprint 2 se refleja en su tablero de tareas y gráfico \texti
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 2.}
 \end{figure}
 
-Las evidencias de \textbf{TR09} a \textbf{TR12} documentan la estructura hexagonal con Prisma, la autenticación JWT, la gestión de usuarios/zonas/auditoría y el alta transaccional de clientes con activación por correo.
+Las evidencias de TR09 a TR12 documentan la estructura hexagonal con Prisma, la autenticación JWT, la gestión de usuarios/zonas/auditoría y el alta transaccional de clientes con activación por correo.
 
 \begin{figure}[H]
 \centering
@@ -669,7 +669,7 @@ El avance y seguimiento de horas del Sprint 3 se registran en las siguientes fig
 {\small \textit{Nota.} Elaboración propia. Seguimiento de horas estimadas frente al avance real durante el Sprint 3.}
 \end{figure}
 
-Las evidencias de \textbf{TR13} y \textbf{TR14} abarcan los endpoints de sucursales, áreas y planes de servicio, incluyendo provisión de cuentas locales y validaciones en Swagger.
+Las evidencias de TR13 y TR14 abarcan los endpoints de sucursales, áreas y planes de servicio, incluyendo provisión de cuentas locales y validaciones en Swagger.
 
 \begin{figure}[H]
 \centering
@@ -750,7 +750,7 @@ Las evidencias de \textbf{TR13} y \textbf{TR14} abarcan los endpoints de sucursa
 
 % --- EVIDENCIA TR15: INVENTARIO ITAM Y HOJA DE VIDA ---
 
-Las capturas de \textbf{TR15} muestran las operaciones de gestión y trazabilidad de equipos y componentes de hardware, junto con la consulta de su hoja de vida técnica.
+Las capturas de TR15 muestran las operaciones de gestión y trazabilidad de equipos y componentes de hardware, junto con la consulta de su hoja de vida técnica.
 
 \begin{figure}[H]
 \centering
@@ -798,7 +798,7 @@ Las capturas de \textbf{TR15} muestran las operaciones de gestión y trazabilida
 
 % --- EVIDENCIA TR16: GESTIÓN DE SOFTWARE Y CONTROL DE LICENCIAS ---
 
-La evidencia de \textbf{TR16} respalda la administración del catálogo de software, asignación de licencias a equipos y consulta de la bóveda de credenciales.
+La evidencia de TR16 respalda la administración del catálogo de software, asignación de licencias a equipos y consulta de la bóveda de credenciales.
 
 \begin{figure}[H]
 \centering
@@ -825,7 +825,7 @@ La evidencia de \textbf{TR16} respalda la administración del catálogo de softw
 % --- EVIDENCIA TR17: AUTOASIGNACIÓN DE SOPORTE Y GESTIÓN DE TICKETS ---
 
 \vspace{-0.4em}
-La evidencia de \textbf{TR17} cubre la autoasignación automática de tickets pendientes por cron y WebSockets, además de los endpoints de registro y asignación de soporte.
+La evidencia de TR17 cubre la autoasignación automática de tickets pendientes por cron y WebSockets, además de los endpoints de registro y asignación de soporte.
 \vspace{-0.3em}
 
 \begin{figure}[H]
@@ -942,7 +942,7 @@ El seguimiento del Sprint 4 se observa en su tablero y gráfico \textit{burndown
 
 % --- EVIDENCIA TR18: ENDPOINTS, ASIGNACIÓN IN-SITU, SOFTLOCK Y DERIVACIÓN ---
 
-La evidencia correspondiente a la tarea \textbf{TR18} documenta el flujo de programación de visitas presenciales, combinando la exposición de rutas en Swagger con la lógica de asignación automática por zona geográfica, agrupamiento de hasta tres atenciones por sucursal, control de disponibilidad y bloqueo temporal (\textit{SoftLock}).
+La evidencia correspondiente a la tarea TR18 documenta el flujo de programación de visitas presenciales, combinando la exposición de rutas en Swagger con la lógica de asignación automática por zona geográfica, agrupamiento de hasta tres atenciones por sucursal, control de disponibilidad y bloqueo temporal (\textit{SoftLock}).
 
 \begin{figure}[H]
 \centering
@@ -1060,7 +1060,7 @@ La evidencia correspondiente a la tarea \textbf{TR18} documenta el flujo de prog
 % --- EVIDENCIA TR19: CHAT EN TIEMPO REAL, WEBSOCKETS Y REDIS ---
 
 \vspace{-0.3em}
-La evidencia de \textbf{TR19} muestra la implementación del chat en tiempo real mediante WebSockets, el control de salas y permisos sobre el ticket, y la gestión de presencia y canales Pub/Sub en Redis.
+La evidencia de TR19 muestra la implementación del chat en tiempo real mediante WebSockets, el control de salas y permisos sobre el ticket, y la gestión de presencia y canales Pub/Sub en Redis.
 \vspace{-0.3em}
 
 \begin{figure}[H]
@@ -1172,7 +1172,7 @@ El avance y seguimiento de horas del Sprint 5 se documentan en las siguientes fi
 
 % --- EVIDENCIA TR20: ESTRUCTURA DE CARPETAS DEL FRONTEND (ARQUITECTURA MODULAR) ---
 
-La evidencia de \textbf{TR20} ilustra la arquitectura modular del \textit{frontend}, diferenciando los componentes compartidos de \texttt{src/components} frente a los encapsulados dentro de cada módulo en \texttt{src/modules}.
+La evidencia de TR20 ilustra la arquitectura modular del \textit{frontend}, diferenciando los componentes compartidos de \texttt{src/components} frente a los encapsulados dentro de cada módulo en \texttt{src/modules}.
 
 \begin{figure}[H]
 \centering
@@ -1200,7 +1200,7 @@ La evidencia de \textbf{TR20} ilustra la arquitectura modular del \textit{fronte
 
 % --- EVIDENCIA TR21: AUTENTICACIÓN Y GESTIÓN DE USUARIOS ---
 
-La evidencia de \textbf{TR21} presenta el flujo de inicio de sesión y las interfaces de administración de usuarios, incluyendo filtros, registro y edición con campos contextuales por rol.
+La evidencia de TR21 presenta el flujo de inicio de sesión y las interfaces de administración de usuarios, incluyendo filtros, registro y edición con campos contextuales por rol.
 
 \begin{figure}[H]
 \centering
@@ -1248,7 +1248,7 @@ La evidencia de \textbf{TR21} presenta el flujo de inicio de sesión y las inter
 
 % --- EVIDENCIA TR22: GESTIÓN DE CLIENTES, SUCURSALES Y ÁREAS ---
 
-La evidencia de \textbf{TR22} reúne las vistas principales para administrar la jerarquía organizacional de clientes, sucursales y áreas internas.
+La evidencia de TR22 reúne las vistas principales para administrar la jerarquía organizacional de clientes, sucursales y áreas internas.
 
 \begin{figure}[H]
 \centering
@@ -1285,7 +1285,7 @@ La evidencia de \textbf{TR22} reúne las vistas principales para administrar la 
 
 % --- EVIDENCIA TR23: INVENTARIO TI, TICKETS/CHAT, CRONOGRAMA DE CITAS Y DASHBOARD ---
 
-La evidencia de \textbf{TR23} abarca las interfaces operativas del sistema: inventario TI (equipos, hardware y software), mesa de ayuda con chat en tiempo real, cronograma de citas con geolocalización y dashboard de operaciones.
+La evidencia de TR23 abarca las interfaces operativas del sistema: inventario TI (equipos, hardware y software), mesa de ayuda con chat en tiempo real, cronograma de citas con geolocalización y dashboard de operaciones.
 
 \begin{figure}[H]
 \centering
@@ -1436,14 +1436,14 @@ La puesta en marcha de la plataforma demanda una transición ordenada desde los 
 \begin{itemize}
 \item \textbf{Formalización del Ingreso de Solicitudes:} Los usuarios finales ya no reportarán fallas por vías informales u opacas; cada incidencia generará formalmente un ticket de soporte asociado a un código PIN único, garantizando un registro centralizado y trazable.
 
-\item \textbf{Inventario TI Centralizado y Hoja de Vida de Equipos:} El sistema integra la gestión detallada del parque informático corporativo organizado por empresas cliente, sucursales y áreas. Esto permite a los equipos de soporte consultar en tiempo real la \textbf{hoja de vida técnica} de cada equipo (historial de fallas, hardware instalado y licencias de software asignadas), brindando el contexto técnico necesario para agilizar la resolución de incidencias.
+\item \textbf{Inventario TI Centralizado y Hoja de Vida de Equipos:} El sistema integra la gestión detallada del parque informático corporativo organizado por empresas cliente, sucursales y áreas. Esto permite a los equipos de soporte consultar en tiempo real la \textit{hoja de vida técnica} de cada equipo (historial de fallas, hardware instalado y licencias de software asignadas), brindando el contexto técnico necesario para agilizar la resolución de incidencias.
 
 \item \textbf{Algoritmo Automatizado de Autoasignación y Derivación In-Situ:} 
 El flujo operativo distingue claramente entre la atención remota y presencial:
 \begin{itemize}
     \item Cuando el soporte remoto determina que la falla no puede resolverse de forma virtual, ejecuta la derivación hacia soporte presencial (\textit{in-situ}).
-    \item El algoritmo de autoasignación analiza de forma automatizada los técnicos disponibles filtrando por la \textbf{zona geográfica de la sucursal}.
-    \item Adicionalmente, el motor inteligente verifica si el técnico seleccionado ya cuenta con citas agendadas en la \textbf{misma sucursal}, priorizando y asignando esa misma franja horaria para agrupar hasta un máximo de tres (3) atenciones presenciales en una sola visita. Esto elimina desplazamientos innecesarios y optimiza los tiempos de traslado del personal técnico.
+    \item El algoritmo de autoasignación analiza de forma automatizada los técnicos disponibles filtrando por la \textit{zona geográfica de la sucursal}.
+    \item Adicionalmente, el motor inteligente verifica si el técnico seleccionado ya cuenta con citas agendadas en la \textit{misma sucursal}, priorizando y asignando esa misma franja horaria para agrupar hasta un máximo de tres (3) atenciones presenciales en una sola visita. Esto elimina desplazamientos innecesarios y optimiza los tiempos de traslado del personal técnico.
 \end{itemize}
 
 \item \textbf{Gestión de Componentes y Credenciales en Campo:} Durante las visitas presenciales, el técnico de soporte \textit{in-situ} gestiona dinámicamente la hoja de vida del equipo. Si se realiza el reemplazo o instalación de un nuevo componente de hardware (discos, memorias, etc.), el sistema registra la modificación de forma inmediata. Asimismo, el técnico cuenta con acceso controlado a las credenciales y claves de licencias de software requeridas para la intervención.
@@ -1567,7 +1567,7 @@ Para aquellas incidencias que demandan intervención física en las instalacione
 \end{figure}
 
 \section{Cronograma de ejecución de la mejora}
-La ejecución del proyecto se organiza en seis sprints incrementales (\textbf{Sprint 0} a \textbf{Sprint 6}), distribuidos desde el análisis y modelado hasta la calidad y despliegue:
+La ejecución del proyecto se organiza en seis sprints incrementales (Sprint 0 a Sprint 6), distribuidos desde el análisis y modelado hasta la calidad y despliegue:
 \begingroup
 \small
 \setlength{\itemsep}{2pt}
@@ -1609,7 +1609,7 @@ A continuación, se presenta el diagrama de Gantt que detalla la planificación 
 \end{figure}
 
 \vspace{-0.2em}
-Como se observa en la figura, el porcentaje de completado de las tareas está representado mediante una escala de colores en la columna correspondiente. El \textbf{color verde oscuro} indica las fases y tareas concluidas al 100\% (valor máximo), correspondientes a la arquitectura base, desarrollo del backend y la mayor parte del frontend. El \textbf{color amarillo} denota una tarea en curso con un avance parcial del 66\% (correspondiente a pantallas de inventario ITAM, tickets, chat y dashboard). Por último, el \textbf{color rojo} señala las actividades pendientes con un avance del 0\%, vinculadas a la fase final de control de calidad, exportación PDF y despliegue en producción.
+Como se observa en la figura, el porcentaje de completado de las tareas está representado mediante una escala de colores en la columna correspondiente. El \textit{color verde oscuro} indica las fases y tareas concluidas al 100\% (valor máximo), correspondientes a la arquitectura base, desarrollo del backend y la mayor parte del frontend. El \textit{color amarillo} denota una tarea en curso con un avance parcial del 66\% (correspondiente a pantallas de inventario ITAM, tickets, chat y dashboard). Por último, el \textit{color rojo} señala las actividades pendientes con un avance del 0\%, vinculadas a la fase final de control de calidad, exportación PDF y despliegue en producción.
 
 \section{Aspecto limitante para la implementación de la mejora}
 Durante el proceso de implantación y puesta en marcha de la solución tecnológica centralizada, se han identificado diversos factores limitantes de carácter técnico, operativo y organizacional que podrían influir en la adopción del sistema. Estos aspectos se clasifican y detallan a continuación según los actores involucrados:
